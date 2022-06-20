@@ -11,7 +11,7 @@ import CustomersRepository from '@modules/customers/infra/typeorm/repositories/C
 // import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 // import { IUserTokensRepository } from '@modules/users/domain/repositories/IUserTokensRepository';
 
-// import '@modules/users/providers';
+import '@modules/customers/providers';
 
 import CategoriesRepository from '@modules/categories/infra/typeorm/repositories/CategoriesRepository';
 import { ICategoriesRepository } from '@modules/categories/domain/repositories/ICategoriesRepository';

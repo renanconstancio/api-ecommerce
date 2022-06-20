@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
+import { messages } from 'joi-translation-pt-br';
 import CustomersController from '../controllers/CustomersController';
 // import isAuthenticated from '@shared/infra/http/middlewares/isAuthenticated';
 
@@ -11,12 +12,22 @@ const customersController = new CustomersController();
 customersRouter
   .post(
     '/',
-    celebrate({
-      [Segments.BODY]: {
-        name: Joi.string().required(),
-        email: Joi.string().email().required(),
+    celebrate(
+      {
+        [Segments.BODY]: {
+          name: Joi.string().required(),
+          email: Joi.string().email().required(),
+          password: Joi.string().min(6).max(12).required(),
+          phone: Joi.string().required(),
+          cpf: Joi.string().allow('').optional(),
+          cnpj: Joi.string().allow('').optional(),
+        },
       },
-    }),
+      {
+        abortEarly: false,
+        messages: messages,
+      },
+    ),
     customersController.create,
   )
   .put(

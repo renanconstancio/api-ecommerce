@@ -58,6 +58,7 @@
     "express-async-errors": "^3.1.1",
     "handlebars": "^4.7.6",
     "ioredis": "^4.19.4",
+    "joi-translation-pt-br": "^0.0.6",
     "jsonwebtoken": "^8.5.1",
     "mime": "^2.5.0",
     "multer": "^1.4.2",

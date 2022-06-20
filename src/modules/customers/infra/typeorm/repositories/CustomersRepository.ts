@@ -13,8 +13,22 @@ class CustomersRepository implements ICustomersRepository {
     this.ormRepository = dataSource.getRepository(Customer);
   }
 
-  public async create({ name, email }: ICreateCustomer): Promise<Customer> {
-    const customer = this.ormRepository.create({ name, email });
+  public async create({
+    name,
+    email,
+    cnpj,
+    cpf,
+    password,
+    phone,
+  }: ICreateCustomer): Promise<Customer> {
+    const customer = this.ormRepository.create({
+      name,
+      email,
+      cnpj,
+      cpf,
+      password,
+      phone,
+    });
 
     await this.ormRepository.save(customer);
 

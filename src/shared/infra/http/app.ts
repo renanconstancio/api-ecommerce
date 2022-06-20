@@ -20,6 +20,8 @@ app.use('/files', express.static(uploadConfig.directory));
 app.use('/api', routes);
 app.use(
   (error: Error, request: Request, response: Response, next: NextFunction) => {
+    console.log('ERROR: %O', error);
+
     if (error instanceof CelebrateError) {
       // is a celebrate error
       const result: {

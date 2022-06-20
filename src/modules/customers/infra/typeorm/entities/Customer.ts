@@ -9,7 +9,7 @@ import {
 import { ICustomer } from '@modules/customers/domain/models/ICustomer';
 
 @Entity('customers')
-class Customer implements ICustomer {
+export default class Customer implements ICustomer {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -22,16 +22,16 @@ class Customer implements ICustomer {
   @Column({ type: 'varchar', length: 86 })
   password!: string;
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'varchar', length: 20, nullable: true })
   cpf!: string;
 
-  @Column({ type: 'varchar', length: 22 })
+  @Column({ type: 'varchar', length: 22, nullable: true })
   cnpj!: string;
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'varchar', length: 20, nullable: true })
   phone!: string;
 
-  @Column({ type: 'varchar', length: 41 })
+  @Column({ type: 'varchar', length: 41, nullable: true })
   avatar!: string;
 
   @CreateDateColumn({ type: 'datetime' })
@@ -43,5 +43,3 @@ class Customer implements ICustomer {
   @DeleteDateColumn({ type: 'datetime' })
   deleted_at!: Date;
 }
-
-export default Customer;
