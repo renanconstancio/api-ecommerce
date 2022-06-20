@@ -46,8 +46,8 @@ class CustomersRepository implements ICustomersRepository {
       .getManyAndCount();
 
     const result = {
-      per_page: take,
       total: count,
+      per_page: take,
       current_page: page,
       data: customers,
     };

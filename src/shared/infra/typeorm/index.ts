@@ -7,6 +7,7 @@ import { DataSource } from 'typeorm';
 // import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts';
 // import Product from '@modules/products/infra/typeorm/entities/Product';
 import Category from '@modules/categories/infra/typeorm/entities/Category';
+import Customer from '@modules/customers/infra/typeorm/entities/Customer';
 
 // import { CreateProducts1607437608841 } from './migrations/1607437608841-CreateProducts';
 // import { CreateUsers1607534203339 } from './migrations/1607534203339-CreateUsers';
@@ -27,7 +28,7 @@ export const dataSource = new DataSource({
   password: process.env.DB_PASS || 'rootpass',
   database: process.env.DB_DATABASE || 'ecommerce_db',
   // entities: [User, UserToken, Customer, Order, OrdersProducts, Product],
-  entities: [Category],
+  entities: [Category, Customer],
   synchronize: true,
   // migrations: [
   //   CreateProducts1607437608841,

@@ -1,6 +1,7 @@
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -12,17 +13,35 @@ class Customer implements ICustomer {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  name: string;
+  @Column({ type: 'varchar', length: 105 })
+  name!: string;
 
-  @Column()
-  email: string;
+  @Column({ type: 'varchar', length: 85 })
+  email!: string;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @Column({ type: 'varchar', length: 86 })
+  password!: string;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @Column({ type: 'varchar', length: 20 })
+  cpf!: string;
+
+  @Column({ type: 'varchar', length: 22 })
+  cnpj!: string;
+
+  @Column({ type: 'varchar', length: 20 })
+  phone!: string;
+
+  @Column({ type: 'varchar', length: 41 })
+  avatar!: string;
+
+  @CreateDateColumn({ type: 'datetime' })
+  created_at!: Date;
+
+  @UpdateDateColumn({ type: 'datetime' })
+  updated_at!: Date;
+
+  @DeleteDateColumn({ type: 'datetime' })
+  deleted_at!: Date;
 }
 
 export default Customer;
