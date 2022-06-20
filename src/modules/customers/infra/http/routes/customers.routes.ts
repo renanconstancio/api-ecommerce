@@ -2,12 +2,10 @@ import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import { messages } from 'joi-translation-pt-br';
 import CustomersController from '../controllers/CustomersController';
-// import isAuthenticated from '@shared/infra/http/middlewares/isAuthenticated';
+import isAuthenticated from '@shared/infra/http/middlewares/isAuthenticated';
 
 const customersRouter = Router();
 const customersController = new CustomersController();
-
-// customersRouter.use(isAuthenticated);
 
 customersRouter
   .post(
@@ -50,6 +48,7 @@ customersRouter
         messages: messages,
       },
     ),
+    isAuthenticated,
     customersController.update,
   )
   .delete(
@@ -59,6 +58,7 @@ customersRouter
         id: Joi.string().uuid().required(),
       },
     }),
+    isAuthenticated,
     customersController.delete,
   )
   .get('/', customersController.index)
