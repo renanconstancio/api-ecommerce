@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ICustomer } from '@modules/customers/domain/models/ICustomer';
+import { Exclude } from 'class-transformer';
 
 @Entity('customers')
 export default class Customer implements ICustomer {
@@ -20,6 +21,7 @@ export default class Customer implements ICustomer {
   email!: string;
 
   @Column({ type: 'varchar', length: 86 })
+  @Exclude()
   password!: string;
 
   @Column({ type: 'varchar', length: 20, nullable: true })

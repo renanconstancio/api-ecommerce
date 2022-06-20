@@ -5,6 +5,7 @@ import DeleteCustomerService from '@modules/customers/services/DeleteCustomerSer
 import ListCustomerService from '@modules/customers/services/ListCustomerService';
 import ShowCustomerService from '@modules/customers/services/ShowCustomerService';
 import UpdateCustomerService from '@modules/customers/services/UpdateCustomerService';
+import { classToClass } from 'class-transformer';
 
 export default class CustomersController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -14,7 +15,7 @@ export default class CustomersController {
     const listCustomers = container.resolve(ListCustomerService);
     const customers = await listCustomers.execute({ page, limit });
 
-    return response.json(customers);
+    return response.json(classToClass(customers));
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
@@ -24,7 +25,7 @@ export default class CustomersController {
 
     const customer = await showCustomer.execute({ id });
 
-    return response.json(customer);
+    return response.json(classToClass(customer));
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
@@ -41,7 +42,7 @@ export default class CustomersController {
       phone,
     });
 
-    return response.json(customer);
+    return response.json(classToClass(customer));
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -56,7 +57,7 @@ export default class CustomersController {
       email,
     });
 
-    return response.json(customer);
+    return response.json(classToClass(customer));
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {

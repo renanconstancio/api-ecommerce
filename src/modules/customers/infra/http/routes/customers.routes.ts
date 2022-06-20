@@ -32,15 +32,24 @@ customersRouter
   )
   .put(
     '/:id',
-    celebrate({
-      [Segments.BODY]: {
-        name: Joi.string().required(),
-        email: Joi.string().email().required(),
+    celebrate(
+      {
+        [Segments.BODY]: {
+          name: Joi.string().required(),
+          email: Joi.string().email().required(),
+          phone: Joi.string().required(),
+          cpf: Joi.string().allow('').optional(),
+          cnpj: Joi.string().allow('').optional(),
+        },
+        [Segments.PARAMS]: {
+          id: Joi.string().uuid().required(),
+        },
       },
-      [Segments.PARAMS]: {
-        id: Joi.string().uuid().required(),
+      {
+        abortEarly: false,
+        messages: messages,
       },
-    }),
+    ),
     customersController.update,
   )
   .delete(
