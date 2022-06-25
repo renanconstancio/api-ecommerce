@@ -13,7 +13,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(rateLimiter);
+// app.use(rateLimiter);
 app.use(errors());
 app.use('/files', express.static(uploadConfig.directory));
 app.use('/api', routes);
