@@ -61,7 +61,6 @@ customersRouter
     isAuthenticated,
     customersController.delete,
   )
-  .get('/', customersController.index)
   .get(
     '/:id',
     celebrate({
@@ -70,6 +69,7 @@ customersRouter
       },
     }),
     customersController.show,
-  );
+  )
+  .get('/', customersController.index);
 
 export default customersRouter;
