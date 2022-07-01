@@ -2,34 +2,34 @@ import 'reflect-metadata';
 import DeleteCategoryService from './DeleteCategoryService';
 import FakeCategoriesRepository from '@modules/categories/domain/repositories/fakes/FakeCategoriesRepository';
 import CreateCategoryService from './CreateCategoryService';
+import AppError from '@shared/errors/AppError';
 // import AppError from '@shared/errors/AppError';
 
 let fakeCategoriesRepository: FakeCategoriesRepository;
-let createCategory: CreateCategoryService;
+let createDeleteCategory: CreateCategoryService;
 let deleteCategory: DeleteCategoryService;
 
 describe('DeleteCategories', () => {
   beforeEach(() => {
     fakeCategoriesRepository = new FakeCategoriesRepository();
-    createCategory = new CreateCategoryService(fakeCategoriesRepository);
+    createDeleteCategory = new CreateCategoryService(fakeCategoriesRepository);
     deleteCategory = new DeleteCategoryService(fakeCategoriesRepository);
   });
 
   it('should be able to delete a category', async () => {
-    const category = await createCategory.execute({
+    const category = await createDeleteCategory.execute({
       name: 'Category A',
       description: '',
       keywords: '',
       position: 1,
-      category_id: '',
     });
+
+    console.log(category.id);
 
     expect(
       await deleteCategory.execute({
         id: category.id,
       }),
-    ).toHaveReturned();
-
-    // expect(deleteCategory).rejects.toBeInstanceOf(AppError);
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

@@ -8,7 +8,7 @@ import { ICreateStore } from '../domain/models/ICreateStore';
 export default class CreateStoreService {
   constructor(
     @inject('StoresRepository')
-    private StoresRepository: IStoresRepository,
+    private storesRepository: IStoresRepository,
   ) {}
 
   public async execute({
@@ -26,7 +26,7 @@ export default class CreateStoreService {
     zip_code,
     visible,
   }: ICreateStore): Promise<IStore> {
-    const storeExists = await this.StoresRepository.findByFantasyName(
+    const storeExists = await this.storesRepository.findByFantasyName(
       fantasy_name,
     );
 
@@ -34,7 +34,7 @@ export default class CreateStoreService {
       throw new AppError('There is already one stores with this fantasy name');
     }
 
-    const store = await this.StoresRepository.create({
+    const store = await this.storesRepository.create({
       title,
       fantasy_name,
       email,

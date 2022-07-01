@@ -1,7 +1,5 @@
 import { container, delay } from 'tsyringe';
 
-import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
-import CustomersRepository from '@modules/customers/infra/typeorm/repositories/CustomersRepository';
 // import OrdersRepository from '@modules/orders/infra/typeorm/repositories/OrdersRepository';
 // import { IOrdersRepository } from '@modules/orders/domain/repositories/IOrdersRepository';
 // import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
@@ -13,8 +11,14 @@ import CustomersRepository from '@modules/customers/infra/typeorm/repositories/C
 
 import '@modules/customers/providers';
 
+import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
+import CustomersRepository from '@modules/customers/infra/typeorm/repositories/CustomersRepository';
+
 import CategoriesRepository from '@modules/categories/infra/typeorm/repositories/CategoriesRepository';
 import { ICategoriesRepository } from '@modules/categories/domain/repositories/ICategoriesRepository';
+
+import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
+import StoresRepository from '@modules/stores/infra/typeorm/repositories/StoresRepository';
 
 container.registerSingleton<ICategoriesRepository>(
   'CategoriesRepository',
@@ -24,6 +28,11 @@ container.registerSingleton<ICategoriesRepository>(
 container.registerSingleton<ICustomersRepository>(
   'CustomersRepository',
   delay(() => CustomersRepository),
+);
+
+container.registerSingleton<IStoresRepository>(
+  'StoresRepository',
+  delay(() => StoresRepository),
 );
 
 // container.registerSingleton<IProductsRepository>(

@@ -1,28 +1,31 @@
 import 'reflect-metadata';
-import FakeUsersRepository from '@modules/users/domain/repositories/fakes/FakeUsersRepository';
 import AppError from '@shared/errors/AppError';
-import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
+import FakeCustomersRepository from '../domain/repositories/fakes/FakeCustomersRepository';
 import CreateSessionsService from './CreateSessionsService';
+import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 
-let fakeUsersRepository: FakeUsersRepository;
+let fakeCutomersRepository: FakeCustomersRepository;
 let createSession: CreateSessionsService;
 let fakeHashProvider: FakeHashProvider;
 
 describe('CreateSession', () => {
   beforeEach(() => {
-    fakeUsersRepository = new FakeUsersRepository();
+    fakeCutomersRepository = new FakeCustomersRepository();
     fakeHashProvider = new FakeHashProvider();
     createSession = new CreateSessionsService(
-      fakeUsersRepository,
+      fakeCutomersRepository,
       fakeHashProvider,
     );
   });
 
   it('should be able to authenticate', async () => {
-    const user = await fakeUsersRepository.create({
+    const customer = await fakeCutomersRepository.create({
       name: 'Jorge Aluizio',
       email: 'teste@teste.com',
       password: '123456',
+      phone: '',
+      cnpj: '',
+      cpf: '',
     });
 
     const response = await createSession.execute({
@@ -31,10 +34,10 @@ describe('CreateSession', () => {
     });
 
     expect(response).toHaveProperty('token');
-    expect(response.user).toEqual(user);
+    expect(response.customer).toEqual(customer);
   });
 
-  it('should not be able to authenticate with non existent user', async () => {
+  it('should not be able to authenticate with non existent customer', async () => {
     expect(
       createSession.execute({
         email: 'teste@teste.com',
@@ -44,16 +47,19 @@ describe('CreateSession', () => {
   });
 
   it('should not be able to authenticate with wrong password', async () => {
-    const user = await fakeUsersRepository.create({
+    await fakeCutomersRepository.create({
       name: 'Jorge Aluizio',
       email: 'teste@teste.com',
       password: '123456',
+      phone: '',
+      cnpj: '',
+      cpf: '',
     });
 
     expect(
       createSession.execute({
         email: 'teste@teste.com',
-        password: '567890',
+        password: '123456',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

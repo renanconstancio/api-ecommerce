@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ICreateCategory } from '@modules/categories/domain/models/ICreateCategory';
 import { ICategoriesRepository } from '@modules/categories/domain/repositories/ICategoriesRepository';
-import { Category } from '@modules/categories/infra/typeorm/entities/Category';
 import { IPaginateCategory } from '../../models/IPaginateCategory';
+import Category from '@modules/categories/infra/typeorm/entities/Category';
 
 export default class FakeCategoriesRepository implements ICategoriesRepository {
   private categories: Category[] = [];
@@ -35,10 +35,7 @@ export default class FakeCategoriesRepository implements ICategoriesRepository {
   }
 
   async remove(data: Category): Promise<void> {
-    // const category = this.categories.find(
-    //   categories => categories.id !== data.id,
-    // );
-
+    this.categories.find(categories => categories.id !== data.id);
     return;
   }
 

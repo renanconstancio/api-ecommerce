@@ -1,18 +1,29 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ICreateCustomer } from '@modules/customers/domain/models/ICreateCustomer';
 import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
-import Customer from '@modules/customers/infra/typeorm/entities/Customer';
 import { ICustomerPaginate } from '../../models/ICustomerPaginate';
+import Customer from '@modules/customers/infra/typeorm/entities/Customer';
 
 class FakeCustomersRepository implements ICustomersRepository {
   private customers: Customer[] = [];
 
-  async create({ name, email }: ICreateCustomer): Promise<Customer> {
+  async create({
+    name,
+    email,
+    cnpj,
+    cpf,
+    phone,
+    password,
+  }: ICreateCustomer): Promise<Customer> {
     const customer = new Customer();
 
     customer.id = uuidv4();
     customer.name = name;
     customer.email = email;
+    customer.cnpj = cnpj;
+    customer.cpf = cpf;
+    customer.phone = phone;
+    customer.password = password;
 
     this.customers.push(customer);
 
@@ -30,7 +41,7 @@ class FakeCustomersRepository implements ICustomersRepository {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  async remove(customer: Customer): Promise<void> {}
+  async remove(_customer: Customer): Promise<void> {}
 
   async findAll(): Promise<ICustomerPaginate> {
     return {} as ICustomerPaginate;
@@ -38,13 +49,9 @@ class FakeCustomersRepository implements ICustomersRepository {
 
   async findAllPaginate(): Promise<ICustomerPaginate> {
     const customersPaginate = {
-      from: 1,
-      to: 1,
-      per_page: 1,
       total: 1,
+      per_page: 1,
       current_page: 1,
-      prev_page: null,
-      next_page: null,
       data: this.customers,
     };
 
