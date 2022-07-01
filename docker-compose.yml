@@ -1,23 +1,22 @@
 version: '3'
 
 services:
-  app:
+  api_ecommerce:
     build: .
     entrypoint: .docker/entrypoint.sh
-    container_name: apivendas-app
+    container_name: api_ecommerce
     ports:
-      - '3333:3333'
+      - '8000:8000'
     volumes:
-      - .:/home/node/app
-    depends_on:
-      - db
-      - redis
+      - ./:/home/node/app
+    # depends_on:
+    #   - redis
 
-  redis:
-    image: 'bitnami/redis:latest'
-    container_name: apivendas-redis
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+  # redis:
+  #   container_name: redis
+  #   image: 'bitnami/redis:latest'
+  #   environment:
+  #     - ALLOW_EMPTY_PASSWORD=yes
 
   # db:
   #   build: .docker/postgres
