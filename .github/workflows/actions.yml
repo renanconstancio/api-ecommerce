@@ -4,11 +4,13 @@ name: Tests and coverage
 on: [push]
 
 jobs:
-  run_test:
+  test:
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
     - name: Run Jest
       uses: stefanoeb/jest-action@1.0.3
+      with:
+        # this is just an example, this could be any command that will trigger jest
+        test-command: "yarn test"
