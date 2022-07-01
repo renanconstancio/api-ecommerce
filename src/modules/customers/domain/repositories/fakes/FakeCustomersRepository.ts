@@ -44,7 +44,12 @@ class FakeCustomersRepository implements ICustomersRepository {
   async remove(_customer: Customer): Promise<void> {}
 
   async findAll(): Promise<ICustomerPaginate> {
-    return {} as ICustomerPaginate;
+    return {
+      total: 1,
+      per_page: 1,
+      current_page: 1,
+      data: this.customers,
+    };
   }
 
   async findAllPaginate(): Promise<ICustomerPaginate> {
