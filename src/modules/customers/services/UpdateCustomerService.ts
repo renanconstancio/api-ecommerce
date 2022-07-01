@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 import { IUpdateCustomer } from '../domain/models/IUpdateCustomer';
-import Customer from '../infra/typeorm/entities/Customer';
 import { ICustomersRepository } from '../domain/repositories/ICustomersRepository';
+import { ICustomer } from '../domain/models/ICustomer';
 
 @injectable()
 export default class UpdateCustomerService {
@@ -15,7 +15,7 @@ export default class UpdateCustomerService {
     id,
     name,
     email,
-  }: IUpdateCustomer): Promise<Customer> {
+  }: IUpdateCustomer): Promise<ICustomer> {
     const customer = await this.customersRepository.findById(id);
 
     if (!customer) {
