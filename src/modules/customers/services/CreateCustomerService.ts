@@ -6,7 +6,7 @@ import { ICustomersRepository } from '../domain/repositories/ICustomersRepositor
 import { IHashProvider } from '../providers/HashProvider/models/IHashPovider';
 
 @injectable()
-class CreateCustomerService {
+export default class CreateCustomerService {
   constructor(
     @inject('CustomersRepository')
     private customersRepository: ICustomersRepository,
@@ -42,5 +42,3 @@ class CreateCustomerService {
     return customer;
   }
 }
-
-export default CreateCustomerService;

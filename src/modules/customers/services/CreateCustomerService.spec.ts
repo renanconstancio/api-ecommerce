@@ -8,7 +8,7 @@ let fakeCustomersRepository: FakeCustomersRepository;
 let createCustomer: CreateCustomerService;
 let fakeHashProvider: FakeHashProvider;
 
-describe('CreateCustomer', () => {
+describe('CreateCustomerService', () => {
   beforeEach(() => {
     fakeCustomersRepository = new FakeCustomersRepository();
     fakeHashProvider = new FakeHashProvider();

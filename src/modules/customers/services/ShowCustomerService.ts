@@ -5,7 +5,7 @@ import { IShowCustomer } from '../domain/models/IShowCustomer';
 import { ICustomersRepository } from '../domain/repositories/ICustomersRepository';
 
 @injectable()
-class ShowCustomerService {
+export default class ShowCustomerService {
   constructor(
     @inject('CustomersRepository')
     private customersRepository: ICustomersRepository,
@@ -21,5 +21,3 @@ class ShowCustomerService {
     return customer;
   }
 }
-
-export default ShowCustomerService;

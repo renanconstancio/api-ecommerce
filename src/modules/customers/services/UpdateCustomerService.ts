@@ -5,7 +5,7 @@ import Customer from '../infra/typeorm/entities/Customer';
 import { ICustomersRepository } from '../domain/repositories/ICustomersRepository';
 
 @injectable()
-class UpdateCustomerService {
+export default class UpdateCustomerService {
   constructor(
     @inject('CustomersRepository')
     private customersRepository: ICustomersRepository,
@@ -36,5 +36,3 @@ class UpdateCustomerService {
     return customer;
   }
 }
-
-export default UpdateCustomerService;

@@ -8,7 +8,7 @@ interface SearchParams {
 }
 
 @injectable()
-class ListCustomerService {
+export default class ListCustomerService {
   constructor(
     @inject('CustomersRepository')
     private customersRepository: ICustomersRepository,
@@ -29,5 +29,3 @@ class ListCustomerService {
     return customers;
   }
 }
-
-export default ListCustomerService;

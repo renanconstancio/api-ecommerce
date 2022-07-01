@@ -8,7 +8,7 @@ let fakeCutomersRepository: FakeCustomersRepository;
 let createSession: CreateSessionsService;
 let fakeHashProvider: FakeHashProvider;
 
-describe('CreateSession', () => {
+describe('CreateSessionsService', () => {
   beforeEach(() => {
     fakeCutomersRepository = new FakeCustomersRepository();
     fakeHashProvider = new FakeHashProvider();
@@ -19,7 +19,7 @@ describe('CreateSession', () => {
   });
 
   it('should be able to authenticate', async () => {
-    const customer = await fakeCutomersRepository.create({
+    const customer = fakeCutomersRepository.create({
       name: 'Jorge Aluizio',
       email: 'teste@teste.com',
       password: '123456',
@@ -37,29 +37,11 @@ describe('CreateSession', () => {
     expect(response.customer).toEqual(customer);
   });
 
-  it('should not be able to authenticate with non existent customer', async () => {
+  it('should not be able to authenticate with non existent customer or wrong password', async () => {
     expect(
       createSession.execute({
         email: 'teste@teste.com',
-        password: '123456',
-      }),
-    ).rejects.toBeInstanceOf(AppError);
-  });
-
-  it('should not be able to authenticate with wrong password', async () => {
-    await fakeCutomersRepository.create({
-      name: 'Jorge Aluizio',
-      email: 'teste@teste.com',
-      password: '123456',
-      phone: '',
-      cnpj: '',
-      cpf: '',
-    });
-
-    expect(
-      createSession.execute({
-        email: 'teste@teste.com',
-        password: '123456',
+        password: '1234567',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

@@ -31,6 +31,8 @@ export default class CreateSessionsService {
       customer.password,
     );
 
+    console.log('AQUI %O OUTRO %O', customer.password, password);
+
     if (!passwordConfirmed) {
       throw new AppError('Incorrect email/password combination.', 401);
     }

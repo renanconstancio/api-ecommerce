@@ -4,7 +4,7 @@ import { IDeleteCustomer } from '../domain/models/IDeleteCustomer';
 import { ICustomersRepository } from '../domain/repositories/ICustomersRepository';
 
 @injectable()
-class DeleteCustomerService {
+export default class DeleteCustomerService {
   constructor(
     @inject('CustomersRepository')
     private customersRepository: ICustomersRepository,
@@ -20,5 +20,3 @@ class DeleteCustomerService {
     await this.customersRepository.remove(customer);
   }
 }
-
-export default DeleteCustomerService;
