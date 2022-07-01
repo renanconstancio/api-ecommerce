@@ -19,8 +19,8 @@ describe('CreateSessionsService', () => {
   });
 
   it('should be able to authenticate', async () => {
-    const customer = fakeCutomersRepository.create({
-      name: 'Jorge Aluizio',
+    const customer = await fakeCutomersRepository.create({
+      name: 'Renan Testes',
       email: 'teste@teste.com',
       password: '123456',
       phone: '',
@@ -33,8 +33,9 @@ describe('CreateSessionsService', () => {
       password: '123456',
     });
 
+    expect(customer).toEqual(response.customer);
+
     expect(response).toHaveProperty('token');
-    expect(response.customer).toEqual(customer);
   });
 
   it('should not be able to authenticate with non existent customer or wrong password', async () => {

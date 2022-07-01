@@ -27,8 +27,17 @@ describe('DeleteCategories', () => {
       id: category.id,
     });
 
-    expect(categoryDelete).toBeNull();
+    expect(categoryDelete).toBeUndefined();
     // expect(categoryDelete).rejects.toBeInstanceOf(AppError);
+    //.toBeNull();
+  });
+
+  it('should not be able to delete a category', async () => {
+    expect(
+      deleteCategory.execute({
+        id: '',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
     //.toBeNull();
   });
 });
