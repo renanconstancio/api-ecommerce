@@ -3,7 +3,6 @@ import DeleteCategoryService from './DeleteCategoryService';
 import FakeCategoriesRepository from '@modules/categories/domain/repositories/fakes/FakeCategoriesRepository';
 import CreateCategoryService from './CreateCategoryService';
 import AppError from '@shared/errors/AppError';
-// import AppError from '@shared/errors/AppError';
 
 let fakeCategoriesRepository: FakeCategoriesRepository;
 let createDeleteCategory: CreateCategoryService;
@@ -24,12 +23,12 @@ describe('DeleteCategories', () => {
       position: 1,
     });
 
-    console.log(category.id);
+    const categoryDelete = await deleteCategory.execute({
+      id: category.id,
+    });
 
-    expect(
-      await deleteCategory.execute({
-        id: category.id,
-      }),
-    ).rejects.toBeInstanceOf(AppError);
+    expect(categoryDelete).toBeNull();
+    // expect(categoryDelete).rejects.toBeInstanceOf(AppError);
+    //.toBeNull();
   });
 });
