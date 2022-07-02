@@ -15,6 +15,9 @@ export default class UpdateCustomerService {
     id,
     name,
     email,
+    cnpj,
+    cpf,
+    phone,
   }: IUpdateCustomer): Promise<ICustomer> {
     const customer = await this.customersRepository.findById(id);
 
@@ -30,6 +33,9 @@ export default class UpdateCustomerService {
 
     customer.name = name;
     customer.email = email;
+    customer.cnpj = cnpj;
+    customer.cpf = cpf;
+    customer.phone = phone;
 
     await this.customersRepository.save(customer);
 
