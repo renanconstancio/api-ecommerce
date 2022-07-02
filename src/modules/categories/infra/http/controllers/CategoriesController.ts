@@ -3,7 +3,7 @@ import { container } from 'tsyringe';
 import CreateCustomerService from '@modules/categories/services/CreateCategoryService';
 import DeleteCategoryService from '@modules/categories/services/DeleteCategoryService';
 import UpdateCategoryService from '@modules/categories/services/UpdateCategoryService';
-import ListCategoryService from '@modules/categories/services/ListCategoryServce';
+import ListCategoryService from '@modules/categories/services/ListCategoryService';
 import ShowCategoryService from '@modules/categories/services/ShowCategoryService';
 
 export class CategoriesController {
