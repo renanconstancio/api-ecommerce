@@ -1,0 +1,30 @@
+* {
+  margin    : 0;
+  padding   : 0;
+  box-sizing: border-box;
+}
+
+#root {
+  height          : 100vh;
+  background-color: #f1f1f1;
+  display         : flex;
+}
+
+.app {
+  height: 100%;
+
+  >nav {
+    position        : absolute;
+    overflow-y      : auto;
+    height          : 100%;
+    background-color: aqua;
+    width           : 205px;
+    padding         : 16px;
+  }
+
+  >aside {
+    padding    : 16px;
+    width      : calc(100% - 205px);
+    margin-left: 205px;
+  }
+}
