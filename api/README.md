@@ -1,5 +1,5 @@
 
-## API Restful com Node.js, Express, Typescript, etc
+## API Restful
 
 ### Rodando a aplicação no seu PC
 
