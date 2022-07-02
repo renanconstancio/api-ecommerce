@@ -1,23 +1,23 @@
 import AppError from '@shared/errors/AppError';
 import 'reflect-metadata';
-import FakeCategoriesRepository from '../domain/repositories/fakes/FakeCategoriesRepository';
-import CreateCategoryService from './CreateCategoryService';
-import ShowCategoryService from './ShowCategoryService';
+import FakeStoresRepository from '../domain/repositories/fakes/FakeStoresRepository';
+import CreateStoreService from './CreateStoreService';
+import ShowStoreService from './ShowStoreService';
 
-let fakeCustomersRepository: FakeCategoriesRepository;
-let showCategoryService: ShowCategoryService;
-let createCategory: CreateCategoryService;
+let fakeCustomersRepository: FakeStoresRepository;
+let showStoreService: ShowStoreService;
+let createStore: CreateStoreService;
 
-describe('ShowCategoryService', () => {
+describe('ShowStoreService', () => {
   beforeEach(() => {
-    fakeCustomersRepository = new FakeCategoriesRepository();
-    showCategoryService = new ShowCategoryService(fakeCustomersRepository);
-    createCategory = new CreateCategoryService(fakeCustomersRepository);
+    fakeCustomersRepository = new FakeStoresRepository();
+    showStoreService = new ShowStoreService(fakeCustomersRepository);
+    createStore = new CreateStoreService(fakeCustomersRepository);
   });
 
   it('must be able to list the categories', async () => {
-    const category = await createCategory.execute({
-      name: 'Category A',
+    const category = await createStore.execute({
+      name: 'Store A',
       description: '',
       keywords: '',
       position: 1,
@@ -28,7 +28,7 @@ describe('ShowCategoryService', () => {
 
   it("shouldn't be able to list categories if it doesn't exist", async () => {
     expect(
-      showCategoryService.execute({
+      showStoreService.execute({
         id: '',
       }),
     ).rejects.toBeInstanceOf(AppError);

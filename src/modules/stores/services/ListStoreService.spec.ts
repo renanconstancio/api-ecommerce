@@ -8,7 +8,7 @@ let fakeStoresRepository: FakeStoresRepository;
 let listStoresService: ListStoreService;
 let createStore: CreateStoreService;
 
-describe('ListCategoryService', () => {
+describe('ListStoreService', () => {
   beforeEach(() => {
     fakeStoresRepository = new FakeStoresRepository();
     listStoresService = new ListStoreService(fakeStoresRepository);
