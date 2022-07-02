@@ -1,25 +1,34 @@
 import AppError from '@shared/errors/AppError';
 import 'reflect-metadata';
-import FakeCategoriesRepository from '../domain/repositories/fakes/FakeCategoriesRepository';
-import UpdateCategoryService from './UpdateCategoryService';
+import FakeStoresRepository from '../domain/repositories/fakes/FakeStoresRepository';
+import UpdateStoreService from './UpdateStoreService';
 
-let fakeCategoriesRepository: FakeCategoriesRepository;
-let updateCategoryService: UpdateCategoryService;
+let fakeStoresRepository: FakeStoresRepository;
+let updateStoreService: UpdateStoreService;
 
-describe('UpdateCategoryService', () => {
+describe('UpdateStoreService', () => {
   beforeEach(() => {
-    fakeCategoriesRepository = new FakeCategoriesRepository();
-    updateCategoryService = new UpdateCategoryService(fakeCategoriesRepository);
+    fakeStoresRepository = new FakeStoresRepository();
+    updateStoreService = new UpdateStoreService(fakeStoresRepository);
   });
 
   it('must be able to list the customers', async () => {
     expect(
-      updateCategoryService.execute({
+      updateStoreService.execute({
+        title: 'title',
+        fantasy_name: 'fantasy_name',
+        email: 'email',
+        phone: 'phone',
+        opening_hours: 'opening_hours',
+        address: 'address',
+        number: 'number',
+        district: 'district',
+        complement: 'complement',
+        city: 'city',
+        state: 'state',
+        zip_code: 'zip_code',
+        visible: false,
         id: '',
-        name: '',
-        description: '',
-        keywords: '',
-        position: 0,
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

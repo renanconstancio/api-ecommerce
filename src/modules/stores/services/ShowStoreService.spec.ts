@@ -15,18 +15,26 @@ describe('ShowStoreService', () => {
     createStore = new CreateStoreService(fakeCustomersRepository);
   });
 
-  it('must be able to list the categories', async () => {
+  it('must be able to list the stores', async () => {
     const category = await createStore.execute({
-      name: 'Store A',
-      description: '',
-      keywords: '',
-      position: 1,
-      category_id: '',
+      title: 'title',
+      fantasy_name: 'fantasy_name',
+      email: 'email',
+      phone: 'phone',
+      opening_hours: 'opening_hours',
+      address: 'address',
+      number: 'number',
+      district: 'district',
+      complement: 'complement',
+      city: 'city',
+      state: 'state',
+      zip_code: 'zip_code',
+      visible: false,
     });
     expect(category).toHaveProperty('id');
   });
 
-  it("shouldn't be able to list categories if it doesn't exist", async () => {
+  it("shouldn't be able to list stores if it doesn't exist", async () => {
     expect(
       showStoreService.execute({
         id: '',
