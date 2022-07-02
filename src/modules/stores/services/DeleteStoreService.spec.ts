@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import AppError from '@shared/errors/AppError';
-import FakeStoresRepository from '../infra/typeorm/repositories/fakes/FakeStoresRepository';
+import FakeStoresRepository from '../domain/repositories/fakes/FakeStoresRepository';
 import CreateStoreService from './CreateStoreService';
 import DeleteStoreService from './DeleteStoreService';
 

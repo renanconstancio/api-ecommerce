@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import AppError from '@shared/errors/AppError';
 import CreateStoreService from './CreateStoreService';
-import FakeStoresRepository from '../infra/typeorm/repositories/fakes/FakeStoresRepository';
+import FakeStoresRepository from '../domain/repositories/fakes/FakeStoresRepository';
 
 let fakeStoresRepository: FakeStoresRepository;
 let createStore: CreateStoreService;
