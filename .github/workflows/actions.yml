@@ -14,14 +14,15 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x, 14.x, 16.x]
+    
+    defaults:
+      run:
+        working-directory: ./api/
 
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
-        defaults:
-          run:
-            working-directory: ./api
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn
