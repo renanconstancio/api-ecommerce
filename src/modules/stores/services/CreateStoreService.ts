@@ -11,7 +11,7 @@ export default class CreateStoreService {
     private storesRepository: IStoresRepository,
   ) {}
 
-  public async execute({
+  async execute({
     title,
     fantasy_name,
     email,

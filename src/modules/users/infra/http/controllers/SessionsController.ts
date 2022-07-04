@@ -4,7 +4,7 @@ import CreateSessionsService from '@modules/users/services/CreateSessionsService
 import { classToClass } from 'class-transformer';
 
 export default class SessionsController {
-  public async create(request: Request, response: Response): Promise<Response> {
+  async create(request: Request, response: Response): Promise<Response> {
     const { email, password } = request.body;
 
     const createSession = container.resolve(CreateSessionsService);

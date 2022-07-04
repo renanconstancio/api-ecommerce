@@ -18,7 +18,7 @@ class OrdersRepository implements IOrdersRepository {
     this.ormRepository = dataSource.getRepository(Order);
   }
 
-  public async findById(id: string): Promise<Order | null> {
+  async findById(id: string): Promise<Order | null> {
     const order = this.ormRepository.findOne({
       where: { id },
       relations: ['order_products', 'customer'],
@@ -27,7 +27,7 @@ class OrdersRepository implements IOrdersRepository {
     return order;
   }
 
-  public async findAll({
+  async findAll({
     page,
     skip,
     take,
@@ -48,7 +48,7 @@ class OrdersRepository implements IOrdersRepository {
     return result;
   }
 
-  public async create({ customer, products }: ICreateOrder): Promise<Order> {
+  async create({ customer, products }: ICreateOrder): Promise<Order> {
     const order = this.ormRepository.create({
       customer,
       order_products: products,

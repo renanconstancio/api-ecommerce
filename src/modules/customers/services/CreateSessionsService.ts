@@ -16,7 +16,7 @@ export default class CreateSessionsService {
     private hashProvider: IHashProvider,
   ) {}
 
-  public async execute({
+  async execute({
     email,
     password,
   }: ICreateSession): Promise<ICustomerAuthenticated> {

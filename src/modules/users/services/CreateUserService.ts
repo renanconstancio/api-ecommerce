@@ -14,7 +14,7 @@ class CreateUserService {
     private hashProvider: IHashProvider,
   ) {}
 
-  public async execute({ name, email, password }: ICreateUser): Promise<IUser> {
+  async execute({ name, email, password }: ICreateUser): Promise<IUser> {
     const emailExists = await this.usersRepository.findByEmail(email);
 
     if (emailExists) {

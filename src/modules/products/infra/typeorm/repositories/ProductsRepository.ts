@@ -13,40 +13,48 @@ type SearchParams = {
   take: number;
 };
 
-class ProductsRepository implements IProductsRepository {
+export default class ProductsRepository implements IProductsRepository {
   private ormRepository: Repository<Product>;
 
   constructor() {
     this.ormRepository = dataSource.getRepository(Product);
   }
 
-  public async create({
+  async create({
+    sku,
     name,
     price,
     quantity,
+    description,
   }: ICreateProduct): Promise<Product> {
-    const product = this.ormRepository.create({ name, price, quantity });
+    const product = this.ormRepository.create({
+      sku,
+      name,
+      price,
+      quantity,
+      description,
+    });
 
     await this.ormRepository.save(product);
 
     return product;
   }
 
-  public async save(product: Product): Promise<Product> {
+  async save(product: Product): Promise<Product> {
     await this.ormRepository.save(product);
 
     return product;
   }
 
-  public async remove(product: Product): Promise<void> {
+  async remove(product: Product): Promise<void> {
     await this.ormRepository.remove(product);
   }
 
-  public async updateStock(products: IUpdateStockProduct[]): Promise<void> {
+  async updateStock(products: IUpdateStockProduct[]): Promise<void> {
     await this.ormRepository.save(products);
   }
 
-  public async findByName(name: string): Promise<Product | null> {
+  async findByName(name: string): Promise<Product | null> {
     const product = this.ormRepository.findOneBy({
       name,
     });
@@ -54,17 +62,13 @@ class ProductsRepository implements IProductsRepository {
     return product;
   }
 
-  public async findById(id: string): Promise<Product | null> {
+  async findById(id: string): Promise<Product | null> {
     const product = this.ormRepository.findOneBy({ id });
 
     return product;
   }
 
-  public async findAll({
-    page,
-    skip,
-    take,
-  }: SearchParams): Promise<IProductPaginate> {
+  async findAll({ page, skip, take }: SearchParams): Promise<IProductPaginate> {
     const [products, count] = await this.ormRepository
       .createQueryBuilder()
       .skip(skip)
@@ -81,7 +85,7 @@ class ProductsRepository implements IProductsRepository {
     return result;
   }
 
-  public async findAllByIds(products: IFindProducts[]): Promise<Product[]> {
+  async findAllByIds(products: IFindProducts[]): Promise<Product[]> {
     const productIds = products.map(product => product.id);
 
     const existentProducts = await this.ormRepository.find({
@@ -93,5 +97,3 @@ class ProductsRepository implements IProductsRepository {
     return existentProducts;
   }
 }
-
-export default ProductsRepository;

@@ -7,7 +7,7 @@ import { IPaginateUser } from '../../models/IPaginateUser';
 class FakeUsersRepository implements IUsersRepository {
   private users: User[] = [];
 
-  public async create({ name, email, password }: ICreateUser): Promise<User> {
+  async create({ name, email, password }: ICreateUser): Promise<User> {
     const user = new User();
 
     user.id = uuidv4();
@@ -20,7 +20,7 @@ class FakeUsersRepository implements IUsersRepository {
     return user;
   }
 
-  public async save(user: User): Promise<User> {
+  async save(user: User): Promise<User> {
     const findIndex = this.users.findIndex(findUser => findUser.id === user.id);
 
     this.users[findIndex] = user;
@@ -29,13 +29,13 @@ class FakeUsersRepository implements IUsersRepository {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  public async remove(user: User): Promise<void> {}
+  async remove(user: User): Promise<void> {}
 
-  public async findAll(): Promise<IPaginateUser> {
+  async findAll(): Promise<IPaginateUser> {
     return {} as IPaginateUser;
   }
 
-  public async findAllPaginate(): Promise<IPaginateUser> {
+  async findAllPaginate(): Promise<IPaginateUser> {
     const usersPaginate = {
       from: 1,
       to: 1,
@@ -50,17 +50,17 @@ class FakeUsersRepository implements IUsersRepository {
     return usersPaginate;
   }
 
-  public async findByName(name: string): Promise<User | null> {
+  async findByName(name: string): Promise<User | null> {
     const user = this.users.find(user => user.name === name);
     return user as User;
   }
 
-  public async findById(id: string): Promise<User | null> {
+  async findById(id: string): Promise<User | null> {
     const user = this.users.find(user => user.id === id);
     return user as User;
   }
 
-  public async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string): Promise<User | null> {
     const user = this.users.find(user => user.email === email);
     return user as User;
   }

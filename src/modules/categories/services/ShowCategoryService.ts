@@ -11,7 +11,7 @@ export default class ShowCategoryService {
     private categoriesRepository: ICategoriesRepository,
   ) {}
 
-  public async execute({ id }: IShowCategory): Promise<ICategory> {
+  async execute({ id }: IShowCategory): Promise<ICategory> {
     const category = await this.categoriesRepository.findById(id);
 
     if (!category) {

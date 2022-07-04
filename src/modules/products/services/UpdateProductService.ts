@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import redisCache from '@shared/cache/RedisCache';
+// import redisCache from '@shared/cache/RedisCache';
 import AppError from '@shared/errors/AppError';
 import { IUpdateProduct } from '../domain/models/IUpdateProduct';
 import { IProductsRepository } from '../domain/repositories/IProductsRepository';
@@ -12,11 +12,13 @@ class UpdateProductService {
     private productsRepository: IProductsRepository,
   ) {}
 
-  public async execute({
+  async execute({
     id,
     name,
     price,
     quantity,
+    description,
+    slug,
   }: IUpdateProduct): Promise<IProduct> {
     const product = await this.productsRepository.findById(id);
 
@@ -30,11 +32,14 @@ class UpdateProductService {
       throw new AppError('There is already one product with this name');
     }
 
-    await redisCache.invalidate('api-vendas-PRODUCT_LIST');
+    // await redisCache.invalidate('api-vendas-PRODUCT_LIST');
 
     product.name = name;
     product.price = price;
     product.quantity = quantity;
+    product.description = description;
+    product.slug = slug;
+    product.name = name;
 
     await this.productsRepository.save(product);
 

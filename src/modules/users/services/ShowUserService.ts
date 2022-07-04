@@ -11,7 +11,7 @@ class ShowUserService {
     private usersRepository: IUsersRepository,
   ) {}
 
-  public async execute({ id }: IShowUser): Promise<User> {
+  async execute({ id }: IShowUser): Promise<User> {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {

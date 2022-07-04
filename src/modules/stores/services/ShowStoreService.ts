@@ -11,7 +11,7 @@ export default class ShowStoreService {
     private storesRepository: IStoresRepository,
   ) {}
 
-  public async execute({ id }: IShowStore): Promise<IStore> {
+  async execute({ id }: IShowStore): Promise<IStore> {
     const store = await this.storesRepository.findById(id);
 
     if (!store) {

@@ -12,7 +12,7 @@ class CreateProductService {
     private productsRepository: IProductsRepository,
   ) {}
 
-  public async execute({
+  async execute({
     name,
     price,
     quantity,

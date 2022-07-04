@@ -14,7 +14,7 @@ class ListOrderService {
     private ordersRepository: IOrdersRepository,
   ) {}
 
-  public async execute({ page, limit }: SearchParams): Promise<IOrderPaginate> {
+  async execute({ page, limit }: SearchParams): Promise<IOrderPaginate> {
     const take = limit;
     const skip = (Number(page) - 1) * take;
     const orders = await this.ordersRepository.findAll({

@@ -10,7 +10,7 @@ export default class DeleteCategoryService {
     private categoriesRepository: ICategoriesRepository,
   ) {}
 
-  public async execute({ id }: IDeleteCategory): Promise<void> {
+  async execute({ id }: IDeleteCategory): Promise<void> {
     const category = await this.categoriesRepository.findById(id);
 
     if (!category) {

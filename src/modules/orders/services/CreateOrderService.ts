@@ -19,7 +19,7 @@ class CreateOrderService {
     private productsRepository: IProductsRepository,
   ) {}
 
-  public async execute({
+  async execute({
     customer_id,
     products,
   }: IRequestCreateOrder): Promise<IOrder> {

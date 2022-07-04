@@ -14,7 +14,7 @@ export default class ListStoreService {
     private storesRepository: IStoresRepository,
   ) {}
 
-  public async execute({ page, limit }: SearchParams): Promise<IStorePaginate> {
+  async execute({ page, limit }: SearchParams): Promise<IStorePaginate> {
     const take = limit;
     const skip = (Number(page) - 1) * take;
     const stores = await this.storesRepository.findAll({

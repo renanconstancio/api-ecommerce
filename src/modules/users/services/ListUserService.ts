@@ -14,7 +14,7 @@ class ListUserService {
     private usersRepository: IUsersRepository,
   ) {}
 
-  public async execute({ page, limit }: SearchParams): Promise<IPaginateUser> {
+  async execute({ page, limit }: SearchParams): Promise<IPaginateUser> {
     const take = limit;
     const skip = (Number(page) - 1) * take;
     const users = await this.usersRepository.findAll({

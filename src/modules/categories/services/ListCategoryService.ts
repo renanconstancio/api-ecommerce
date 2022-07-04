@@ -14,7 +14,7 @@ export default class ListCategoryService {
     private categoriesRepository: ICategoriesRepository,
   ) {}
 
-  public async execute({
+  async execute({
     page,
     limit,
   }: SearchParams): Promise<IPaginateCategory> {

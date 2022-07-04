@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, TableColumn } from 'typeorm';
 
 export class AddOrderFieldtoOrders1619889809717 implements MigrationInterface {
-  public async up(queryRunner: QueryRunner): Promise<void> {
+  async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.addColumn(
       'orders',
       new TableColumn({
@@ -13,7 +13,7 @@ export class AddOrderFieldtoOrders1619889809717 implements MigrationInterface {
     );
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {
+  async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropColumn('orders', 'order');
   }
 }

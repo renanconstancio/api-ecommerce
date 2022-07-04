@@ -8,7 +8,7 @@ import UpdateCustomerService from '@modules/customers/services/UpdateCustomerSer
 import { classToClass } from 'class-transformer';
 
 export default class CustomersController {
-  public async index(request: Request, response: Response): Promise<Response> {
+  async index(request: Request, response: Response): Promise<Response> {
     const page = request.query.page ? Number(request.query.page) : 1;
     const limit = request.query.limit ? Number(request.query.limit) : 15;
 
@@ -18,7 +18,7 @@ export default class CustomersController {
     return response.json(classToClass(customers));
   }
 
-  public async show(request: Request, response: Response): Promise<Response> {
+  async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
     const showCustomer = container.resolve(ShowCustomerService);
@@ -28,7 +28,7 @@ export default class CustomersController {
     return response.json(classToClass(customer));
   }
 
-  public async create(request: Request, response: Response): Promise<Response> {
+  async create(request: Request, response: Response): Promise<Response> {
     const { name, email, cnpj, cpf, password, phone } = request.body;
 
     const createCustomer = container.resolve(CreateCustomerService);
@@ -45,7 +45,7 @@ export default class CustomersController {
     return response.json(classToClass(customer));
   }
 
-  public async update(request: Request, response: Response): Promise<Response> {
+  async update(request: Request, response: Response): Promise<Response> {
     const { name, email } = request.body;
     const { id } = request.params;
 
@@ -60,7 +60,7 @@ export default class CustomersController {
     return response.json(classToClass(customer));
   }
 
-  public async delete(request: Request, response: Response): Promise<Response> {
+  async delete(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
     const deleteCustomer = container.resolve(DeleteCustomerService);

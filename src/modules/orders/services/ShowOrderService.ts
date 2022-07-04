@@ -11,7 +11,7 @@ class ShowOrderService {
     private ordersRepository: IOrdersRepository,
   ) {}
 
-  public async execute({ id }: IShowOrder): Promise<IOrder> {
+  async execute({ id }: IShowOrder): Promise<IOrder> {
     const order = await this.ordersRepository.findById(id);
 
     if (!order) {

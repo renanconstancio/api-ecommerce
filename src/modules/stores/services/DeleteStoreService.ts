@@ -10,7 +10,7 @@ export default class DeleteStoreService {
     private storesRepository: IStoresRepository,
   ) {}
 
-  public async execute({ id }: IDeleteProduct): Promise<void> {
+  async execute({ id }: IDeleteProduct): Promise<void> {
     const store = await this.storesRepository.findById(id);
 
     if (!store) {

@@ -11,7 +11,7 @@ class DeleteProductService {
     private productsRepository: IProductsRepository,
   ) {}
 
-  public async execute({ id }: IDeleteProduct): Promise<void> {
+  async execute({ id }: IDeleteProduct): Promise<void> {
     const product = await this.productsRepository.findById(id);
 
     if (!product) {

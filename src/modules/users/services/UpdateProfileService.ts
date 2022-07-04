@@ -12,7 +12,7 @@ class UpdateProfileService {
     private usersRepository: IUsersRepository,
   ) {}
 
-  public async execute({
+  async execute({
     user_id,
     name,
     email,

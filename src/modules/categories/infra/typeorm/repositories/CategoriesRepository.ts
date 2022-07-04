@@ -48,10 +48,7 @@ export default class CategoriesRepository implements ICategoriesRepository {
     skip,
     take,
   }: ISearchCategory): Promise<IPaginateCategory> {
-    const [
-      categories,
-      count,
-    ] = await this.ormRepository
+    const [categories, count] = await this.ormRepository
       .createQueryBuilder()
       .skip(skip)
       .take(take)

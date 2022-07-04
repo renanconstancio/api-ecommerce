@@ -14,7 +14,7 @@ class UpdateUserAvatarService {
     private usersRepository: IUsersRepository,
   ) {}
 
-  public async execute({
+  async execute({
     user_id,
     avatarFilename,
   }: IUpdateUserAvatar): Promise<IUser> {

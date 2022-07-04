@@ -10,7 +10,7 @@ export default class DeleteCustomerService {
     private customersRepository: ICustomersRepository,
   ) {}
 
-  public async execute({ id }: IDeleteCustomer): Promise<void> {
+  async execute({ id }: IDeleteCustomer): Promise<void> {
     const customer = await this.customersRepository.findById(id);
 
     if (!customer) {

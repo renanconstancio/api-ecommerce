@@ -11,7 +11,7 @@ class ShowProductService {
     private productsRepository: IProductsRepository,
   ) {}
 
-  public async execute({ id }: IShowProduct): Promise<IProduct> {
+  async execute({ id }: IShowProduct): Promise<IProduct> {
     const product = await this.productsRepository.findById(id);
 
     if (!product) {

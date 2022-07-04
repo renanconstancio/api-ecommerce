@@ -13,7 +13,7 @@ class CustomersRepository implements ICustomersRepository {
     this.ormRepository = dataSource.getRepository(Customer);
   }
 
-  public async create({
+  async create({
     name,
     email,
     cnpj,
@@ -35,17 +35,17 @@ class CustomersRepository implements ICustomersRepository {
     return customer;
   }
 
-  public async save(customer: Customer): Promise<Customer> {
+  async save(customer: Customer): Promise<Customer> {
     await this.ormRepository.save(customer);
 
     return customer;
   }
 
-  public async remove(customer: Customer): Promise<void> {
+  async remove(customer: Customer): Promise<void> {
     await this.ormRepository.remove(customer);
   }
 
-  public async findAll({
+  async findAll({
     page,
     skip,
     take,
@@ -69,7 +69,7 @@ class CustomersRepository implements ICustomersRepository {
     return result;
   }
 
-  public async findByName(name: string): Promise<Customer | null> {
+  async findByName(name: string): Promise<Customer | null> {
     const customer = await this.ormRepository.findOneBy({
       name,
     });
@@ -77,7 +77,7 @@ class CustomersRepository implements ICustomersRepository {
     return customer;
   }
 
-  public async findById(id: string): Promise<Customer | null> {
+  async findById(id: string): Promise<Customer | null> {
     const customer = await this.ormRepository.findOneBy({
       id,
     });
@@ -85,7 +85,7 @@ class CustomersRepository implements ICustomersRepository {
     return customer;
   }
 
-  public async findByEmail(email: string): Promise<Customer | null> {
+  async findByEmail(email: string): Promise<Customer | null> {
     const customer = await this.ormRepository.findOneBy({
       email,
     });

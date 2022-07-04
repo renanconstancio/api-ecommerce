@@ -7,7 +7,7 @@ import UpdateStoreService from '@modules/stores/services/UpdateStoreService';
 import DeleteStoreService from '@modules/stores/services/DeleteStoreService';
 
 export default class StoresController {
-  public async index(request: Request, response: Response): Promise<Response> {
+  async index(request: Request, response: Response): Promise<Response> {
     const page = request.query.page ? Number(request.query.page) : 1;
 
     const limit = request.query.limit ? Number(request.query.limit) : 15;
@@ -19,7 +19,7 @@ export default class StoresController {
     return response.json(stores);
   }
 
-  public async show(request: Request, response: Response): Promise<Response> {
+  async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
     const showStore = container.resolve(ShowStoreService);
@@ -29,7 +29,7 @@ export default class StoresController {
     return response.json(store);
   }
 
-  public async create(request: Request, response: Response): Promise<Response> {
+  async create(request: Request, response: Response): Promise<Response> {
     const {
       title,
       fantasy_name,
@@ -67,7 +67,7 @@ export default class StoresController {
     return response.json(store);
   }
 
-  public async update(request: Request, response: Response): Promise<Response> {
+  async update(request: Request, response: Response): Promise<Response> {
     const {
       title,
       fantasy_name,
@@ -107,7 +107,7 @@ export default class StoresController {
     return response.json(store);
   }
 
-  public async delete(request: Request, response: Response): Promise<Response> {
+  async delete(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
     const deleteStore = container.resolve(DeleteStoreService);

@@ -18,7 +18,7 @@ class UsersRepository implements IUsersRepository {
     this.ormRepository = dataSource.getRepository(User);
   }
 
-  public async create({ name, email, password }: ICreateUser): Promise<User> {
+  async create({ name, email, password }: ICreateUser): Promise<User> {
     const user = this.ormRepository.create({ name, email, password });
 
     await this.ormRepository.save(user);
@@ -26,13 +26,13 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  public async save(user: User): Promise<User> {
+  async save(user: User): Promise<User> {
     await this.ormRepository.save(user);
 
     return user;
   }
 
-  public async findAll({
+  async findAll({
     page,
     skip,
     take,
@@ -53,7 +53,7 @@ class UsersRepository implements IUsersRepository {
     return result;
   }
 
-  public async findByName(name: string): Promise<User | null> {
+  async findByName(name: string): Promise<User | null> {
     const user = await this.ormRepository.findOneBy({
       name,
     });
@@ -61,7 +61,7 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  public async findById(id: string): Promise<User | null> {
+  async findById(id: string): Promise<User | null> {
     const user = await this.ormRepository.findOneBy({
       id,
     });
@@ -69,7 +69,7 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  public async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string): Promise<User | null> {
     const user = await this.ormRepository.findOneBy({
       email,
     });

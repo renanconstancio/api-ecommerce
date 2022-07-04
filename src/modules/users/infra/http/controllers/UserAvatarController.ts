@@ -4,7 +4,7 @@ import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarSer
 import { classToClass } from 'class-transformer';
 
 export default class UserAvatarController {
-  public async update(request: Request, response: Response): Promise<Response> {
+  async update(request: Request, response: Response): Promise<Response> {
     const updateAvatar = container.resolve(UpdateUserAvatarService);
 
     const user = await updateAvatar.execute({

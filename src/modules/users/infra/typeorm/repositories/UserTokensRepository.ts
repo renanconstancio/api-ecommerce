@@ -10,7 +10,7 @@ class UserTokensRepository implements IUserTokensRepository {
     this.ormRepository = dataSource.getRepository(UserToken);
   }
 
-  public async findByToken(token: string): Promise<UserToken | null> {
+  async findByToken(token: string): Promise<UserToken | null> {
     const userToken = await this.ormRepository.findOneBy({
       token,
     });
@@ -18,7 +18,7 @@ class UserTokensRepository implements IUserTokensRepository {
     return userToken;
   }
 
-  public async generate(user_id: string): Promise<UserToken> {
+  async generate(user_id: string): Promise<UserToken> {
     const userToken = this.ormRepository.create({
       user_id,
     });

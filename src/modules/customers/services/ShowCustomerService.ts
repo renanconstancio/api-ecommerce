@@ -11,7 +11,7 @@ export default class ShowCustomerService {
     private customersRepository: ICustomersRepository,
   ) {}
 
-  public async execute({ id }: IShowCustomer): Promise<ICustomer> {
+  async execute({ id }: IShowCustomer): Promise<ICustomer> {
     const customer = await this.customersRepository.findById(id);
 
     if (!customer) {

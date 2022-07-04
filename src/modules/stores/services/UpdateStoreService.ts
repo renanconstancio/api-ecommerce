@@ -11,7 +11,7 @@ export default class UpdateStoreService {
     private storesRepository: IStoresRepository,
   ) {}
 
-  public async execute({
+  async execute({
     id,
     title,
     fantasy_name,

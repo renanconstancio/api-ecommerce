@@ -11,7 +11,7 @@ export default class UpdateCustomerService {
     private customersRepository: ICustomersRepository,
   ) {}
 
-  public async execute({
+  async execute({
     id,
     name,
     email,

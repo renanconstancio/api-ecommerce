@@ -11,7 +11,7 @@ export default class CreateCategoryService {
     private categoriesRepository: ICategoriesRepository,
   ) {}
 
-  public async execute({
+  async execute({
     category_id,
     name,
     description,

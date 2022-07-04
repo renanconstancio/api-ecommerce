@@ -5,7 +5,7 @@ import ShowOrderService from '@modules/orders/services/ShowOrderService';
 import ListOrderService from '@modules/orders/services/ListOrderService';
 
 export default class OrdersController {
-  public async index(request: Request, response: Response): Promise<Response> {
+  async index(request: Request, response: Response): Promise<Response> {
     const page = request.query.page ? Number(request.query.page) : 1;
     const limit = request.query.limit ? Number(request.query.limit) : 15;
     const listOrders = container.resolve(ListOrderService);
@@ -15,7 +15,7 @@ export default class OrdersController {
     return response.json(orders);
   }
 
-  public async show(request: Request, response: Response): Promise<Response> {
+  async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
     const showOrder = container.resolve(ShowOrderService);
@@ -25,7 +25,7 @@ export default class OrdersController {
     return response.json(order);
   }
 
-  public async create(request: Request, response: Response): Promise<Response> {
+  async create(request: Request, response: Response): Promise<Response> {
     const { customer_id, products } = request.body;
 
     const createOrder = container.resolve(CreateOrderService);

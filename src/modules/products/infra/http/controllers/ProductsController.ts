@@ -7,7 +7,7 @@ import ShowProductService from '@modules/products/services/ShowProductService';
 import UpdateProductService from '@modules/products/services/UpdateProductService';
 
 export default class ProductsController {
-  public async index(request: Request, response: Response): Promise<Response> {
+  async index(request: Request, response: Response): Promise<Response> {
     const page = request.query.page ? Number(request.query.page) : 1;
     const limit = request.query.limit ? Number(request.query.limit) : 15;
     const listProducts = container.resolve(ListProductService);
@@ -15,7 +15,7 @@ export default class ProductsController {
     return response.json(products);
   }
 
-  public async show(request: Request, response: Response): Promise<Response> {
+  async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
     const showProduct = container.resolve(ShowProductService);
@@ -25,8 +25,8 @@ export default class ProductsController {
     return response.json(product);
   }
 
-  public async create(request: Request, response: Response): Promise<Response> {
-    const { name, price, quantity } = request.body;
+  async create(request: Request, response: Response): Promise<Response> {
+    const { name, price, quantity, description, slug } = request.body;
 
     const createProduct = container.resolve(CreateProductService);
 
@@ -34,13 +34,15 @@ export default class ProductsController {
       name,
       price,
       quantity,
+      description,
+      slug,
     });
 
     return response.json(product);
   }
 
-  public async update(request: Request, response: Response): Promise<Response> {
-    const { name, price, quantity } = request.body;
+  async update(request: Request, response: Response): Promise<Response> {
+    const { name, price, quantity, description, slug } = request.body;
     const { id } = request.params;
 
     const updateProduct = container.resolve(UpdateProductService);
@@ -50,12 +52,14 @@ export default class ProductsController {
       name,
       price,
       quantity,
+      description,
+      slug,
     });
 
     return response.json(product);
   }
 
-  public async delete(request: Request, response: Response): Promise<Response> {
+  async delete(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
     const deleteProduct = container.resolve(DeleteProductService);

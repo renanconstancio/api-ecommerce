@@ -13,7 +13,7 @@ export default class S3StorageProvider {
     });
   }
 
-  public async saveFile(file: string): Promise<string> {
+  async saveFile(file: string): Promise<string> {
     const originalPath = path.resolve(uploadConfig.tmpFolder, file);
 
     const ContentType = mime.getType(originalPath);
@@ -39,7 +39,7 @@ export default class S3StorageProvider {
     return file;
   }
 
-  public async deleteFile(file: string): Promise<void> {
+  async deleteFile(file: string): Promise<void> {
     await this.client
       .deleteObject({
         Bucket: uploadConfig.config.aws.bucket,

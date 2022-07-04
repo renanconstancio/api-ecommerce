@@ -6,7 +6,7 @@ import ShowUserService from '@modules/users/services/ShowUserService';
 import { classToClass } from 'class-transformer';
 
 export default class UsersController {
-  public async index(request: Request, response: Response): Promise<Response> {
+  async index(request: Request, response: Response): Promise<Response> {
     const page = request.query.page ? Number(request.query.page) : 1;
     const limit = request.query.limit ? Number(request.query.limit) : 15;
     const listUser = container.resolve(ListUserService);
@@ -16,7 +16,7 @@ export default class UsersController {
     return response.json(classToClass(users));
   }
 
-  public async show(request: Request, response: Response): Promise<Response> {
+  async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
     const showUser = container.resolve(ShowUserService);
@@ -26,7 +26,7 @@ export default class UsersController {
     return response.json(user);
   }
 
-  public async create(request: Request, response: Response): Promise<Response> {
+  async create(request: Request, response: Response): Promise<Response> {
     const { name, email, password } = request.body;
 
     const createUser = container.resolve(CreateUserService);

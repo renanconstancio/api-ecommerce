@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 export default class DiskStorageProvider {
-  public async saveFile(file: string): Promise<string> {
+  async saveFile(file: string): Promise<string> {
     await fs.promises.rename(
       path.resolve(uploadConfig.tmpFolder, file),
       path.resolve(uploadConfig.directory, file),
@@ -12,7 +12,7 @@ export default class DiskStorageProvider {
     return file;
   }
 
-  public async deleteFile(file: string): Promise<void> {
+  async deleteFile(file: string): Promise<void> {
     const filePath = path.resolve(uploadConfig.directory, file);
 
     try {

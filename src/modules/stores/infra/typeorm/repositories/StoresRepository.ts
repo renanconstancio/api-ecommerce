@@ -19,7 +19,7 @@ export default class StoresRepository implements IStoresRepository {
     this.ormRepository = dataSource.getRepository(Store);
   }
 
-  public async create({
+  async create({
     title,
     fantasy_name,
     email,
@@ -55,21 +55,21 @@ export default class StoresRepository implements IStoresRepository {
     return store;
   }
 
-  public async save(store: Store): Promise<Store> {
+  async save(store: Store): Promise<Store> {
     await this.ormRepository.save(store);
 
     return store;
   }
 
-  public async remove(store: Store): Promise<void> {
+  async remove(store: Store): Promise<void> {
     await this.ormRepository.remove(store);
   }
 
-  // public async updateStock(stores: IUpdateStockProduct[]): Promise<void> {
+  // async updateStock(stores: IUpdateStockProduct[]): Promise<void> {
   //   await this.ormRepository.save(stores);
   // }
 
-  public async findByFantasyName(fantasy_name: string): Promise<Store | null> {
+  async findByFantasyName(fantasy_name: string): Promise<Store | null> {
     const store = this.ormRepository.findOneBy({
       fantasy_name,
     });
@@ -77,13 +77,13 @@ export default class StoresRepository implements IStoresRepository {
     return store;
   }
 
-  public async findById(id: string): Promise<Store | null> {
+  async findById(id: string): Promise<Store | null> {
     const store = this.ormRepository.findOneBy({ id });
 
     return store;
   }
 
-  public async findAll({
+  async findAll({
     page,
     skip,
     take,
@@ -104,7 +104,7 @@ export default class StoresRepository implements IStoresRepository {
     return result;
   }
 
-  public async findAllByIds(stores: IFindStores[]): Promise<Store[]> {
+  async findAllByIds(stores: IFindStores[]): Promise<Store[]> {
     const productIds = stores.map(store => store.id);
 
     const existentStoIFindStores = await this.ormRepository.find({

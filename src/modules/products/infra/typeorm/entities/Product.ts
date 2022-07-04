@@ -1,23 +1,26 @@
-import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts';
+// import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  OneToMany,
+  // OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity('products')
-class Product {
+export default class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToMany(() => OrdersProducts, order_products => order_products.product)
-  order_products: OrdersProducts[];
+  // @OneToMany(() => OrdersProducts, order_products => order_products.product)
+  // order_products: OrdersProducts[];
 
-  @Column()
+  @Column({ type: 'varchar', length: 20 })
+  sku: string;
+
+  @Column({ type: 'varchar', length: 155 })
   name: string;
 
   @Column('decimal')
@@ -25,6 +28,9 @@ class Product {
 
   @Column('int')
   quantity: number;
+
+  @Column({ type: 'text' })
+  description: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -35,5 +41,3 @@ class Product {
   @DeleteDateColumn()
   deleted_at: Date;
 }
-
-export default Product;

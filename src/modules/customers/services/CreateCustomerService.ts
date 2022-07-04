@@ -14,7 +14,7 @@ export default class CreateCustomerService {
     private hashProvider: IHashProvider,
   ) {}
 
-  public async execute({
+  async execute({
     name,
     email,
     cnpj,

@@ -14,7 +14,7 @@ export default class ListCustomerService {
     private customersRepository: ICustomersRepository,
   ) {}
 
-  public async execute({
+  async execute({
     page,
     limit,
   }: SearchParams): Promise<ICustomerPaginate> {
