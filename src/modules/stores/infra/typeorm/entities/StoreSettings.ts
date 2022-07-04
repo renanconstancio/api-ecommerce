@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 
 @Entity('products')
-class Product {
+export default class StoreSettings {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -60,5 +60,3 @@ class Product {
   @DeleteDateColumn()
   deleated_at: Date;
 }
-
-export default Product;
