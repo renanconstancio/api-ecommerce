@@ -1,8 +1,9 @@
-import Login from "./pages/Login";
+import SideNavigation from "./components/SideNavigation";
+// import Login from "./pages/Login";
 import "./style/app.scss";
 
-function App() {
-  return <Login />;
+export default function App() {
+  return <SideNavigation />;
   // return (
   //   <div className="app">
   //     <nav></nav>
@@ -10,5 +11,3 @@ function App() {
   //   </div>
   // );
 }
-
-export default App;
