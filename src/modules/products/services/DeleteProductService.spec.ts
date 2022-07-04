@@ -1,40 +1,39 @@
 import 'reflect-metadata';
-import DeleteCategoryService from './DeleteCategoryService';
-import FakeCategoriesRepository from '@modules/categories/domain/repositories/fakes/FakeCategoriesRepository';
-import CreateCategoryService from './CreateCategoryService';
 import AppError from '@shared/errors/AppError';
+import FakeProductsRepository from '../domain/repositories/fakes/FakeProductsRepository';
+import CreateProductService from './CreateProductService';
+import DeleteProductService from './DeleteProductService';
 
-let fakeCategoriesRepository: FakeCategoriesRepository;
-let createDeleteCategory: CreateCategoryService;
-let deleteCategory: DeleteCategoryService;
+let fakeProductsRepository: FakeProductsRepository;
+let createDeleteProduct: CreateProductService;
+let deleteProduct: DeleteProductService;
 
-describe('DeleteCategories', () => {
+describe('DeleteProducts', () => {
   beforeEach(() => {
-    fakeCategoriesRepository = new FakeCategoriesRepository();
-    createDeleteCategory = new CreateCategoryService(fakeCategoriesRepository);
-    deleteCategory = new DeleteCategoryService(fakeCategoriesRepository);
+    fakeProductsRepository = new FakeProductsRepository();
+    createDeleteProduct = new CreateProductService(fakeProductsRepository);
+    deleteProduct = new DeleteProductService(fakeProductsRepository);
   });
 
-  it('should be able to delete a category', async () => {
-    const category = await createDeleteCategory.execute({
+  it('should be able to delete a product', async () => {
+    const product = await createDeleteProduct.execute({
       name: 'Category A',
       description: '',
-      keywords: '',
-      position: 1,
+      price: 0,
+      quantity: 0,
+      sku: '',
     });
 
-    const categoryDelete = await deleteCategory.execute({
-      id: category.id,
+    const productDelete = await deleteProduct.execute({
+      id: product.id,
     });
 
-    expect(categoryDelete).toBeUndefined();
-    // expect(categoryDelete).rejects.toBeInstanceOf(AppError);
-    //.toBeNull();
+    expect(productDelete).toBeUndefined();
   });
 
-  it('should not be able to delete a category', async () => {
+  it('should not be able to delete a product', async () => {
     expect(
-      deleteCategory.execute({
+      deleteProduct.execute({
         id: '',
       }),
     ).rejects.toBeInstanceOf(AppError);
