@@ -9,7 +9,7 @@
     130
   ],
   "[scss]": {
-    "editor.defaultFormatter": "MikeBovenlander.formate"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

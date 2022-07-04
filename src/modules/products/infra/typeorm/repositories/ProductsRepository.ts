@@ -65,10 +65,7 @@ class ProductsRepository implements IProductsRepository {
     skip,
     take,
   }: SearchParams): Promise<IProductPaginate> {
-    const [
-      products,
-      count,
-    ] = await this.ormRepository
+    const [products, count] = await this.ormRepository
       .createQueryBuilder()
       .skip(skip)
       .take(take)

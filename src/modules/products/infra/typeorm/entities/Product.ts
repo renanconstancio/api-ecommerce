@@ -2,6 +2,7 @@ import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProduct
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -30,6 +31,9 @@ class Product {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @DeleteDateColumn()
+  deleted_at: Date;
 }
 
 export default Product;
