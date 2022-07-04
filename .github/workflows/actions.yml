@@ -2,22 +2,21 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master, test ]
+    branches: [master, test]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [12.x, 14.x, 16.x]
-    
-    defaults:
-      run:
-        working-directory: ./api/
+
+    # defaults:
+    #   run:
+    #     working-directory: ./api/
 
     steps:
       - uses: actions/checkout@v3
