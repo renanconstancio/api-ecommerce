@@ -8,7 +8,7 @@ import { IProduct } from '@modules/products/domain/models/IProduct';
 import { IUpdateStockProduct } from '@modules/products/domain/models/IUpdateStockProduct';
 
 export default class FakeProductsRepository implements IProductsRepository {
-  private categories: Product[] = [];
+  private products: Product[] = [];
 
   async create({
     description,
@@ -25,19 +25,19 @@ export default class FakeProductsRepository implements IProductsRepository {
     product.name = name;
     product.price = price;
     product.quantity = quantity;
-    this.categories.push(product);
+    this.products.push(product);
 
     return product;
   }
 
   async save(data: Product): Promise<Product> {
-    Object.assign(this.categories, data);
+    Object.assign(this.products, data);
 
     return data;
   }
 
   async remove(data: Product): Promise<void> {
-    this.categories.find(categories => categories.id !== data.id);
+    this.products.find(products => products.id !== data.id);
     return;
   }
 
@@ -50,19 +50,18 @@ export default class FakeProductsRepository implements IProductsRepository {
   }
 
   async findById(id: string): Promise<Product | null> {
-    const category = this.categories.find(categories => categories.id === id);
+    const category = this.products.find(products => products.id === id);
 
     return category as Product;
   }
 
-  async updateStock(products: IUpdateStockProduct[]): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async updateStock(_products: IUpdateStockProduct[]): Promise<void> {
     return;
   }
 
   async findByName(name: string): Promise<Product | null> {
-    const category = this.categories.find(
-      categories => categories.name === name,
-    );
+    const category = this.products.find(products => products.name === name);
 
     return category as Product;
   }

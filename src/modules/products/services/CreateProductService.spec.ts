@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import CreateProductService from './CreateProductService';
 import AppError from '@shared/errors/AppError';
-import FakeProductsRepository from '../infra/typeorm/repositories/fakes/FakeProductsRepository';
+import FakeProductsRepository from '../domain/repositories/fakes/FakeProductsRepository';
 
 let fakeProductsRepository: FakeProductsRepository;
 let createProduct: CreateProductService;
@@ -24,7 +24,7 @@ describe('CreateProducts', () => {
     expect(Product).toHaveProperty('id');
   });
 
-  it('should not be able to create two customers with the same email', async () => {
+  it('should not be able to create two poroduts with the same name', async () => {
     await createProduct.execute({
       price: 0,
       quantity: 0,

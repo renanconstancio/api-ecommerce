@@ -5,7 +5,7 @@ import { IShowProduct } from '../domain/models/IShowProduct';
 import { IProduct } from '../domain/models/IProduct';
 
 @injectable()
-class ShowProductService {
+export default class ShowProductService {
   constructor(
     @inject('ProductsRepository')
     private productsRepository: IProductsRepository,
@@ -21,5 +21,3 @@ class ShowProductService {
     return product;
   }
 }
-
-export default ShowProductService;

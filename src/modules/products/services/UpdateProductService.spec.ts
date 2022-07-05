@@ -1,25 +1,26 @@
 import AppError from '@shared/errors/AppError';
 import 'reflect-metadata';
-import FakeCategoriesRepository from '../domain/repositories/fakes/FakeCategoriesRepository';
-import UpdateCategoryService from './UpdateCategoryService';
+import FakeProductsRepository from '../domain/repositories/fakes/FakeProductsRepository';
+import UpdateProductService from './UpdateProductService';
 
-let fakeCategoriesRepository: FakeCategoriesRepository;
-let updateCategoryService: UpdateCategoryService;
+let fakeProductsRepository: FakeProductsRepository;
+let updateProductService: UpdateProductService;
 
-describe('UpdateCategoryService', () => {
+describe('UpdateProductService', () => {
   beforeEach(() => {
-    fakeCategoriesRepository = new FakeCategoriesRepository();
-    updateCategoryService = new UpdateCategoryService(fakeCategoriesRepository);
+    fakeProductsRepository = new FakeProductsRepository();
+    updateProductService = new UpdateProductService(fakeProductsRepository);
   });
 
   it('must be able to list the customers', async () => {
     expect(
-      updateCategoryService.execute({
+      updateProductService.execute({
         id: '',
-        name: '',
+        name: 'Product A',
         description: '',
-        keywords: '',
-        position: 0,
+        price: 0,
+        quantity: 0,
+        sku: '',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

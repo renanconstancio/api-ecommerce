@@ -17,10 +17,10 @@ describe('DeleteProducts', () => {
 
   it('should be able to delete a product', async () => {
     const product = await createDeleteProduct.execute({
-      name: 'Category A',
-      description: '',
       price: 0,
       quantity: 0,
+      name: 'Product A',
+      description: '',
       sku: '',
     });
 
@@ -37,6 +37,5 @@ describe('DeleteProducts', () => {
         id: '',
       }),
     ).rejects.toBeInstanceOf(AppError);
-    //.toBeNull();
   });
 });

@@ -6,7 +6,7 @@ import { IProductsRepository } from '../domain/repositories/IProductsRepository'
 import { IProduct } from '../domain/models/IProduct';
 
 @injectable()
-class UpdateProductService {
+export default class UpdateProductService {
   constructor(
     @inject('ProductsRepository')
     private productsRepository: IProductsRepository,
@@ -18,7 +18,7 @@ class UpdateProductService {
     price,
     quantity,
     description,
-    slug,
+    sku,
   }: IUpdateProduct): Promise<IProduct> {
     const product = await this.productsRepository.findById(id);
 
@@ -38,7 +38,7 @@ class UpdateProductService {
     product.price = price;
     product.quantity = quantity;
     product.description = description;
-    product.slug = slug;
+    product.sku = sku;
     product.name = name;
 
     await this.productsRepository.save(product);
@@ -46,5 +46,3 @@ class UpdateProductService {
     return product;
   }
 }
-
-export default UpdateProductService;

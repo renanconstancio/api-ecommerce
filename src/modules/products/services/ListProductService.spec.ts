@@ -1,28 +1,29 @@
 import 'reflect-metadata';
-import FakeCategoriesRepository from '../domain/repositories/fakes/FakeCategoriesRepository';
-import ListCategoryService from './ListCategoryService';
-import CreateCategoryService from './CreateCategoryService';
+import FakeProductsRepository from '../domain/repositories/fakes/FakeProductsRepository';
+import ListProductService from './ListProductService';
+import CreateProductService from './CreateProductService';
 
-let fakeCategoriesRepository: FakeCategoriesRepository;
-let listCategoriesService: ListCategoryService;
-let createCategory: CreateCategoryService;
+let fakeProductsRepository: FakeProductsRepository;
+let listProductsService: ListProductService;
+let createProduct: CreateProductService;
 
-describe('ListCategoryService', () => {
+describe('ListProductService', () => {
   beforeEach(() => {
-    fakeCategoriesRepository = new FakeCategoriesRepository();
-    listCategoriesService = new ListCategoryService(fakeCategoriesRepository);
-    createCategory = new CreateCategoryService(fakeCategoriesRepository);
+    fakeProductsRepository = new FakeProductsRepository();
+    listProductsService = new ListProductService(fakeProductsRepository);
+    createProduct = new CreateProductService(fakeProductsRepository);
   });
 
   it('must be able to list the customers', async () => {
-    await createCategory.execute({
+    await createProduct.execute({
+      name: 'Product A',
       description: '',
-      keywords: '',
-      name: '',
-      position: 0,
+      price: 0,
+      quantity: 0,
+      sku: '',
     });
 
-    const customerList = await listCategoriesService.execute({
+    const customerList = await listProductsService.execute({
       page: 1,
       limit: 100,
     });

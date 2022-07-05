@@ -13,11 +13,11 @@ export default class CreateProductService {
   ) {}
 
   async execute({
+    sku,
+    name,
     price,
     quantity,
-    name,
     description,
-    sku,
   }: ICreateProduct): Promise<IProduct> {
     const productExists = await this.productsRepository.findByName(name);
 
@@ -28,11 +28,11 @@ export default class CreateProductService {
     // await redisCache.invalidate('api-vendas-PRODUCT_LIST');
 
     const product = await this.productsRepository.create({
+      sku,
+      name,
       price,
       quantity,
-      name,
       description,
-      sku,
     });
 
     return product;

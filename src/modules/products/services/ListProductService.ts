@@ -8,16 +8,13 @@ interface SearchParams {
 }
 
 @injectable()
-class ListProductService {
+export default class ListProductService {
   constructor(
     @inject('ProductsRepository')
     private productsRepository: IProductsRepository,
   ) {}
 
-  async execute({
-    page,
-    limit,
-  }: SearchParams): Promise<IProductPaginate> {
+  async execute({ page, limit }: SearchParams): Promise<IProductPaginate> {
     const take = limit;
     const skip = (Number(page) - 1) * take;
     const products = await this.productsRepository.findAll({
@@ -29,5 +26,3 @@ class ListProductService {
     return products;
   }
 }
-
-export default ListProductService;
