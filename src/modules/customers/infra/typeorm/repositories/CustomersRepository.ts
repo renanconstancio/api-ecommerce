@@ -20,6 +20,7 @@ class CustomersRepository implements ICustomersRepository {
     cpf,
     password,
     phone,
+    birth_date,
   }: ICreateCustomer): Promise<Customer> {
     const customer = this.ormRepository.create({
       name,
@@ -28,6 +29,7 @@ class CustomersRepository implements ICustomersRepository {
       cpf,
       password,
       phone,
+      birth_date,
     });
 
     await this.ormRepository.save(customer);
@@ -50,10 +52,7 @@ class CustomersRepository implements ICustomersRepository {
     skip,
     take,
   }: SearchParams): Promise<ICustomerPaginate> {
-    const [
-      customers,
-      count,
-    ] = await this.ormRepository
+    const [customers, count] = await this.ormRepository
       .createQueryBuilder()
       .skip(skip)
       .take(take)

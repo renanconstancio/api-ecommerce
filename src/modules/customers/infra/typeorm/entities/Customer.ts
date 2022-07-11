@@ -33,6 +33,9 @@ export default class Customer implements ICustomer {
   @Column({ type: 'varchar', length: 20, nullable: true })
   phone!: string;
 
+  @Column({ type: 'varchar', length: 20, nullable: true })
+  birth_date!: string;
+
   @Column({ type: 'varchar', length: 41, nullable: true })
   avatar!: string;
 

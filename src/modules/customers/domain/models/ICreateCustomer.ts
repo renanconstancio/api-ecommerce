@@ -4,6 +4,7 @@ export interface ICreateCustomer {
   phone: string;
   cpf: string;
   cnpj: string;
+  birth_date: string;
   avatar?: string;
   password: string;
 }

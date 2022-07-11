@@ -6,6 +6,7 @@ export interface ICustomer {
   cpf: string;
   cnpj: string;
   avatar: string;
+  birth_date: string;
   password: string;
   created_at: Date;
   updated_at: Date;

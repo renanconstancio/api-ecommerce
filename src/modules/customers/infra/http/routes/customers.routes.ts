@@ -19,6 +19,7 @@ customersRouter
           phone: Joi.string().required(),
           cpf: Joi.string().allow('').optional(),
           cnpj: Joi.string().allow('').optional(),
+          birth_date: Joi.string().allow('').optional(),
         },
       },
       {
@@ -38,6 +39,7 @@ customersRouter
           phone: Joi.string().required(),
           cpf: Joi.string().allow('').optional(),
           cnpj: Joi.string().allow('').optional(),
+          birth_date: Joi.string().allow('').optional(),
         },
         [Segments.PARAMS]: {
           id: Joi.string().uuid().required(),

@@ -5,4 +5,5 @@ export interface IUpdateCustomer {
   cnpj: string;
   cpf: string;
   phone: string;
+  birth_date: string;
 }
