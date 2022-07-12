@@ -5,6 +5,7 @@ import { ICategoriesRepository } from '../domain/repositories/ICategoriesReposit
 interface SearchParams {
   page: number;
   limit: number;
+  name: string;
 }
 
 @injectable()
@@ -17,6 +18,7 @@ export default class ListCategoryService {
   async execute({
     page,
     limit,
+    name,
   }: SearchParams): Promise<IPaginateCategory> {
     const take = limit;
     const skip = (Number(page) - 1) * take;
@@ -24,6 +26,7 @@ export default class ListCategoryService {
       page,
       skip,
       take,
+      name,
     });
 
     return customers;

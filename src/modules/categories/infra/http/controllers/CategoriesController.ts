@@ -44,8 +44,18 @@ export class CategoriesController {
     const page = request.query.page ? Number(request.query.page) : 1;
     const limit = request.query.limit ? Number(request.query.limit) : 15;
 
+    const { name } = (
+      request.query.categories ? request.query.categories : ''
+    ) as {
+      [key: string]: '';
+    };
+
     const listCategories = container.resolve(ListCategoryService);
-    const categories = await listCategories.execute({ page, limit });
+    const categories = await listCategories.execute({
+      page,
+      limit,
+      name,
+    });
 
     return response.json(categories);
   }

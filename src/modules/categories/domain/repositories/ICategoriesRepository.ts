@@ -4,7 +4,12 @@ import { IPaginateCategory } from '../models/IPaginateCategory';
 import { ISearchCategory } from '../models/ISearchCategory';
 
 export interface ICategoriesRepository {
-  findAll({ page, skip, take }: ISearchCategory): Promise<IPaginateCategory>;
+  findAll({
+    page,
+    skip,
+    take,
+    name,
+  }: ISearchCategory): Promise<IPaginateCategory>;
   findByName(name: string): Promise<ICategory | null>;
   findById(id: string): Promise<ICategory | null>;
   create(data: ICreateCategory): Promise<ICategory>;

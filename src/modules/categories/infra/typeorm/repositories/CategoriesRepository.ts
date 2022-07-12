@@ -3,7 +3,7 @@ import { IPaginateCategory } from '@modules/categories/domain/models/IPaginateCa
 import { ISearchCategory } from '@modules/categories/domain/models/ISearchCategory';
 import { ICategoriesRepository } from '@modules/categories/domain/repositories/ICategoriesRepository';
 import { dataSource } from '@shared/infra/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import Category from '../entities/Category';
 
 export default class CategoriesRepository implements ICategoriesRepository {
@@ -47,12 +47,17 @@ export default class CategoriesRepository implements ICategoriesRepository {
     page,
     skip,
     take,
+    name,
   }: ISearchCategory): Promise<IPaginateCategory> {
-    const [categories, count] = await this.ormRepository
-      .createQueryBuilder()
-      .skip(skip)
-      .take(take)
-      .getManyAndCount();
+    const where = {} as { [key: string]: unknown };
+
+    if (name) where.name = Like(`%${name}%`);
+
+    const [categories, count] = await this.ormRepository.findAndCount({
+      take: take,
+      skip: skip,
+      where,
+    });
 
     const result = {
       total: count,
@@ -65,18 +70,18 @@ export default class CategoriesRepository implements ICategoriesRepository {
   }
 
   async findById(id: string): Promise<Category | null> {
-    const customer = await this.ormRepository.findOneBy({
+    const category = await this.ormRepository.findOneBy({
       id,
     });
 
-    return customer;
+    return category;
   }
 
   async findByName(name: string): Promise<Category | null> {
-    const customer = await this.ormRepository.findOneBy({
+    const category = await this.ormRepository.findOneBy({
       name,
     });
 
-    return customer;
+    return category;
   }
 }
