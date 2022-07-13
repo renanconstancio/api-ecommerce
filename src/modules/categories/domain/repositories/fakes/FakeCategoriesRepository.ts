@@ -34,8 +34,8 @@ export default class FakeCategoriesRepository implements ICategoriesRepository {
     return data;
   }
 
-  async remove(data: Category): Promise<void> {
-    this.categories.find(categories => categories.id !== data.id);
+  async remove(id: string): Promise<void> {
+    this.categories.find(categories => categories.id !== id);
     return;
   }
 
