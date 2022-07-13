@@ -26,7 +26,7 @@ export default class ProductsController {
   }
 
   async create(request: Request, response: Response): Promise<Response> {
-    const { name, price, quantity, description, slug } = request.body;
+    const { name, price, quantity, description, sku } = request.body;
 
     const createProduct = container.resolve(CreateProductService);
 
@@ -35,14 +35,14 @@ export default class ProductsController {
       price,
       quantity,
       description,
-      slug,
+      sku,
     });
 
     return response.json(product);
   }
 
   async update(request: Request, response: Response): Promise<Response> {
-    const { name, price, quantity, description, slug } = request.body;
+    const { name, price, quantity, description, sku } = request.body;
     const { id } = request.params;
 
     const updateProduct = container.resolve(UpdateProductService);
@@ -53,7 +53,7 @@ export default class ProductsController {
       price,
       quantity,
       description,
-      slug,
+      sku,
     });
 
     return response.json(product);

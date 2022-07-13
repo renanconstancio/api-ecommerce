@@ -25,6 +25,7 @@ describe('ListCategoryService', () => {
     const customerList = await listCategoriesService.execute({
       page: 1,
       limit: 100,
+      name: '',
     });
 
     expect(customerList).toEqual(expect.objectContaining({}));
