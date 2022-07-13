@@ -3,7 +3,6 @@
 export interface IProduct {
   id: string;
   sku: string;
-  // order_products?: IOrderProducts[];
   name: string;
   price: number;
   quantity: number;

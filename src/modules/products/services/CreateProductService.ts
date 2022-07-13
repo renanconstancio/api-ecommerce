@@ -28,11 +28,11 @@ export default class CreateProductService {
     // await redisCache.invalidate('api-vendas-PRODUCT_LIST');
 
     const product = await this.productsRepository.create({
-      sku,
-      name,
-      price,
-      quantity,
-      description,
+      sku: sku,
+      name: name,
+      price: price,
+      quantity: quantity,
+      description: description,
     });
 
     return product;

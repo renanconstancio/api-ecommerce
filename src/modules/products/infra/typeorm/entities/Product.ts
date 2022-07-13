@@ -12,32 +12,32 @@ import {
 @Entity('products')
 export default class Product {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   // @OneToMany(() => OrdersProducts, order_products => order_products.product)
   // order_products: OrdersProducts[];
 
   @Column({ type: 'varchar', length: 20 })
-  sku: string;
+  sku!: string;
 
   @Column({ type: 'varchar', length: 155 })
-  name: string;
+  name!: string;
 
   @Column('decimal')
-  price: number;
+  price!: number;
 
   @Column('int')
-  quantity: number;
+  quantity!: number;
 
   @Column({ type: 'text' })
-  description: string;
+  description!: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  created_at!: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updated_at!: Date;
 
   @DeleteDateColumn()
-  deleted_at: Date;
+  deleted_at!: Date;
 }

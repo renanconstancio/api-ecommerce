@@ -19,6 +19,8 @@ import { ICategoriesRepository } from '@modules/categories/domain/repositories/I
 
 import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
 import StoresRepository from '@modules/stores/infra/typeorm/repositories/StoresRepository';
+import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
+import ProductsRepository from '@modules/products/infra/typeorm/repositories/ProductsRepository';
 
 container.registerSingleton<ICategoriesRepository>(
   'CategoriesRepository',
@@ -35,10 +37,10 @@ container.registerSingleton<IStoresRepository>(
   delay(() => StoresRepository),
 );
 
-// container.registerSingleton<IProductsRepository>(
-//   'ProductsRepository',
-//   ProductsRepository,
-// );
+container.registerSingleton<IProductsRepository>(
+  'ProductsRepository',
+  ProductsRepository,
+);
 
 // container.registerSingleton<IOrdersRepository>(
 //   'OrdersRepository',

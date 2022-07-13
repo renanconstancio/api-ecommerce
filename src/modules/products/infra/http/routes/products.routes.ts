@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import ProductsController from '../controllers/ProductsController';
 import { celebrate, Joi, Segments } from 'celebrate';
+import { messages } from 'joi-translation-pt-br';
 
 const productsRouter = Router();
 const productsController = new ProductsController();
@@ -8,27 +9,43 @@ const productsController = new ProductsController();
 productsRouter
   .post(
     '/',
-    celebrate({
-      [Segments.BODY]: {
-        name: Joi.string().required(),
-        price: Joi.number().precision(2).required(),
-        quantity: Joi.number().required(),
+    celebrate(
+      {
+        [Segments.BODY]: {
+          sku: Joi.string().required(),
+          name: Joi.string().required(),
+          price: Joi.number().precision(2).required(),
+          quantity: Joi.number().required(),
+          description: Joi.string().allow('').default(''),
+        },
       },
-    }),
+      {
+        abortEarly: false,
+        messages: messages,
+      },
+    ),
     productsController.create,
   )
   .put(
     '/:id',
-    celebrate({
-      [Segments.BODY]: {
-        name: Joi.string().required(),
-        price: Joi.number().precision(2).required(),
-        quantity: Joi.number().required(),
+    celebrate(
+      {
+        [Segments.BODY]: {
+          sku: Joi.string().required(),
+          name: Joi.string().required(),
+          price: Joi.number().precision(2).required(),
+          quantity: Joi.number().required(),
+          description: Joi.string().allow('').default(''),
+        },
+        [Segments.PARAMS]: {
+          id: Joi.string().uuid().required(),
+        },
       },
-      [Segments.PARAMS]: {
-        id: Joi.string().uuid().required(),
+      {
+        abortEarly: false,
+        messages: messages,
       },
-    }),
+    ),
     productsController.update,
   )
   .delete(
