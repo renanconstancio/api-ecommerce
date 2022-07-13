@@ -6,7 +6,7 @@ import Customer from '../entities/Customer';
 import { dataSource } from '@shared/infra/typeorm';
 import { SearchParams } from '../../../domain/repositories/ICustomersRepository';
 
-class CustomersRepository implements ICustomersRepository {
+export default class CustomersRepository implements ICustomersRepository {
   private ormRepository: Repository<Customer>;
 
   constructor() {
@@ -43,8 +43,8 @@ class CustomersRepository implements ICustomersRepository {
     return customer;
   }
 
-  async remove(customer: Customer): Promise<void> {
-    await this.ormRepository.remove(customer);
+  async remove(id: string): Promise<void> {
+    await this.ormRepository.softDelete(id);
   }
 
   async findAll({
@@ -92,5 +92,3 @@ class CustomersRepository implements ICustomersRepository {
     return customer;
   }
 }
-
-export default CustomersRepository;

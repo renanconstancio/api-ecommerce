@@ -17,6 +17,6 @@ export default class DeleteCustomerService {
       throw new AppError('Customer not found.');
     }
 
-    await this.customersRepository.remove(customer);
+    await this.customersRepository.remove(id);
   }
 }

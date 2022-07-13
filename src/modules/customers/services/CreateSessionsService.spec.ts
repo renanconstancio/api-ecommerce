@@ -26,6 +26,7 @@ describe('CreateSessionsService', () => {
       phone: '',
       cnpj: '',
       cpf: '',
+      birth_date: '',
     });
 
     const response = await createSession.execute({

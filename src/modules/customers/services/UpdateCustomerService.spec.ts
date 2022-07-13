@@ -30,6 +30,7 @@ describe('UpdateCustomerService', () => {
         cnpj: '',
         cpf: '',
         phone: '',
+        birth_date: '',
       }),
     ).rejects.toBeInstanceOf(AppError);
     // expect(customerShow).toEqual(expect.objectContaining({}));

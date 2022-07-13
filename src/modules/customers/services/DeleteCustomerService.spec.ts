@@ -28,6 +28,7 @@ describe('DeleteCustomerService', () => {
       cnpj: 'cnpj',
       cpf: 'cpf',
       phone: 'phone',
+      birth_date: '',
       password: 'password',
     });
 

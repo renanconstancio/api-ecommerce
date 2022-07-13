@@ -20,6 +20,7 @@ export default class CreateCustomerService {
     cnpj,
     cpf,
     phone,
+    birth_date,
     password,
   }: ICreateCustomer): Promise<ICustomer> {
     const emailExists = await this.customersRepository.findByEmail(email);
@@ -36,6 +37,7 @@ export default class CreateCustomerService {
       cnpj,
       cpf,
       phone,
+      birth_date,
       password: hashedPassword,
     });
 

@@ -1,4 +1,4 @@
-import { In, Repository } from 'typeorm';
+import { In, Like, Repository } from 'typeorm';
 import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
 import Product from '../entities/Product';
 import { IFindProducts } from '@modules/products/domain/models/IFindProducts';
@@ -11,6 +11,7 @@ type SearchParams = {
   page: number;
   skip: number;
   take: number;
+  name: string;
 };
 
 export default class ProductsRepository implements IProductsRepository {
@@ -46,8 +47,8 @@ export default class ProductsRepository implements IProductsRepository {
     return product;
   }
 
-  async remove(product: Product): Promise<void> {
-    await this.ormRepository.remove(product);
+  async remove(id: string): Promise<void> {
+    await this.ormRepository.softDelete(id);
   }
 
   async updateStock(products: IUpdateStockProduct[]): Promise<void> {
@@ -68,12 +69,27 @@ export default class ProductsRepository implements IProductsRepository {
     return product;
   }
 
-  async findAll({ page, skip, take }: SearchParams): Promise<IProductPaginate> {
-    const [products, count] = await this.ormRepository
-      .createQueryBuilder()
-      .skip(skip)
-      .take(take)
-      .getManyAndCount();
+  async findAll({
+    page,
+    skip,
+    take,
+    name,
+  }: SearchParams): Promise<IProductPaginate> {
+    const where = {} as { [key: string]: unknown };
+
+    if (name) where.name = Like(`%${name}%`);
+
+    const [products, count] = await this.ormRepository.findAndCount({
+      take: take,
+      skip: skip,
+      where,
+    });
+
+    // const [products, count] = await this.ormRepository
+    //   .createQueryBuilder()
+    //   .skip(skip)
+    //   .take(take)
+    //   .getManyAndCount();
 
     const result = {
       total: count,

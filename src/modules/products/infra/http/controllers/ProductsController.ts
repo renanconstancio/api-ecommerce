@@ -10,8 +10,14 @@ export default class ProductsController {
   async index(request: Request, response: Response): Promise<Response> {
     const page = request.query.page ? Number(request.query.page) : 1;
     const limit = request.query.limit ? Number(request.query.limit) : 15;
+
+    const { name } = (request.query.products ? request.query.products : '') as {
+      [key: string]: '';
+    };
+
     const listProducts = container.resolve(ListProductService);
-    const products = await listProducts.execute({ page, limit });
+    const products = await listProducts.execute({ page, limit, name });
+
     return response.json(products);
   }
 
@@ -19,7 +25,6 @@ export default class ProductsController {
     const { id } = request.params;
 
     const showProduct = container.resolve(ShowProductService);
-
     const product = await showProduct.execute({ id });
 
     return response.json(product);
@@ -29,7 +34,6 @@ export default class ProductsController {
     const { name, price, quantity, description, sku } = request.body;
 
     const createProduct = container.resolve(CreateProductService);
-
     const product = await createProduct.execute({
       name,
       price,

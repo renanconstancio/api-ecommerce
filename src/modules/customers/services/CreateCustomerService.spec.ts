@@ -26,6 +26,7 @@ describe('CreateCustomerService', () => {
       cpf: 'cpf',
       phone: 'phone',
       password: 'password',
+      birth_date: '',
     });
 
     expect(customer).toHaveProperty('id');
@@ -39,6 +40,7 @@ describe('CreateCustomerService', () => {
       cpf: 'cpf',
       phone: 'phone',
       password: 'password',
+      birth_date: '',
     });
 
     expect(
@@ -49,6 +51,7 @@ describe('CreateCustomerService', () => {
         cpf: 'cpf',
         phone: 'phone',
         password: 'password',
+        birth_date: '',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

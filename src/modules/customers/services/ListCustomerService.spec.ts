@@ -28,6 +28,7 @@ describe('ListCustomerService', () => {
       cpf: 'cpf',
       phone: 'phone',
       password: 'password',
+      birth_date: '',
     });
 
     const customerList = await listCustomerService.execute({
