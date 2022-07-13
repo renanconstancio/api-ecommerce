@@ -10,17 +10,16 @@ import { container, delay } from 'tsyringe';
 // import { IUserTokensRepository } from '@modules/users/domain/repositories/IUserTokensRepository';
 
 import '@modules/customers/providers';
-
 import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
 import CustomersRepository from '@modules/customers/infra/typeorm/repositories/CustomersRepository';
-
 import CategoriesRepository from '@modules/categories/infra/typeorm/repositories/CategoriesRepository';
 import { ICategoriesRepository } from '@modules/categories/domain/repositories/ICategoriesRepository';
-
 import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
 import StoresRepository from '@modules/stores/infra/typeorm/repositories/StoresRepository';
 import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
 import ProductsRepository from '@modules/products/infra/typeorm/repositories/ProductsRepository';
+import { IProductsSkusRepository } from '@modules/products/domain/repositories/IProductsSkusRepository';
+import ProductsSkusRepository from '@modules/products/infra/typeorm/repositories/ProductsSkusRepository';
 
 container.registerSingleton<ICategoriesRepository>(
   'CategoriesRepository',
@@ -40,6 +39,11 @@ container.registerSingleton<IStoresRepository>(
 container.registerSingleton<IProductsRepository>(
   'ProductsRepository',
   ProductsRepository,
+);
+
+container.registerSingleton<IProductsSkusRepository>(
+  'ProductsSkusRepository',
+  ProductsSkusRepository,
 );
 
 // container.registerSingleton<IOrdersRepository>(

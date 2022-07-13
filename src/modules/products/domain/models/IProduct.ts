@@ -1,4 +1,4 @@
-// import { IOrderProducts } from '@modules/orders/domain/models/IOrderProducts';
+import { IProductSku } from './IProductSku';
 
 export interface IProduct {
   id: string;
@@ -7,6 +7,7 @@ export interface IProduct {
   price: number;
   quantity: number;
   description: string;
+  skus?: IProductSku[];
   created_at: Date;
   updated_at: Date;
 }

@@ -36,8 +36,8 @@ export default class FakeProductsRepository implements IProductsRepository {
     return data;
   }
 
-  async remove(data: Product): Promise<void> {
-    this.products.find(products => products.id !== data.id);
+  async remove(id: string): Promise<void> {
+    this.products.find(products => products.id !== id);
     return;
   }
 

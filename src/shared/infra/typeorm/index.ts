@@ -10,6 +10,7 @@ import Category from '@modules/categories/infra/typeorm/entities/Category';
 import Customer from '@modules/customers/infra/typeorm/entities/Customer';
 import Store from '@modules/stores/infra/typeorm/entities/Store';
 import Product from '@modules/products/infra/typeorm/entities/Product';
+import ProductSku from '@modules/products/infra/typeorm/entities/ProductSku';
 
 // import { CreateProducts1607437608841 } from './migrations/1607437608841-CreateProducts';
 // import { CreateUsers1607534203339 } from './migrations/1607534203339-CreateUsers';
@@ -29,7 +30,7 @@ export const dataSource = new DataSource({
   username: process.env.DB_USER || 'root',
   password: process.env.DB_PASS || 'rootpass',
   database: process.env.DB_DATABASE || 'ecommerce_db',
-  entities: [Store, Category, Product, Customer],
+  entities: [Store, Category, Product, ProductSku, Customer],
   synchronize: true,
   // migrations: [
   //   CreateProducts1607437608841,

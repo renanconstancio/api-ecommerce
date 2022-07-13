@@ -80,6 +80,7 @@ export default class ProductsRepository implements IProductsRepository {
     if (name) where.name = Like(`%${name}%`);
 
     const [products, count] = await this.ormRepository.findAndCount({
+      relations: ['skus'],
       take: take,
       skip: skip,
       where,

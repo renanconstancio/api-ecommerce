@@ -1,21 +1,23 @@
-// import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  // OneToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import ProductSku from './ProductSku';
 
 @Entity('products')
 export default class Product {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  // @OneToMany(() => OrdersProducts, order_products => order_products.product)
-  // order_products: OrdersProducts[];
+  @OneToMany(() => ProductSku, skus => skus.product, {
+    cascade: true,
+  })
+  skus!: ProductSku[];
 
   @Column({ type: 'varchar', length: 20 })
   sku!: string;
