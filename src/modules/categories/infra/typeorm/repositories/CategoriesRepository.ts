@@ -39,8 +39,8 @@ export default class CategoriesRepository implements ICategoriesRepository {
     return data;
   }
 
-  async remove(data: Category): Promise<void> {
-    await this.ormRepository.remove(data);
+  async remove(id: string): Promise<void> {
+    await this.ormRepository.softDelete(id);
   }
 
   async findAll({

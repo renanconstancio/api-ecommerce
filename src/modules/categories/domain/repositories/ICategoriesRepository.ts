@@ -14,5 +14,5 @@ export interface ICategoriesRepository {
   findById(id: string): Promise<ICategory | null>;
   create(data: ICreateCategory): Promise<ICategory>;
   save(data: ICategory): Promise<ICategory>;
-  remove(data: ICategory): Promise<void>;
+  remove(id: string): Promise<void>;
 }

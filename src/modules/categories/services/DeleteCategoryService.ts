@@ -6,7 +6,7 @@ import { ICategoriesRepository } from '../domain/repositories/ICategoriesReposit
 @injectable()
 export default class DeleteCategoryService {
   constructor(
-    @inject('CategorysRepository')
+    @inject('CategoriesRepository')
     private categoriesRepository: ICategoriesRepository,
   ) {}
 
@@ -17,6 +17,6 @@ export default class DeleteCategoryService {
       throw new AppError('Category not found.');
     }
 
-    await this.categoriesRepository.remove(category);
+    await this.categoriesRepository.remove(id);
   }
 }
