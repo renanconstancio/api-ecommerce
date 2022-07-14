@@ -27,11 +27,7 @@ class OrdersRepository implements IOrdersRepository {
     return order;
   }
 
-  async findAll({
-    page,
-    skip,
-    take,
-  }: SearchParams): Promise<IOrderPaginate> {
+  async findAll({ page, skip, take }: SearchParams): Promise<IOrderPaginate> {
     const [orders, count] = await this.ormRepository
       .createQueryBuilder()
       .skip(skip)

@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { Request, Response } from 'express';
 import CreateProductService from '@modules/products/services/CreateProductService';
 import DeleteProductService from '@modules/products/services/DeleteProductService';
 import ListProductService from '@modules/products/services/ListProductService';
@@ -31,22 +31,24 @@ export default class ProductsController {
   }
 
   async create(request: Request, response: Response): Promise<Response> {
-    const { name, price, quantity, description, sku } = request.body;
+    const { name, keywords, description, description_text, visible } =
+      request.body;
 
     const createProduct = container.resolve(CreateProductService);
     const product = await createProduct.execute({
       name,
-      price,
-      quantity,
+      keywords,
       description,
-      sku,
+      description_text,
+      visible,
     });
 
     return response.json(product);
   }
 
   async update(request: Request, response: Response): Promise<Response> {
-    const { name, price, quantity, description, sku } = request.body;
+    const { name, keywords, description, description_text, visible } =
+      request.body;
     const { id } = request.params;
 
     const updateProduct = container.resolve(UpdateProductService);
@@ -54,10 +56,10 @@ export default class ProductsController {
     const product = await updateProduct.execute({
       id,
       name,
-      price,
-      quantity,
+      keywords,
       description,
-      sku,
+      description_text,
+      visible,
     });
 
     return response.json(product);

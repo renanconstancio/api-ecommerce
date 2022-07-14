@@ -32,11 +32,7 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  async findAll({
-    page,
-    skip,
-    take,
-  }: SearchParams): Promise<IPaginateUser> {
+  async findAll({ page, skip, take }: SearchParams): Promise<IPaginateUser> {
     const [users, count] = await this.ormRepository
       .createQueryBuilder()
       .skip(skip)

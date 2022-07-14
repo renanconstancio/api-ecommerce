@@ -17,10 +17,10 @@ describe('UpdateProductService', () => {
       updateProductService.execute({
         id: '',
         name: 'Product A',
-        description: '',
-        price: 0,
-        quantity: 0,
-        sku: '',
+        description: 'description',
+        description_text: 'description_text',
+        keywords: 'keywords',
+        visible: 'visible',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

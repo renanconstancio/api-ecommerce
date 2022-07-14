@@ -19,20 +19,24 @@ export default class Product {
   })
   skus!: ProductSku[];
 
-  @Column({ type: 'varchar', length: 20 })
-  sku!: string;
-
   @Column({ type: 'varchar', length: 155 })
   name!: string;
 
-  @Column({ type: 'decimal', default: 0 })
-  price!: number;
+  @Column({ type: 'varchar', length: 255 })
+  keywords!: string;
 
-  @Column({ type: 'int', default: 0 })
-  quantity!: number;
+  @Column({ type: 'varchar', length: 505 })
+  description!: string;
+
+  @Column({
+    type: 'enum',
+    enum: ['visible', 'invisible'],
+    default: 'invisible',
+  })
+  visible!: string;
 
   @Column({ type: 'text' })
-  description!: string;
+  description_text!: string;
 
   @CreateDateColumn()
   created_at!: Date;

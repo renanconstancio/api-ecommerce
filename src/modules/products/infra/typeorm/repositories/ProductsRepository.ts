@@ -1,6 +1,6 @@
+import Product from '../entities/Product';
 import { In, Like, Repository } from 'typeorm';
 import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
-import Product from '../entities/Product';
 import { IFindProducts } from '@modules/products/domain/models/IFindProducts';
 import { ICreateProduct } from '@modules/products/domain/models/ICreateProduct';
 import { IUpdateStockProduct } from '@modules/products/domain/models/IUpdateStockProduct';
@@ -22,18 +22,18 @@ export default class ProductsRepository implements IProductsRepository {
   }
 
   async create({
-    sku,
     name,
-    price,
-    quantity,
+    keywords,
     description,
+    description_text,
+    visible,
   }: ICreateProduct): Promise<Product> {
     const product = this.ormRepository.create({
-      sku,
-      name,
-      price,
-      quantity,
       description,
+      description_text,
+      keywords,
+      name,
+      visible,
     });
 
     await this.ormRepository.save(product);
@@ -90,12 +90,6 @@ export default class ProductsRepository implements IProductsRepository {
       skip: skip,
       where,
     });
-
-    // const [products, count] = await this.ormRepository
-    //   .createQueryBuilder()
-    //   .skip(skip)
-    //   .take(take)
-    //   .getManyAndCount();
 
     const result = {
       total: count,

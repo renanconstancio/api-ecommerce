@@ -83,11 +83,7 @@ export default class StoresRepository implements IStoresRepository {
     return store;
   }
 
-  async findAll({
-    page,
-    skip,
-    take,
-  }: SearchParams): Promise<IStorePaginate> {
+  async findAll({ page, skip, take }: SearchParams): Promise<IStorePaginate> {
     const [stores, count] = await this.ormRepository
       .createQueryBuilder()
       .skip(skip)

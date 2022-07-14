@@ -1,7 +1,7 @@
 export interface ICreateProduct {
-  sku: string;
   name: string;
-  price: number;
-  quantity: number;
+  keywords: string;
   description: string;
+  visible: string;
+  description_text: string;
 }

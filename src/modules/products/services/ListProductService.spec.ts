@@ -16,11 +16,11 @@ describe('ListProductService', () => {
 
   it('must be able to list the customers', async () => {
     await createProduct.execute({
-      name: 'Product A',
-      description: '',
-      price: 0,
-      quantity: 0,
-      sku: '',
+      description: 'description',
+      description_text: 'description_text',
+      keywords: 'keywords',
+      name: 'name',
+      visible: 'visible',
     });
 
     const customerList = await listProductsService.execute({

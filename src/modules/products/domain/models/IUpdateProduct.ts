@@ -1,8 +1,8 @@
 export interface IUpdateProduct {
   id: string;
-  sku: string;
   name: string;
-  price: number;
-  quantity: number;
+  keywords: string;
   description: string;
+  visible: string;
+  description_text: string;
 }

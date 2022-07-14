@@ -17,11 +17,11 @@ describe('DeleteProducts', () => {
 
   it('should be able to delete a product', async () => {
     const product = await createDeleteProduct.execute({
-      price: 0,
-      quantity: 0,
-      name: 'Product A',
-      description: '',
-      sku: '',
+      description: 'description',
+      description_text: 'description_text',
+      keywords: 'keywords',
+      name: 'name',
+      visible: 'visible',
     });
 
     const productDelete = await deleteProduct.execute({

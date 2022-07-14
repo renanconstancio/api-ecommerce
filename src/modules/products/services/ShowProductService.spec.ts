@@ -17,11 +17,11 @@ describe('ShowProductService', () => {
 
   it('must be able to list the products', async () => {
     const category = await createProduct.execute({
-      name: 'Product A',
-      description: '',
-      price: 0,
-      quantity: 0,
-      sku: '',
+      description: 'description',
+      description_text: 'description_text',
+      keywords: 'keywords',
+      name: 'name',
+      visible: 'visible',
     });
     expect(category).toHaveProperty('id');
   });

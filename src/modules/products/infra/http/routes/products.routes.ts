@@ -1,5 +1,5 @@
-import { Router } from 'express';
 import ProductsController from '../controllers/ProductsController';
+import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import { messages } from 'joi-translation-pt-br';
 
@@ -12,11 +12,11 @@ productsRouter
     celebrate(
       {
         [Segments.BODY]: {
-          sku: Joi.string().required(),
           name: Joi.string().required(),
-          price: Joi.number().precision(2).required(),
-          quantity: Joi.number().required(),
-          description: Joi.string().allow('').default(''),
+          keywords: Joi.string().allow(''),
+          description: Joi.string().allow(''),
+          description_text: Joi.string().allow(''),
+          visible: Joi.string().allow('').default('invisible'),
         },
       },
       {
@@ -31,11 +31,11 @@ productsRouter
     celebrate(
       {
         [Segments.BODY]: {
-          sku: Joi.string().required(),
           name: Joi.string().required(),
-          price: Joi.number().precision(2).required(),
-          quantity: Joi.number().required(),
-          description: Joi.string().allow('').default(''),
+          keywords: Joi.string().allow(''),
+          description: Joi.string().allow(''),
+          description_text: Joi.string().allow(''),
+          visible: Joi.string().allow('').default('invisible'),
         },
         [Segments.PARAMS]: {
           id: Joi.string().uuid().required(),

@@ -15,10 +15,10 @@ export default class UpdateProductService {
   async execute({
     id,
     name,
-    price,
-    quantity,
     description,
-    sku,
+    description_text,
+    keywords,
+    visible,
   }: IUpdateProduct): Promise<IProduct> {
     const product = await this.productsRepository.findById(id);
 
@@ -33,13 +33,11 @@ export default class UpdateProductService {
     }
 
     // await redisCache.invalidate('api-vendas-PRODUCT_LIST');
-
     product.name = name;
-    product.price = price;
-    product.quantity = quantity;
     product.description = description;
-    product.sku = sku;
-    product.name = name;
+    product.description_text = description_text;
+    product.keywords = keywords;
+    product.visible = visible;
 
     await this.productsRepository.save(product);
 

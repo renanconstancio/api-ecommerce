@@ -14,11 +14,11 @@ describe('CreateProducts', () => {
 
   it('should be able to create a new Product', async () => {
     const Product = await createProduct.execute({
-      price: 0,
-      quantity: 0,
-      name: 'Product A',
-      description: '',
-      sku: '',
+      description: 'description',
+      description_text: 'description_text',
+      keywords: 'keywords',
+      name: 'name',
+      visible: 'visible',
     });
 
     expect(Product).toHaveProperty('id');
@@ -26,20 +26,20 @@ describe('CreateProducts', () => {
 
   it('should not be able to create two poroduts with the same name', async () => {
     await createProduct.execute({
-      price: 0,
-      quantity: 0,
-      name: 'Product A',
-      description: '',
-      sku: '',
+      description: 'description',
+      description_text: 'description_text',
+      keywords: 'keywords',
+      name: 'name',
+      visible: 'visible',
     });
 
     expect(
       createProduct.execute({
-        price: 0,
-        quantity: 0,
-        name: 'Product A',
-        description: '',
-        sku: '',
+        description: 'description',
+        description_text: 'description_text',
+        keywords: 'keywords',
+        name: 'name',
+        visible: 'visible',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
