@@ -64,7 +64,12 @@ export default class ProductsRepository implements IProductsRepository {
   }
 
   async findById(id: string): Promise<Product | null> {
-    const product = this.ormRepository.findOneBy({ id });
+    const product = this.ormRepository.findOne({
+      relations: ['skus'],
+      where: {
+        id,
+      },
+    });
 
     return product;
   }

@@ -66,6 +66,7 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
         },
       },
     });
+
     return productSku;
   }
 
