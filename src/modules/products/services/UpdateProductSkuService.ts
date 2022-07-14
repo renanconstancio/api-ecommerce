@@ -19,7 +19,7 @@ export default class UpdateProductSkuService {
     quantity,
     sku,
   }: IUpdateProductSku): Promise<IProductSku> {
-    const productSku = await this.productsSkusRepository.findById(id);
+    const productSku = await this.productsSkusRepository.findByIdSku(id);
 
     if (!productSku) {
       throw new AppError('Product not found.');

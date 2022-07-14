@@ -27,7 +27,7 @@ productsSkusRouter
     productsSkuController.create,
   )
   .put(
-    '/:product_id/skus',
+    '/:product_id/skus/:id',
     celebrate(
       {
         [Segments.BODY]: {
@@ -38,6 +38,7 @@ productsSkusRouter
           quantity: Joi.number().required(),
         },
         [Segments.PARAMS]: {
+          product_id: Joi.string().uuid().required(),
           id: Joi.string().uuid().required(),
         },
       },
@@ -53,6 +54,7 @@ productsSkusRouter
     celebrate(
       {
         [Segments.PARAMS]: {
+          product_id: Joi.string().uuid().required(),
           id: Joi.string().uuid().required(),
         },
       },

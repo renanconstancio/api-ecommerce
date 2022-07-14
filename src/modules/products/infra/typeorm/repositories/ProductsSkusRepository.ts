@@ -5,13 +5,14 @@ import { IProduct } from '@modules/products/domain/models/IProduct';
 import { dataSource } from '@shared/infra/typeorm';
 import Product from '../entities/Product';
 import ProductSku from '../entities/ProductSku';
+import { IProductSku } from '@modules/products/domain/models/IProductSku';
 
 export default class ProductsSkusRepository implements IProductsSkusRepository {
-  private ormRepository: Repository<ProductSku>;
+  private ormSkuRepository: Repository<ProductSku>;
   private ormProductRepository: Repository<Product>;
 
   constructor() {
-    this.ormRepository = dataSource.getRepository(ProductSku);
+    this.ormSkuRepository = dataSource.getRepository(ProductSku);
     this.ormProductRepository = dataSource.getRepository(Product);
   }
 
@@ -23,7 +24,7 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
     sale_price,
     quantity,
   }: ICreateProductSku): Promise<ProductSku> {
-    const productSku = this.ormRepository.create({
+    const productSku = this.ormSkuRepository.create({
       product_id,
       sku,
       price,
@@ -32,23 +33,23 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
       quantity,
     });
 
-    await this.ormRepository.save(productSku);
+    await this.ormSkuRepository.save(productSku);
 
     return productSku;
   }
 
   async save(sku: ProductSku): Promise<ProductSku> {
-    await this.ormRepository.save(sku);
+    await this.ormSkuRepository.save(sku);
 
     return sku;
   }
 
   async remove(id: string): Promise<void> {
-    await this.ormRepository.softDelete(id);
+    await this.ormSkuRepository.softDelete(id);
   }
 
   async findBySku(sku: string): Promise<ProductSku | null> {
-    const productSku = this.ormRepository.findOneBy({
+    const productSku = this.ormSkuRepository.findOneBy({
       sku,
     });
 
@@ -64,6 +65,13 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
           id,
         },
       },
+    });
+    return productSku;
+  }
+
+  async findByIdSku(id: string): Promise<IProductSku | null> {
+    const productSku = this.ormSkuRepository.findOneBy({
+      id,
     });
     return productSku;
   }
