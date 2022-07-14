@@ -26,16 +26,16 @@ export default class ProductSku {
   @Column({ type: 'varchar', length: 20 })
   sku!: string;
 
-  @Column('decimal')
+  @Column({ type: 'decimal', default: 0 })
   cost_price!: number;
 
-  @Column('decimal')
+  @Column({ type: 'decimal', default: 0 })
   sale_price!: number;
 
-  @Column('decimal')
+  @Column({ type: 'decimal', default: 0 })
   price!: number;
 
-  @Column('int')
+  @Column({ type: 'int', default: 0 })
   quantity!: number;
 
   @CreateDateColumn()

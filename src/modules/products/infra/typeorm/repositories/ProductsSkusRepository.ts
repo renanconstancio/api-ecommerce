@@ -1,15 +1,18 @@
-import { Like, Repository } from 'typeorm';
-import ProductSku from '../entities/ProductSku';
+import { Repository } from 'typeorm';
 import { IProductsSkusRepository } from '@modules/products/domain/repositories/IProductsSkusRepository';
 import { ICreateProductSku } from '@modules/products/domain/models/ICreateProductSku';
-import { IProductPaginate } from '@modules/products/domain/models/IProductPaginate';
+import { IProduct } from '@modules/products/domain/models/IProduct';
 import { dataSource } from '@shared/infra/typeorm';
+import Product from '../entities/Product';
+import ProductSku from '../entities/ProductSku';
 
 export default class ProductsSkusRepository implements IProductsSkusRepository {
   private ormRepository: Repository<ProductSku>;
+  private ormProductRepository: Repository<Product>;
 
   constructor() {
     this.ormRepository = dataSource.getRepository(ProductSku);
+    this.ormProductRepository = dataSource.getRepository(Product);
   }
 
   async create({
@@ -52,42 +55,24 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
     return productSku;
   }
 
-  async findById(id: string): Promise<ProductSku | null> {
-    const productSku = this.ormRepository.findOneBy({
-      id,
+  async findById(product_id: string, id: string): Promise<IProduct | null> {
+    const productSku = this.ormProductRepository.findOne({
+      relations: ['skus'],
+      where: {
+        id: product_id,
+        skus: {
+          id,
+        },
+      },
     });
-
     return productSku;
   }
 
-  async findAll({
-    product_id,
-  }: {
-    product_id: string;
-  }): Promise<IProductPaginate> {
-    const where = {} as { [key: string]: unknown };
-
-    if (name) where.name = Like(`%${name}%`);
-
-    const [products, count] = await this.ormRepository.findAndCount({
+  async findAll(product_id: string): Promise<IProduct | null> {
+    const productSku = this.ormProductRepository.findOne({
       relations: ['skus'],
-
-      where,
+      where: { id: product_id },
     });
-
-    // const [products, count] = await this.ormRepository
-    //   .createQueryBuilder()
-    //   .skip(skip)
-    //   .take(take)
-    //   .getManyAndCount();
-
-    const result = {
-      total: count,
-      per_page: 1,
-      current_page: 1,
-      data: products,
-    };
-
-    return result;
+    return productSku;
   }
 }

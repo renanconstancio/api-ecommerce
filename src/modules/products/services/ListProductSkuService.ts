@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
-import { IProduct } from '../domain/models/IProduct';
 import { IProductsSkusRepository } from '../domain/repositories/IProductsSkusRepository';
+import { IProduct } from '../domain/models/IProduct';
+import AppError from '@shared/errors/AppError';
 
 @injectable()
 export default class ListProductSkuService {
@@ -9,11 +10,13 @@ export default class ListProductSkuService {
     private productsSkusRepository: IProductsSkusRepository,
   ) {}
 
-  async execute(): Promise<IProduct> {
-    const products = await this.productsSkusRepository.findAll({
-      product_id,
-    });
+  async execute(product_id: string): Promise<IProduct> {
+    const productSku = await this.productsSkusRepository.findAll(product_id);
 
-    return products;
+    if (!productSku) {
+      throw new AppError('Product Sku not found.');
+    }
+
+    return productSku;
   }
 }

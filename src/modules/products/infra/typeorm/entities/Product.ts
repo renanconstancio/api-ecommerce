@@ -25,10 +25,10 @@ export default class Product {
   @Column({ type: 'varchar', length: 155 })
   name!: string;
 
-  @Column('decimal')
+  @Column({ type: 'decimal', default: 0 })
   price!: number;
 
-  @Column('int')
+  @Column({ type: 'int', default: 0 })
   quantity!: number;
 
   @Column({ type: 'text' })

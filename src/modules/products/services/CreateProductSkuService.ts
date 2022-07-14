@@ -27,7 +27,6 @@ export default class CreateProductSkuService {
     }
 
     // await redisCache.invalidate('api-vendas-PRODUCT_LIST');
-
     const product = await this.productsSkusRepository.create({
       sku: sku,
       product_id: product_id,

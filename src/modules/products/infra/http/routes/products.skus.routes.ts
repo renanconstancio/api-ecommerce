@@ -50,22 +50,49 @@ productsSkusRouter
   )
   .delete(
     '/:product_id/skus/:id',
-    celebrate({
-      [Segments.PARAMS]: {
-        id: Joi.string().uuid().required(),
+    celebrate(
+      {
+        [Segments.PARAMS]: {
+          id: Joi.string().uuid().required(),
+        },
       },
-    }),
+      {
+        abortEarly: false,
+        messages: messages,
+      },
+    ),
     productsSkuController.delete,
   )
-  // .get(
-  //   '/:id',
-  //   celebrate({
-  //     [Segments.PARAMS]: {
-  //       id: Joi.string().uuid().required(),
-  //     },
-  //   }),
-  //   productsSkuController.show,
-  // )
-  .get('/:product_id/skus', productsSkuController.index);
+  .get(
+    '/:product_id/skus/:id',
+    celebrate(
+      {
+        [Segments.PARAMS]: {
+          product_id: Joi.string().uuid().required(),
+          id: Joi.string().uuid().required(),
+        },
+      },
+      {
+        abortEarly: false,
+        messages: messages,
+      },
+    ),
+    productsSkuController.show,
+  )
+  .get(
+    '/:product_id/skus',
+    celebrate(
+      {
+        [Segments.PARAMS]: {
+          product_id: Joi.string().uuid().required(),
+        },
+      },
+      {
+        abortEarly: false,
+        messages: messages,
+      },
+    ),
+    productsSkuController.index,
+  );
 
 export default productsSkusRouter;
