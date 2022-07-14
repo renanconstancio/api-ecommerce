@@ -11,8 +11,8 @@ export default class DeleteProductSkuService {
     private productsSkusRepository: IProductsSkusRepository,
   ) {}
 
-  async execute({ id }: IDeleteProductSku): Promise<void> {
-    const product = await this.productsSkusRepository.findByIdSku(id);
+  async execute({ product_id, id }: IDeleteProductSku): Promise<void> {
+    const product = await this.productsSkusRepository.findById(product_id, id);
 
     if (!product) {
       throw new AppError('Product Sku not found.');
