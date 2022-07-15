@@ -23,6 +23,12 @@ export default class ProductsImagesRepository
     await this.ormRepository.softDelete(id);
   }
 
+  async findBySkuIdCount(product_sku_id: string): Promise<number | null> {
+    const [, count] = this.ormRepository.findAndCountBy({ product_sku_id });
+
+    return count;
+  }
+
   async findById(id: string): Promise<ProductImage | null> {
     const productImage = this.ormRepository.findOneBy({ id });
 

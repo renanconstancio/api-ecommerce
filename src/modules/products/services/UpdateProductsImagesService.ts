@@ -23,7 +23,7 @@ export default class UpdateProductsImagesService {
     product_sku_id,
     imageFilename,
   }: IUpdateProductImage): Promise<void> {
-    // const image = await this.productsImagesRepository.findById(id);
+    const imageCount = await this.productsImagesRepository.findBySkuIdCount(product_sku_id);
 
     // if (!image) {
     //   throw new AppError('Image not found.');
@@ -48,7 +48,7 @@ export default class UpdateProductsImagesService {
     await this.productsImagesRepository.save({
       product_sku_id,
       image: imageFilename,
-      position: 0,
+      position: imageCount + 1,
     } as ICreateProductImage);
 
     await this.resizeImage.lg(imageFilename);
