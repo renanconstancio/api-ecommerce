@@ -65,7 +65,7 @@ export default class ProductsRepository implements IProductsRepository {
 
   async findById(id: string): Promise<Product | null> {
     const product = this.ormRepository.findOne({
-      relations: ['skus'],
+      relations: ['skus', 'skus.images'],
       where: {
         id,
       },
@@ -85,7 +85,7 @@ export default class ProductsRepository implements IProductsRepository {
     if (name) where.name = Like(`%${name}%`);
 
     const [products, count] = await this.ormRepository.findAndCount({
-      relations: ['skus'],
+      relations: ['skus', 'skus.images'],
       take: take,
       skip: skip,
       where,

@@ -5,6 +5,7 @@ import DeleteProductService from '@modules/products/services/DeleteProductServic
 import ListProductService from '@modules/products/services/ListProductService';
 import ShowProductService from '@modules/products/services/ShowProductService';
 import UpdateProductService from '@modules/products/services/UpdateProductService';
+import { classToClass } from 'class-transformer';
 
 export default class ProductsController {
   async index(request: Request, response: Response): Promise<Response> {
@@ -18,7 +19,7 @@ export default class ProductsController {
     const listProducts = container.resolve(ListProductService);
     const products = await listProducts.execute({ page, limit, name });
 
-    return response.json(products);
+    return response.json(classToClass(products));
   }
 
   async show(request: Request, response: Response): Promise<Response> {

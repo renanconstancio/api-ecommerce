@@ -6,10 +6,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import Product from './Product';
+import ProductImage from './ProductImage';
 
 @Entity('products_skus')
 export default class ProductSku {
@@ -19,6 +21,11 @@ export default class ProductSku {
   @ManyToOne(() => Product, product => product.skus)
   @JoinColumn({ name: 'product_id' })
   product: Product;
+
+  @OneToMany(() => ProductImage, imgs => imgs.isku, {
+    cascade: true,
+  })
+  images!: ProductSku[];
 
   @Column({ type: 'varchar', length: 36, nullable: true })
   product_id!: string;

@@ -1,8 +1,8 @@
 import { IProduct } from '../models/IProduct';
 import { IFindProducts } from '../models/IFindProducts';
-import { ICreateProduct } from '../models/ICreateProduct';
 import { IUpdateStockProduct } from '../models/IUpdateStockProduct';
 import { IProductPaginate } from '../models/IProductPaginate';
+import { ICreateProduct } from '../models/ICreateProduct';
 
 type SearchParams = {
   page: number;

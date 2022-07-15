@@ -58,7 +58,7 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
 
   async findById(product_id: string, id: string): Promise<IProduct | null> {
     const productSku = this.ormProductRepository.findOne({
-      relations: ['skus'],
+      relations: ['skus', 'skus.images'],
       where: {
         id: product_id,
         skus: {
@@ -79,7 +79,7 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
 
   async findAll(product_id: string): Promise<IProduct | null> {
     const productSku = this.ormProductRepository.findOne({
-      relations: ['skus'],
+      relations: ['skus', 'skus.images'],
       where: { id: product_id },
     });
     return productSku;

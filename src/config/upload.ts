@@ -1,6 +1,7 @@
-import path from 'path';
+import path, { extname } from 'path';
 import multer, { StorageEngine } from 'multer';
-import crypto from 'crypto';
+import { randomUUID as uuid } from 'crypto';
+import AppError from '@shared/errors/AppError';
 
 interface IUploadConfig {
   driver: 's3' | 'disk';
@@ -25,11 +26,9 @@ export default {
   tmpFolder,
   multer: {
     storage: multer.diskStorage({
-      destination: tmpFolder,
+      destination: uploadFolder,
       filename(request, file, callback) {
-        const fileHash = crypto.randomBytes(10).toString('hex');
-
-        const filename = `${fileHash}-${file.originalname}`;
+        const filename = `${uuid()}${extname(file.originalname)}`;
 
         callback(null, filename);
       },

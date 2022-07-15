@@ -20,6 +20,8 @@ import { IProductsRepository } from '@modules/products/domain/repositories/IProd
 import ProductsRepository from '@modules/products/infra/typeorm/repositories/ProductsRepository';
 import { IProductsSkusRepository } from '@modules/products/domain/repositories/IProductsSkusRepository';
 import ProductsSkusRepository from '@modules/products/infra/typeorm/repositories/ProductsSkusRepository';
+import { IProductsImagesRepository } from '@modules/products/domain/repositories/IProductsImagesRepository';
+import ProductsImagesRepository from '@modules/products/infra/typeorm/repositories/ProductsImagesRepository';
 
 container.registerSingleton<ICategoriesRepository>(
   'CategoriesRepository',
@@ -38,12 +40,17 @@ container.registerSingleton<IStoresRepository>(
 
 container.registerSingleton<IProductsRepository>(
   'ProductsRepository',
-  ProductsRepository,
+  delay(() => ProductsRepository),
 );
 
 container.registerSingleton<IProductsSkusRepository>(
   'ProductsSkusRepository',
-  ProductsSkusRepository,
+  delay(() => ProductsSkusRepository),
+);
+
+container.registerSingleton<IProductsImagesRepository>(
+  'ProductsImagesRepository',
+  delay(() => ProductsImagesRepository),
 );
 
 // container.registerSingleton<IOrdersRepository>(
