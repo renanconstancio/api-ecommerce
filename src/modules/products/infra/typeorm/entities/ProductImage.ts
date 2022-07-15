@@ -54,4 +54,22 @@ export default class ProductImage {
 
     return `${process.env.BASE_AVATAR_URL}/images/${this.image}`;
   }
+
+  @Expose({ name: 'image_xs' })
+  getImageXs(): string | null {
+    if (!this.image) {
+      return null;
+    }
+
+    return `${process.env.BASE_AVATAR_URL}/images/xs/${this.image}`;
+  }
+
+  @Expose({ name: 'image_md' })
+  getImageMd(): string | null {
+    if (!this.image) {
+      return null;
+    }
+
+    return `${process.env.BASE_AVATAR_URL}/images/md/${this.image}`;
+  }
 }

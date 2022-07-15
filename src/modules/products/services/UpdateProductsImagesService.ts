@@ -7,12 +7,15 @@ import S3StorageProvider from '@shared/providers/StorageProvider/S3StorageProvid
 import { IUpdateProductImage } from '../domain/models/IUpdateProductImage';
 import { IProductsImagesRepository } from '../domain/repositories/IProductsImagesRepository';
 import { ICreateProductImage } from '../domain/models/ICreateProductImage';
+import { IResizeImage } from '../providers/model/IResizeImage';
 
 @injectable()
 export default class UpdateProductsImagesService {
   constructor(
     @inject('ProductsImagesRepository')
     private productsImagesRepository: IProductsImagesRepository,
+    @inject('ResizeImage')
+    private resizeImage: IResizeImage,
   ) {}
 
   async execute({
@@ -20,11 +23,11 @@ export default class UpdateProductsImagesService {
     product_sku_id,
     imageFilename,
   }: IUpdateProductImage): Promise<void> {
-    const image = await this.productsImagesRepository.findById(id);
+    // const image = await this.productsImagesRepository.findById(id);
 
-    if (!image) {
-      throw new AppError('Image not found.');
-    }
+    // if (!image) {
+    //   throw new AppError('Image not found.');
+    // }
 
     // if (uploadConfig.driver === 's3') {
     //   const s3Provider = new S3StorageProvider();
@@ -47,6 +50,12 @@ export default class UpdateProductsImagesService {
       image: imageFilename,
       position: 0,
     } as ICreateProductImage);
+
+    await this.resizeImage.lg(imageFilename);
+
+    await this.resizeImage.md(imageFilename);
+
+    await this.resizeImage.xs(imageFilename);
 
     return;
   }

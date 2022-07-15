@@ -10,6 +10,7 @@ import { container, delay } from 'tsyringe';
 // import { IUserTokensRepository } from '@modules/users/domain/repositories/IUserTokensRepository';
 
 import '@modules/customers/providers';
+import '@modules/products/providers';
 import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
 import CustomersRepository from '@modules/customers/infra/typeorm/repositories/CustomersRepository';
 import CategoriesRepository from '@modules/categories/infra/typeorm/repositories/CategoriesRepository';
