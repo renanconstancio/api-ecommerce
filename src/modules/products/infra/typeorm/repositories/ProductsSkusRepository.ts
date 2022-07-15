@@ -49,7 +49,7 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
   }
 
   async findBySku(sku: string): Promise<ProductSku | null> {
-    const productSku = this.ormSkuRepository.findOneBy({
+    const productSku = await this.ormSkuRepository.findOneBy({
       sku,
     });
 
@@ -57,7 +57,7 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
   }
 
   async findById(product_id: string, id: string): Promise<IProduct | null> {
-    const productSku = this.ormProductRepository.findOne({
+    const productSku = await this.ormProductRepository.findOne({
       relations: ['skus', 'skus.images'],
       where: {
         id: product_id,
@@ -71,14 +71,14 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
   }
 
   async findByIdSku(id: string): Promise<IProductSku | null> {
-    const productSku = this.ormSkuRepository.findOneBy({
+    const productSku = await this.ormSkuRepository.findOneBy({
       id,
     });
     return productSku;
   }
 
   async findAll(product_id: string): Promise<IProduct | null> {
-    const productSku = this.ormProductRepository.findOne({
+    const productSku = await this.ormProductRepository.findOne({
       relations: ['skus', 'skus.images'],
       where: { id: product_id },
     });

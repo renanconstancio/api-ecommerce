@@ -56,7 +56,7 @@ export default class ProductsRepository implements IProductsRepository {
   }
 
   async findByName(name: string): Promise<Product | null> {
-    const product = this.ormRepository.findOneBy({
+    const product = await this.ormRepository.findOneBy({
       name,
     });
 
@@ -64,7 +64,7 @@ export default class ProductsRepository implements IProductsRepository {
   }
 
   async findById(id: string): Promise<Product | null> {
-    const product = this.ormRepository.findOne({
+    const product = await this.ormRepository.findOne({
       relations: ['skus', 'skus.images'],
       where: {
         id,

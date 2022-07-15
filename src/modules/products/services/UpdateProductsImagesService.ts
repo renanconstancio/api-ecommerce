@@ -23,7 +23,9 @@ export default class UpdateProductsImagesService {
     product_sku_id,
     imageFilename,
   }: IUpdateProductImage): Promise<void> {
-    const imageCount = await this.productsImagesRepository.findBySkuIdCount(product_sku_id);
+    const imageCount = await this.productsImagesRepository.findBySkuIdCount(
+      product_sku_id,
+    );
 
     // if (!image) {
     //   throw new AppError('Image not found.');
