@@ -35,7 +35,7 @@ export default class Product {
   })
   visible!: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   description_text!: string;
 
   @CreateDateColumn()
