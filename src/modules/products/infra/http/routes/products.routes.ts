@@ -13,9 +13,9 @@ productsRouter
       {
         [Segments.BODY]: {
           name: Joi.string().required(),
-          keywords: Joi.string().allow(''),
-          description: Joi.string().allow(''),
-          description_text: Joi.string().allow(''),
+          keywords: Joi.string().allow('').optional(),
+          description: Joi.string().allow('').optional(),
+          description_text: Joi.string().allow('').optional(),
           visible: Joi.string().allow('').default('invisible'),
         },
       },
@@ -32,9 +32,9 @@ productsRouter
       {
         [Segments.BODY]: {
           name: Joi.string().required(),
-          keywords: Joi.string().allow(''),
-          description: Joi.string().allow(''),
-          description_text: Joi.string().allow(''),
+          keywords: Joi.string().allow('').optional(),
+          description: Joi.string().allow('').optional(),
+          description_text: Joi.string().allow('').optional(),
           visible: Joi.string().allow('').default('invisible'),
         },
         [Segments.PARAMS]: {
