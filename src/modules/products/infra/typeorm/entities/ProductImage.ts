@@ -31,7 +31,7 @@ export default class ProductImage {
   image!: string;
 
   @Column({ type: 'int', default: 0 })
-  @Exclude()
+  // @Exclude()
   position!: number;
 
   @CreateDateColumn()

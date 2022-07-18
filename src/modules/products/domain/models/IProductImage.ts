@@ -1,9 +1,14 @@
 export interface IProductImage {
-  id: string;
-  product_sku_id: string;
   image: string;
   position: number;
-  created_at: Date;
-  updated_at: Date;
-  deleted_at: Date;
+
+  // image_url: string;
+  // image_xs: string;
+  // image_md: string;
+
+  // id: string;
+  // product_sku_id: string;
+  // created_at: Date;
+  // updated_at: Date;
+  // deleted_at: Date;
 }

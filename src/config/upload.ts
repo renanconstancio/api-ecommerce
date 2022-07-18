@@ -1,7 +1,6 @@
 import path, { extname } from 'path';
 import multer, { StorageEngine } from 'multer';
 import { randomUUID as uuid } from 'crypto';
-import AppError from '@shared/errors/AppError';
 
 interface IUploadConfig {
   driver: 's3' | 'disk';

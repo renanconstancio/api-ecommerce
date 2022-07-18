@@ -25,7 +25,7 @@ export default class ProductSku {
   @OneToMany(() => ProductImage, imgs => imgs.isku, {
     cascade: true,
   })
-  images!: ProductSku[];
+  images!: ProductImage[];
 
   @Column({ type: 'varchar', length: 36, nullable: true })
   product_id!: string;

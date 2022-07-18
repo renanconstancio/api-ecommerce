@@ -65,6 +65,13 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
           id,
         },
       },
+      order: {
+        skus: {
+          images: {
+            position: 'ASC',
+          },
+        },
+      },
     });
 
     return productSku;
@@ -81,6 +88,13 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
     const productSku = await this.ormProductRepository.findOne({
       relations: ['skus', 'skus.images'],
       where: { id: product_id },
+      order: {
+        skus: {
+          images: {
+            position: 'ASC',
+          },
+        },
+      },
     });
     return productSku;
   }

@@ -66,6 +66,13 @@ export default class ProductsRepository implements IProductsRepository {
   async findById(id: string): Promise<Product | null> {
     const product = await this.ormRepository.findOne({
       relations: ['skus', 'skus.images'],
+      order: {
+        skus: {
+          images: {
+            position: 'ASC',
+          },
+        },
+      },
       where: {
         id,
       },
@@ -88,6 +95,13 @@ export default class ProductsRepository implements IProductsRepository {
       relations: ['skus', 'skus.images'],
       take: take,
       skip: skip,
+      order: {
+        skus: {
+          images: {
+            position: 'ASC',
+          },
+        },
+      },
       where,
     });
 
