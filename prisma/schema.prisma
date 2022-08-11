@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id             String     @id @db.VarChar(36)
+  category_id    String?    @db.VarChar(36)
+  name           String     @db.VarChar(255)
+  keywords       String?    @db.VarChar(255)
+  description    String?    @db.Text
+  position       Int        @default(0)
+  created_at     DateTime   @default(now()) @db.DateTime(6)
+  updated_at     DateTime   @default(now()) @db.DateTime(6)
+  deleted_at     DateTime?  @db.DateTime(6)
+  category       Category?  @relation("categoryTocategory", fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_cc7f32b7ab33c70b9e715afae84")
+  other_category Category[] @relation("categoryTocategory")
+
+  @@index([category_id], map: "FK_cc7f32b7ab33c70b9e715afae84")
+  @@map("category")
+}
+
+model Customers {
+  id         String    @id @db.VarChar(36)
+  name       String    @db.VarChar(105)
+  email      String    @db.VarChar(85)
+  password   String    @db.VarChar(86)
+  cpf        String?   @db.VarChar(20)
+  cnpj       String?   @db.VarChar(22)
+  phone      String?   @db.VarChar(20)
+  avatar     String?   @db.VarChar(41)
+  created_at DateTime  @default(now()) @db.DateTime(6)
+  updated_at DateTime  @default(now()) @db.DateTime(6)
+  deleted_at DateTime? @db.DateTime(6)
+  birth_date String?   @db.VarChar(20)
+
+  @@map("customers")
+}
+
+model Products {
+  id               String           @id @db.VarChar(36)
+  name             String           @db.VarChar(155)
+  created_at       DateTime         @default(now()) @db.DateTime(6)
+  updated_at       DateTime         @default(now()) @db.DateTime(6)
+  deleted_at       DateTime?        @db.DateTime(6)
+  keywords         String           @db.VarChar(255)
+  visible          products_visible @default(invisible)
+  description_text String?          @db.Text
+  description      String           @db.VarChar(505)
+  products_skus    ProductsSkus[]
+
+  @@map("products")
+}
+
+model ProductsImages {
+  id             String        @id @db.VarChar(36)
+  product_sku_id String?       @db.VarChar(36)
+  image          String        @db.VarChar(42)
+  position       Int           @default(0)
+  created_at     DateTime      @default(now()) @db.DateTime(6)
+  updated_at     DateTime      @default(now()) @db.DateTime(6)
+  deleted_at     DateTime?     @db.DateTime(6)
+  products_skus  ProductsSkus? @relation(fields: [product_sku_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_d8ddccdc9bbd7345d257f6cb9fc")
+
+  @@index([product_sku_id], map: "FK_d8ddccdc9bbd7345d257f6cb9fc")
+  @@map("products_images")
+}
+
+model ProductsSkus {
+  id              String           @id @db.VarChar(36)
+  sku             String           @db.VarChar(20)
+  price           Decimal          @default(0) @db.Decimal(10, 0)
+  quantity        Int              @default(0)
+  created_at      DateTime         @default(now()) @db.DateTime(6)
+  updated_at      DateTime         @default(now()) @db.DateTime(6)
+  deleted_at      DateTime?        @db.DateTime(6)
+  cost_price      Decimal          @default(0) @db.Decimal(10, 0)
+  sale_price      Decimal          @default(0) @db.Decimal(10, 0)
+  product_id      String?          @db.VarChar(36)
+  products        Products?        @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_4a232ada01f43f6119ed6636985")
+  products_images ProductsImages[]
+
+  @@index([product_id], map: "FK_4a232ada01f43f6119ed6636985")
+  @@map("products_skus")
+}
+
+model Stores {
+  id            String    @id @db.VarChar(36)
+  title         String    @db.VarChar(105)
+  fantasy_name  String    @db.VarChar(105)
+  email         String    @db.VarChar(55)
+  phone         String    @db.VarChar(20)
+  opening_hours String    @db.VarChar(155)
+  address       String    @db.VarChar(55)
+  number        String    @db.VarChar(4)
+  district      String    @db.VarChar(35)
+  complement    String    @db.VarChar(45)
+  city          String    @db.VarChar(35)
+  state         String    @db.VarChar(2)
+  zip_code      String    @db.VarChar(9)
+  visible       Int       @default(1) @db.TinyInt
+  created_at    DateTime  @default(now()) @db.DateTime(6)
+  updated_at    DateTime  @default(now()) @db.DateTime(6)
+  deleated_at   DateTime? @db.DateTime(6)
+
+  @@map("sotres")
+}
+
+enum products_visible {
+  visible
+  invisible
+}
