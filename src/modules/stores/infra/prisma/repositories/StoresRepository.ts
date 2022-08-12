@@ -76,12 +76,10 @@ export default class StoresRepository implements IStoresRepository {
   }
 
   async findAllByIds(stores: IFindStores[]): Promise<Stores[]> {
-    const productIds: [] = stores.map(store => store.id);
-
     return await prisma.stores.findMany({
       where: {
         id: {
-          hasEvery: productIds,
+          in: stores.map(store => store.id),
         },
       },
     });
