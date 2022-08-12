@@ -1,7 +1,9 @@
-import { ICategory } from '../models/ICategory';
+// import { ICategory } from '../models/ICategory';
+import { Category } from '@prisma/client';
 import { ICreateCategory } from '../models/ICreateCategory';
 import { IPaginateCategory } from '../models/IPaginateCategory';
 import { ISearchCategory } from '../models/ISearchCategory';
+import { IUpdateCategory } from '../models/IUpdateCategory';
 
 export interface ICategoriesRepository {
   findAll({
@@ -10,9 +12,9 @@ export interface ICategoriesRepository {
     take,
     name,
   }: ISearchCategory): Promise<IPaginateCategory>;
-  findByName(name: string): Promise<ICategory | null>;
-  findById(id: string): Promise<ICategory | null>;
-  create(data: ICreateCategory): Promise<ICategory>;
-  save(data: ICategory): Promise<ICategory>;
+  findByName(name: string): Promise<Category | null>;
+  findById(id: string): Promise<Category | null>;
+  create(data: ICreateCategory): Promise<Category>;
+  update(data: IUpdateCategory): Promise<Category>;
   remove(id: string): Promise<void>;
 }

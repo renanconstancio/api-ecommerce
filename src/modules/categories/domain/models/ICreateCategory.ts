@@ -1,7 +1,7 @@
 export interface ICreateCategory {
-  category_id?: string | undefined;
   name: string;
-  description: string;
-  keywords: string;
+  description: string | null;
+  keywords: string | null;
   position: number;
+  category_id: string | null;
 }

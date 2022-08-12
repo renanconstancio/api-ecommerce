@@ -5,7 +5,6 @@ import DeleteProductSkuService from '@modules/products/services/DeleteProductSku
 import ListProductSkuService from '@modules/products/services/ListProductSkuService';
 import ShowProductSkuService from '@modules/products/services/ShowProductSkuService';
 import UpdateProductSkuService from '@modules/products/services/UpdateProductSkuService';
-import { classToClass } from 'class-transformer';
 
 export default class ProductsSkusController {
   async index(request: Request, response: Response): Promise<Response> {
@@ -15,7 +14,7 @@ export default class ProductsSkusController {
 
     const productsSkus = await listProductsSkus.execute(product_id);
 
-    return response.json(classToClass(productsSkus));
+    return response.json(productsSkus);
   }
 
   async show(request: Request, response: Response): Promise<Response> {
@@ -25,7 +24,7 @@ export default class ProductsSkusController {
 
     const product = await showProduct.execute({ id, product_id });
 
-    return response.json(classToClass(product));
+    return response.json(product);
   }
 
   async create(request: Request, response: Response): Promise<Response> {

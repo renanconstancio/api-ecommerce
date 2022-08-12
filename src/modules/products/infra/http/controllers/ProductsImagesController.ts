@@ -1,6 +1,5 @@
 import { container } from 'tsyringe';
 import { Request, Response } from 'express';
-import { classToClass } from 'class-transformer';
 import UpdateProductsImagesService from '@modules/products/services/UpdateProductsImagesService';
 
 export default class ProductsImagesController {
@@ -15,7 +14,7 @@ export default class ProductsImagesController {
       imageFilename: filename,
     });
 
-    return response.json(classToClass(image));
+    return response.json(image);
   }
 
   async delete(request: Request, response: Response): Promise<Response> {

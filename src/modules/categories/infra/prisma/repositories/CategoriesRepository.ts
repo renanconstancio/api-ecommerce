@@ -1,37 +1,42 @@
+import { prisma } from '@shared/infra/prisma';
 import { ICreateCategory } from '@modules/categories/domain/models/ICreateCategory';
 import { IPaginateCategory } from '@modules/categories/domain/models/IPaginateCategory';
 import { ISearchCategory } from '@modules/categories/domain/models/ISearchCategory';
 import { ICategoriesRepository } from '@modules/categories/domain/repositories/ICategoriesRepository';
-import { Category } from '@prisma/client';
-import { prisma } from '@shared/infra/prisma';
+import { IUpdateCategory } from '@modules/categories/domain/models/IUpdateCategory';
+import { Category, Prisma } from '@prisma/client';
 
 export default class CategoriesRepository implements ICategoriesRepository {
-  async create({
-    category_id,
-    name,
-    description,
-    keywords,
-    position,
-  }: ICreateCategory): Promise<Category> {
-    const category = await prisma.category.create({
-      category_id,
-      name,
-      description,
-      keywords,
-      position,
+  async create(data: ICreateCategory): Promise<Category> {
+    return await prisma.category.create({
+      data: {
+        ...data,
+      },
     });
-
-    return category;
   }
 
-  async save(data: Category): Promise<Category> {
-    await prisma.category.save(data);
-
-    return data;
+  async update(data: IUpdateCategory): Promise<Category> {
+    return await prisma.category.update({
+      data,
+      where: {
+        id: data.id,
+      },
+    });
   }
 
   async remove(id: string): Promise<void> {
-    await prisma.category.softDelete(id);
+    // const formatedMysqlString = new Date(
+    //   new Date(new Date(new Date()).toISOString()).getTime() -
+    //     new Date().getTimezoneOffset() * 60000,
+    // )
+    //   .toISOString()
+    //   .slice(0, 19)
+    //   .replace('T', ' ');
+
+    await prisma.category.update({
+      data: { deleted_at: new Date() },
+      where: { id },
+    });
   }
 
   async findAll({
@@ -40,39 +45,41 @@ export default class CategoriesRepository implements ICategoriesRepository {
     take,
     name,
   }: ISearchCategory): Promise<IPaginateCategory> {
-    const where = {} as { [key: string]: unknown };
+    let where: Prisma.CategoryWhereInput = { deleted_at: null };
 
-    if (name) where.name = Like(`%${name}%`);
+    if (name) where = { ...where, name: name };
 
-    const [categories, count] = await prisma.category.findAndCount({
+    const categoriesCount = await prisma.category.count({ where });
+
+    const categories = await prisma.category.findMany({
+      include: {
+        category: true,
+      },
       take: take,
       skip: skip,
       where,
     });
 
-    const result = {
-      total: count,
+    return {
+      total: categoriesCount,
       per_page: take,
       current_page: page,
       data: categories,
     };
-
-    return result;
   }
 
   async findById(id: string): Promise<Category | null> {
-    const category = await prisma.category.findOneBy({
-      id,
+    return await prisma.category.findFirst({
+      where: {
+        id,
+        AND: { deleted_at: null },
+      },
     });
-
-    return category;
   }
 
   async findByName(name: string): Promise<Category | null> {
-    const category = await prisma.category.findOneBy({
-      name,
+    return await prisma.category.findFirst({
+      where: { name, AND: { deleted_at: null } },
     });
-
-    return category;
   }
 }

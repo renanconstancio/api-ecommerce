@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
-import Store from '../../../infra/typeorm/entities/Store';
+import Store from '../../../infra/prisma/entities/Store';
 import { ICreateStore } from '@modules/stores/domain/models/ICreateStore';
 import { IStorePaginate } from '@modules/stores/domain/models/IStorePaginate';
 import { IStore } from '@modules/stores/domain/models/IStore';

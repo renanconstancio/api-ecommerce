@@ -2,13 +2,13 @@ export interface ICustomer {
   id: string;
   name: string;
   email: string;
-  phone: string;
-  cpf: string;
-  cnpj: string;
-  avatar: string;
-  birth_date: string;
   password: string;
+  cpf: string | null;
+  cnpj: string | null;
+  phone: string | null;
+  avatar: string | null;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date | null;
+  birth_date: string | null;
 }

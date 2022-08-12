@@ -1,6 +1,7 @@
+import { Category } from '@prisma/client';
 import AppError from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
-import { ICategory } from '../domain/models/ICategory';
+
 import { IUpdateCategory } from '../domain/models/IUpdateCategory';
 import { ICategoriesRepository } from '../domain/repositories/ICategoriesRepository';
 
@@ -17,7 +18,8 @@ export default class UpdateCategoryService {
     description,
     keywords,
     position,
-  }: IUpdateCategory): Promise<ICategory> {
+    category_id,
+  }: IUpdateCategory): Promise<Category> {
     const category = await this.categoriesRepository.findById(id);
 
     if (!category) {
@@ -30,12 +32,14 @@ export default class UpdateCategoryService {
       throw new AppError('There is already one category with this name.');
     }
 
+    category.id = id;
+    category.category_id = category_id;
     category.name = name;
     category.description = description;
     category.keywords = keywords;
     category.position = position;
 
-    await this.categoriesRepository.save(category);
+    await this.categoriesRepository.update(category);
 
     return category;
   }

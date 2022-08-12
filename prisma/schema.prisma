@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Category {
-  id             String     @id @db.VarChar(36)
+  id             String     @id @default(uuid()) @db.VarChar(36)
   category_id    String?    @db.VarChar(36)
   name           String     @db.VarChar(255)
   keywords       String?    @db.VarChar(255)
@@ -25,7 +25,7 @@ model Category {
 }
 
 model Customers {
-  id         String    @id @db.VarChar(36)
+  id         String    @id @default(uuid()) @db.VarChar(36)
   name       String    @db.VarChar(105)
   email      String    @db.VarChar(85)
   password   String    @db.VarChar(86)
@@ -42,7 +42,7 @@ model Customers {
 }
 
 model Products {
-  id               String           @id @db.VarChar(36)
+  id               String           @id @default(uuid()) @db.VarChar(36)
   name             String           @db.VarChar(155)
   created_at       DateTime         @default(now()) @db.DateTime(6)
   updated_at       DateTime         @default(now()) @db.DateTime(6)
@@ -57,7 +57,7 @@ model Products {
 }
 
 model ProductsImages {
-  id             String        @id @db.VarChar(36)
+  id             String        @id @default(uuid()) @db.VarChar(36)
   product_sku_id String?       @db.VarChar(36)
   image          String        @db.VarChar(42)
   position       Int           @default(0)
@@ -71,7 +71,7 @@ model ProductsImages {
 }
 
 model ProductsSkus {
-  id              String           @id @db.VarChar(36)
+  id              String           @id @default(uuid()) @db.VarChar(36)
   sku             String           @db.VarChar(20)
   price           Decimal          @default(0) @db.Decimal(10, 0)
   quantity        Int              @default(0)
@@ -89,7 +89,7 @@ model ProductsSkus {
 }
 
 model Stores {
-  id            String    @id @db.VarChar(36)
+  id            String    @id @default(uuid()) @db.VarChar(36)
   title         String    @db.VarChar(105)
   fantasy_name  String    @db.VarChar(105)
   email         String    @db.VarChar(55)
@@ -105,7 +105,7 @@ model Stores {
   visible       Int       @default(1) @db.TinyInt
   created_at    DateTime  @default(now()) @db.DateTime(6)
   updated_at    DateTime  @default(now()) @db.DateTime(6)
-  deleated_at   DateTime? @db.DateTime(6)
+  deleted_at    DateTime? @db.DateTime(6)
 
   @@map("sotres")
 }

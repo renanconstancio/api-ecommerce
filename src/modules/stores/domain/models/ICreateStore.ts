@@ -11,5 +11,5 @@ export interface ICreateStore {
   city: string;
   state: string;
   zip_code: string;
-  visible: boolean;
+  visible: number;
 }

@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { Request, Response } from 'express';
 import CreateCustomerService from '@modules/categories/services/CreateCategoryService';
 import UpdateCategoryService from '@modules/categories/services/UpdateCategoryService';
 import ListCategoryService from '@modules/categories/services/ListCategoryService';
@@ -24,12 +24,13 @@ export class CategoriesController {
   }
 
   async update(request: Request, response: Response): Promise<Response> {
-    const { name, description, keywords, position } = request.body;
     const { id } = request.params;
+    const { name, description, keywords, position, category_id } = request.body;
 
-    const createCategory = container.resolve(UpdateCategoryService);
+    const updateCategory = container.resolve(UpdateCategoryService);
 
-    const customer = await createCategory.execute({
+    const customer = await updateCategory.execute({
+      category_id,
       name,
       description,
       keywords,
