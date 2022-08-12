@@ -14,8 +14,10 @@ import StoresRepository from '@modules/stores/infra/prisma/repositories/StoresRe
 
 import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
 import ProductsRepository from '@modules/products/infra/typeorm/repositories/ProductsRepository';
+
 import { IProductsSkusRepository } from '@modules/products/domain/repositories/IProductsSkusRepository';
 import ProductsSkusRepository from '@modules/products/infra/typeorm/repositories/ProductsSkusRepository';
+
 import { IProductsImagesRepository } from '@modules/products/domain/repositories/IProductsImagesRepository';
 import ProductsImagesRepository from '@modules/products/infra/typeorm/repositories/ProductsImagesRepository';
 
@@ -24,10 +26,10 @@ container.registerSingleton<ICategoriesRepository>(
   delay(() => CategoriesRepository),
 );
 
-// container.registerSingleton<ICustomersRepository>(
-//   'CustomersRepository',
-//   delay(() => CustomersRepository),
-// );
+container.registerSingleton<ICustomersRepository>(
+  'CustomersRepository',
+  delay(() => CustomersRepository),
+);
 
 container.registerSingleton<IStoresRepository>(
   'StoresRepository',
