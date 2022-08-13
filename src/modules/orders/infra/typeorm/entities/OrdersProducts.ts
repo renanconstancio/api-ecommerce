@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 
 import Order from './Order';
-import Product from '@modules/products/infra/typeorm/entities/Product';
+import Product from '@modules/products/infra/prisma/entities/Product';
 import { IOrderProducts } from '@modules/orders/domain/models/IOrderProducts';
 
 @Entity('orders_products')
