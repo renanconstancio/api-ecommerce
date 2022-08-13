@@ -1,7 +1,7 @@
-import { IProduct } from '../models/IProduct';
+import { Products } from '@prisma/client';
 import { IFindProducts } from '../models/IFindProducts';
 import { IUpdateStockProduct } from '../models/IUpdateStockProduct';
-import { IProductPaginate } from '../models/IProductPaginate';
+import { IPaginateProduct } from '../models/IPaginateProduct';
 import { ICreateProduct } from '../models/ICreateProduct';
 
 type SearchParams = {
@@ -12,12 +12,13 @@ type SearchParams = {
 };
 
 export interface IProductsRepository {
-  findByName(name: string): Promise<IProduct | null>;
-  findById(id: string): Promise<IProduct | null>;
-  findAll({ page, skip, take, name }: SearchParams): Promise<IProductPaginate>;
-  findAllByIds(products: IFindProducts[]): Promise<IProduct[]>;
-  create(data: ICreateProduct): Promise<IProduct>;
-  save(product: IProduct): Promise<IProduct>;
-  updateStock(products: IUpdateStockProduct[]): Promise<void>;
+  findAll({ page, skip, take, name }: SearchParams): Promise<IPaginateProduct>;
+  findByName(name: string): Promise<Products | null>;
+  findById(id: string): Promise<Products | null>;
+  findAllByIds(id: IFindProducts[]): Promise<Products[]>;
+
+  create(data: ICreateProduct): Promise<Products>;
+  update(data: IUpdateStockProduct): Promise<Products>;
+  updateStock(data: IUpdateStockProduct[]): Promise<void>;
   remove(id: string): Promise<void>;
 }

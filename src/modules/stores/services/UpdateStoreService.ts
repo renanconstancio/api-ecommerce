@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
-import AppError from '@shared/errors/AppError';
 import { IStoresRepository } from '../domain/repositories/IStoresRepository';
 import { IUpdateStore } from '../domain/models/IUpdateStore';
-import { IStore } from '../domain/models/IStore';
+import { Stores } from '@prisma/client';
+import AppError from '@shared/errors/AppError';
 
 @injectable()
 export default class UpdateStoreService {
@@ -26,19 +26,21 @@ export default class UpdateStoreService {
     state,
     zip_code,
     visible,
-  }: IUpdateStore): Promise<IStore> {
+  }: IUpdateStore): Promise<Stores> {
     const store = await this.storesRepository.findById(id);
 
     if (!store) {
       throw new AppError('Store not found.');
     }
 
-    const productExists = await this.storesRepository.findByFantasyName(
+    const storeExists = await this.storesRepository.findByFantasyName(
       fantasy_name,
     );
 
-    if (productExists) {
-      throw new AppError('There is already one store with this fantasy name');
+    if (storeExists && fantasy_name !== store.fantasy_name) {
+      throw new AppError(
+        'There is already one store with this fantasy fantasy_name',
+      );
     }
 
     store.title = title;
@@ -53,9 +55,9 @@ export default class UpdateStoreService {
     store.city = city;
     store.state = state;
     store.zip_code = zip_code;
-    store.visible = visible;
+    store.visible = visible ? 1 : 0;
 
-    await this.storesRepository.save(store);
+    await this.storesRepository.update(store);
 
     return store;
   }

@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { IProductsRepository } from '../domain/repositories/IProductsRepository';
-import { IProductPaginate } from '../domain/models/IProductPaginate';
+import { IPaginateProduct } from '../domain/models/IPaginateProduct';
 
 interface SearchParams {
   page: number;
@@ -19,7 +19,7 @@ export default class ListProductService {
     page,
     limit,
     name,
-  }: SearchParams): Promise<IProductPaginate> {
+  }: SearchParams): Promise<IPaginateProduct> {
     const take = limit;
     const skip = (Number(page) - 1) * take;
     const products = await this.productsRepository.findAll({

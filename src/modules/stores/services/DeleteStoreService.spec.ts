@@ -1,8 +1,8 @@
 import 'reflect-metadata';
-import AppError from '@shared/errors/AppError';
 import FakeStoresRepository from '../domain/repositories/fakes/FakeStoresRepository';
 import CreateStoreService from './CreateStoreService';
 import DeleteStoreService from './DeleteStoreService';
+import AppError from '@shared/errors/AppError';
 
 let fakeStoriesRepository: FakeStoresRepository;
 let createDeleteStore: CreateStoreService;
@@ -29,7 +29,7 @@ describe('DeleteStoreService', () => {
       city: '',
       state: '',
       zip_code: '',
-      visible: true,
+      visible: 1,
     });
 
     const storeDelete = await deleteStore.execute({

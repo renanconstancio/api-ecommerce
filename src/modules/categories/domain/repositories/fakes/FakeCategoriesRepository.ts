@@ -2,33 +2,27 @@ import { v4 as uuidv4 } from 'uuid';
 import { ICreateCategory } from '@modules/categories/domain/models/ICreateCategory';
 import { ICategoriesRepository } from '@modules/categories/domain/repositories/ICategoriesRepository';
 import { IPaginateCategory } from '../../models/IPaginateCategory';
-import Category from '@modules/categories/infra/typeorm/entities/Category';
+import { Category } from '@prisma/client';
 
 export default class FakeCategoriesRepository implements ICategoriesRepository {
   private categories: Category[] = [];
 
-  async create({
-    category_id,
-    name,
-    description,
-    keywords,
-    position,
-  }: ICreateCategory): Promise<Category> {
-    const category = new Category();
+  async create(data: ICreateCategory): Promise<Category> {
+    const category = {} as Category;
 
     category.id = uuidv4();
-    category.category_id = category_id ?? '';
-    category.name = name;
-    category.description = description;
-    category.keywords = keywords;
-    category.position = position;
+    category.name = data.name;
+    category.description = data.description;
+    category.keywords = data.keywords;
+    category.position = data.position;
+    category.category_id = data.category_id ?? '';
 
     this.categories.push(category);
 
     return category;
   }
 
-  async save(data: Category): Promise<Category> {
+  async update(data: Category): Promise<Category> {
     Object.assign(this.categories, data);
 
     return data;

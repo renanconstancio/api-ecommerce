@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
+import { messages } from 'joi-translation-pt-br';
 import StoresController from '../controllers/StoresController';
 
 const storesRouter = Router();
@@ -29,26 +30,32 @@ storesRouter
   )
   .put(
     '/:id',
-    celebrate({
-      [Segments.BODY]: {
-        title: Joi.string().required(),
-        fantasy_name: Joi.string().required(),
-        email: Joi.string().required(),
-        phone: Joi.string().required(),
-        opening_hours: Joi.string().allow('').optional(),
-        address: Joi.string().required(),
-        number: Joi.string().required(),
-        district: Joi.string().required(),
-        complement: Joi.string().allow('').optional(),
-        city: Joi.string().required(),
-        state: Joi.string().required(),
-        zip_code: Joi.string().required(),
-        visible: Joi.string().allow('').optional().default(0),
+    celebrate(
+      {
+        [Segments.BODY]: {
+          title: Joi.string().required(),
+          fantasy_name: Joi.string().required(),
+          email: Joi.string().required(),
+          phone: Joi.string().required(),
+          opening_hours: Joi.string().allow('').optional(),
+          address: Joi.string().required(),
+          number: Joi.string().required(),
+          district: Joi.string().required(),
+          complement: Joi.string().allow('').optional(),
+          city: Joi.string().required(),
+          state: Joi.string().required(),
+          zip_code: Joi.string().required(),
+          visible: Joi.boolean().default(0).optional(),
+        },
+        [Segments.PARAMS]: {
+          id: Joi.string().uuid().required(),
+        },
       },
-      [Segments.PARAMS]: {
-        id: Joi.string().uuid().required(),
+      {
+        abortEarly: false,
+        messages: messages,
       },
-    }),
+    ),
     storesController.update,
   )
   .delete(

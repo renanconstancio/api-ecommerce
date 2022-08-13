@@ -17,6 +17,7 @@ describe('DeleteCategories', () => {
 
   it('should be able to delete a category', async () => {
     const category = await createDeleteCategory.execute({
+      category_id: null,
       name: 'Category A',
       description: '',
       keywords: '',
@@ -28,8 +29,6 @@ describe('DeleteCategories', () => {
     });
 
     expect(categoryDelete).toBeUndefined();
-    // expect(categoryDelete).rejects.toBeInstanceOf(AppError);
-    //.toBeNull();
   });
 
   it('should not be able to delete a category', async () => {
@@ -38,6 +37,5 @@ describe('DeleteCategories', () => {
         id: '',
       }),
     ).rejects.toBeInstanceOf(AppError);
-    //.toBeNull();
   });
 });

@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 import { IStoresRepository } from '../domain/repositories/IStoresRepository';
-import { IStore } from '../domain/models/IStore';
 import { ICreateStore } from '../domain/models/ICreateStore';
+import { Stores } from '@prisma/client';
 
 @injectable()
 export default class CreateStoreService {
@@ -11,23 +11,9 @@ export default class CreateStoreService {
     private storesRepository: IStoresRepository,
   ) {}
 
-  async execute({
-    title,
-    fantasy_name,
-    email,
-    phone,
-    opening_hours,
-    address,
-    number,
-    district,
-    complement,
-    city,
-    state,
-    zip_code,
-    visible,
-  }: ICreateStore): Promise<IStore> {
+  async execute(data: ICreateStore): Promise<Stores> {
     const storeExists = await this.storesRepository.findByFantasyName(
-      fantasy_name,
+      data.fantasy_name,
     );
 
     if (storeExists) {
@@ -35,19 +21,8 @@ export default class CreateStoreService {
     }
 
     const store = await this.storesRepository.create({
-      title,
-      fantasy_name,
-      email,
-      phone,
-      opening_hours,
-      address,
-      number,
-      district,
-      complement,
-      city,
-      state,
-      zip_code,
-      visible,
+      ...data,
+      visible: data.visible ? 1 : 0,
     });
 
     return store;

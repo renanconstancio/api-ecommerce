@@ -1,8 +1,8 @@
-import AppError from '@shared/errors/AppError';
 import 'reflect-metadata';
 import FakeCategoriesRepository from '../domain/repositories/fakes/FakeCategoriesRepository';
 import CreateCategoryService from './CreateCategoryService';
 import ShowCategoryService from './ShowCategoryService';
+import AppError from '@shared/errors/AppError';
 
 let fakeCustomersRepository: FakeCategoriesRepository;
 let showCategoryService: ShowCategoryService;

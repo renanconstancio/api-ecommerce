@@ -1,9 +1,9 @@
-import AppError from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
 import { ICreateCustomer } from '../domain/models/ICreateCustomer';
-import { ICustomer } from '../domain/models/ICustomer';
 import { ICustomersRepository } from '../domain/repositories/ICustomersRepository';
 import { IHashProvider } from '../providers/HashProvider/models/IHashPovider';
+import AppError from '@shared/errors/AppError';
+import { Customers } from '@prisma/client';
 
 @injectable()
 export default class CreateCustomerService {
@@ -14,30 +14,17 @@ export default class CreateCustomerService {
     private hashProvider: IHashProvider,
   ) {}
 
-  async execute({
-    name,
-    email,
-    cnpj,
-    cpf,
-    phone,
-    birth_date,
-    password,
-  }: ICreateCustomer): Promise<ICustomer> {
-    const emailExists = await this.customersRepository.findByEmail(email);
+  async execute(data: ICreateCustomer): Promise<Customers> {
+    const emailExists = await this.customersRepository.findByEmail(data.email);
 
     if (emailExists) {
       throw new AppError('Email address already used.');
     }
 
-    const hashedPassword = await this.hashProvider.generateHash(password);
+    const hashedPassword = await this.hashProvider.generateHash(data.password);
 
     const customer = await this.customersRepository.create({
-      name,
-      email,
-      cnpj,
-      cpf,
-      phone,
-      birth_date,
+      ...data,
       password: hashedPassword,
     });
 

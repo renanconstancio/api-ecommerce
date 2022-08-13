@@ -1,7 +1,7 @@
-import AppError from '@shared/errors/AppError';
 import 'reflect-metadata';
 import FakeCategoriesRepository from '../domain/repositories/fakes/FakeCategoriesRepository';
 import UpdateCategoryService from './UpdateCategoryService';
+import AppError from '@shared/errors/AppError';
 
 let fakeCategoriesRepository: FakeCategoriesRepository;
 let updateCategoryService: UpdateCategoryService;
@@ -12,9 +12,10 @@ describe('UpdateCategoryService', () => {
     updateCategoryService = new UpdateCategoryService(fakeCategoriesRepository);
   });
 
-  it('must be able to list the customers', async () => {
+  it('must be able to list the categories', async () => {
     expect(
       updateCategoryService.execute({
+        category_id: null,
         id: '',
         name: '',
         description: '',

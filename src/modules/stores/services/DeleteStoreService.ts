@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
-import AppError from '@shared/errors/AppError';
 import { IStoresRepository } from '../domain/repositories/IStoresRepository';
 import { IDeleteProduct } from '@modules/products/domain/models/IDeleteProduct';
+import AppError from '@shared/errors/AppError';
 
 @injectable()
 export default class DeleteStoreService {
@@ -17,6 +17,6 @@ export default class DeleteStoreService {
       throw new AppError('Product not found.');
     }
 
-    await this.storesRepository.remove(store);
+    await this.storesRepository.remove(id);
   }
 }

@@ -28,7 +28,7 @@ describe('ListStoreService', () => {
       phone: '',
       state: '',
       title: '',
-      visible: true,
+      visible: 1,
       zip_code: '',
     });
 

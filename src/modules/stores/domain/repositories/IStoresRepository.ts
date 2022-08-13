@@ -1,6 +1,6 @@
 import { Stores } from '@prisma/client';
 import { ICreateStore } from '../models/ICreateStore';
-import { IStorePaginate } from '../models/IStorePaginate';
+import { IPaginateStore } from '../models/IPaginateStore';
 import { IUpdateStore } from '../models/IUpdateStore';
 
 type SearchParams = {
@@ -10,7 +10,7 @@ type SearchParams = {
 };
 
 export interface IStoresRepository {
-  findAll({ page, skip, take }: SearchParams): Promise<IStorePaginate>;
+  findAll({ page, skip, take }: SearchParams): Promise<IPaginateStore>;
   findById(id: string): Promise<Stores | null>;
   findByFantasyName(fantasy_name: string): Promise<Stores | null>;
 

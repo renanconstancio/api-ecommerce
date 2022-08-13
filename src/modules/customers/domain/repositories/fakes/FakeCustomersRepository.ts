@@ -1,49 +1,41 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ICreateCustomer } from '@modules/customers/domain/models/ICreateCustomer';
 import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
-import { ICustomerPaginate } from '../../models/ICustomerPaginate';
-import Customer from '@modules/customers/infra/typeorm/entities/Customer';
+import { Customers } from '@prisma/client';
+import { IPaginateCustomer } from '../../models/IPaginateCustomer';
+import { IUpdateCustomer } from '../../models/IUpdateCustomer';
 
 class FakeCustomersRepository implements ICustomersRepository {
-  private customers: Customer[] = [];
+  private customers: Customers[] = [];
 
-  async create({
-    name,
-    email,
-    cnpj,
-    cpf,
-    phone,
-    password,
-  }: ICreateCustomer): Promise<Customer> {
-    const customer = new Customer();
+  async create(data: ICreateCustomer): Promise<Customers> {
+    const customer = {} as Customers;
 
     customer.id = uuidv4();
-    customer.name = name;
-    customer.email = email;
-    customer.cnpj = cnpj;
-    customer.cpf = cpf;
-    customer.phone = phone;
-    customer.password = password;
+    customer.name = data.name;
+    customer.email = data.email;
+    customer.cnpj = data.cnpj;
+    customer.cpf = data.cpf;
+    customer.phone = data.phone;
+    customer.password = data.password;
 
     this.customers.push(customer);
 
     return customer;
   }
 
-  async save(customer: Customer): Promise<Customer> {
-    const findIndex = this.customers.findIndex(
-      findCustomer => findCustomer.id === customer.id,
-    );
+  async update(data: IUpdateCustomer): Promise<Customers> {
+    Object.assign(this.customers, data);
 
-    this.customers[findIndex] = customer;
-
-    return customer;
+    return data as Customers;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  async remove(id: string): Promise<void> {}
+  async remove(id: string): Promise<void> {
+    this.customers.find(loop => loop.id !== id);
+    return;
+  }
 
-  async findAll(): Promise<ICustomerPaginate> {
+  async findAll(): Promise<IPaginateCustomer> {
     return {
       total: 1,
       per_page: 1,
@@ -52,7 +44,7 @@ class FakeCustomersRepository implements ICustomersRepository {
     };
   }
 
-  async findAllPaginate(): Promise<ICustomerPaginate> {
+  async findAllPaginate(): Promise<IPaginateCustomer> {
     const customersPaginate = {
       total: 1,
       per_page: 1,
@@ -63,19 +55,19 @@ class FakeCustomersRepository implements ICustomersRepository {
     return customersPaginate;
   }
 
-  async findByName(name: string): Promise<Customer | null> {
+  async findByName(name: string): Promise<Customers | null> {
     const customer = this.customers.find(customer => customer.name === name);
-    return customer as Customer;
+    return customer as Customers;
   }
 
-  async findById(id: string): Promise<Customer | null> {
+  async findById(id: string): Promise<Customers | null> {
     const customer = this.customers.find(customer => customer.id === id);
-    return customer as Customer;
+    return customer as Customers;
   }
 
-  async findByEmail(email: string): Promise<Customer | null> {
+  async findByEmail(email: string): Promise<Customers | null> {
     const customer = this.customers.find(customer => customer.email === email);
-    return customer as Customer;
+    return customer as Customers;
   }
 }
 

@@ -14,8 +14,9 @@ describe('ListCategoryService', () => {
     createCategory = new CreateCategoryService(fakeCategoriesRepository);
   });
 
-  it('must be able to list the customers', async () => {
+  it('must be able to list the categories', async () => {
     await createCategory.execute({
+      category_id: null,
       description: '',
       keywords: '',
       name: '',

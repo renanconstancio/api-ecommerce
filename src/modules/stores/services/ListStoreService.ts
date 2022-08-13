@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { IStorePaginate } from '../domain/models/IStorePaginate';
+import { IPaginateStore } from '../domain/models/IPaginateStore';
 import { IStoresRepository } from '../domain/repositories/IStoresRepository';
 
 interface SearchParams {
@@ -14,7 +14,7 @@ export default class ListStoreService {
     private storesRepository: IStoresRepository,
   ) {}
 
-  async execute({ page, limit }: SearchParams): Promise<IStorePaginate> {
+  async execute({ page, limit }: SearchParams): Promise<IPaginateStore> {
     const take = limit;
     const skip = (Number(page) - 1) * take;
     const stores = await this.storesRepository.findAll({

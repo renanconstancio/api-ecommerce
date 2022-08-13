@@ -1,76 +1,62 @@
 import { v4 as uuidv4 } from 'uuid';
 import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
-import Store from '../../../infra/prisma/entities/Store';
+
 import { ICreateStore } from '@modules/stores/domain/models/ICreateStore';
-import { IStorePaginate } from '@modules/stores/domain/models/IStorePaginate';
-import { IStore } from '@modules/stores/domain/models/IStore';
+import { IPaginateStore } from '@modules/stores/domain/models/IPaginateStore';
+import { Stores } from '@prisma/client';
 
 export default class FakeStoresRepository implements IStoresRepository {
-  private stores: Store[] = [];
+  private stores: Stores[] = [];
 
-  async create({
-    title,
-    fantasy_name,
-    email,
-    phone,
-    opening_hours,
-    address,
-    number,
-    district,
-    complement,
-    city,
-    state,
-    zip_code,
-    visible,
-  }: ICreateStore): Promise<Store> {
-    const store = new Store();
+  async create(data: ICreateStore): Promise<Stores> {
+    const store = {} as Stores;
 
     store.id = uuidv4();
-    store.title = title;
-    store.fantasy_name = fantasy_name;
-    store.email = email;
-    store.phone = phone;
-    store.opening_hours = opening_hours;
-    store.address = address;
-    store.number = number;
-    store.district = district;
-    store.complement = complement;
-    store.city = city;
-    store.state = state;
-    store.zip_code = zip_code;
-    store.visible = visible;
+    store.title = data.title;
+    store.fantasy_name = data.fantasy_name;
+    store.email = data.email;
+    store.phone = data.phone;
+    store.opening_hours = data.opening_hours;
+    store.address = data.address;
+    store.number = data.number;
+    store.district = data.district;
+    store.complement = data.complement;
+    store.city = data.city;
+    store.state = data.state;
+    store.zip_code = data.zip_code;
+    store.visible = data.visible ? 1 : 0;
 
     this.stores.push(store);
 
     return store;
   }
 
-  async save(data: Store): Promise<Store> {
+  async update(data: ICreateStore): Promise<Stores> {
     Object.assign(this.stores, data);
 
-    return data;
+    return data as Stores;
   }
 
-  async remove(data: Store): Promise<void> {
-    this.stores.find(stores => stores.id !== data.id);
+  async remove(id: string): Promise<void> {
+    this.stores.find(stores => stores.id !== id);
     return;
   }
 
-  async findAll(): Promise<IStorePaginate> {
-    return {} as IStorePaginate;
+  async findAll(): Promise<IPaginateStore> {
+    return {} as IPaginateStore;
   }
 
-  async findById(id: string): Promise<Store | null> {
+  async findById(id: string): Promise<Stores | null> {
     const store = this.stores.find(stores => stores.id === id);
 
-    return store as Store;
+    return store as Stores;
   }
 
-  async findByFantasyName(fantasy_name: string): Promise<IStore | null> {
+  async findByFantasyName(fantasy_name: string): Promise<Stores | null> {
     const store = this.stores.find(
       stores => stores.fantasy_name === fantasy_name,
     );
 
-    return store as Store;
+    return store as Stores;
   }
 }

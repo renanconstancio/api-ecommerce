@@ -69,10 +69,9 @@ export default class CategoriesRepository implements ICategoriesRepository {
   }
 
   async findById(id: string): Promise<Category | null> {
-    return await prisma.category.findFirst({
+    return await prisma.category.findUnique({
       where: {
         id,
-        AND: { deleted_at: null },
       },
     });
   }

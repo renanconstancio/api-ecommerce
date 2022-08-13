@@ -24,7 +24,7 @@ describe('CreateCategories', () => {
     expect(category).toHaveProperty('id');
   });
 
-  it('should not be able to create two customers with the same email', async () => {
+  it('should not be able to create two category with the same name', async () => {
     await createCategory.execute({
       name: 'Category A',
       description: '',

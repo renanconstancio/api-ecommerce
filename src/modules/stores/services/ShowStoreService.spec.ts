@@ -29,7 +29,7 @@ describe('ShowStoreService', () => {
       city: 'city',
       state: 'state',
       zip_code: 'zip_code',
-      visible: false,
+      visible: 0,
     });
     expect(category).toHaveProperty('id');
   });

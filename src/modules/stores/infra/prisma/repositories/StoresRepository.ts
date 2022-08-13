@@ -1,10 +1,10 @@
 import { prisma } from '@shared/infra/prisma';
 import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
 import { ICreateStore } from '@modules/stores/domain/models/ICreateStore';
-import { IStorePaginate } from '@modules/stores/domain/models/IStorePaginate';
+import { IPaginateStore } from '@modules/stores/domain/models/IPaginateStore';
 import { IFindStores } from '@modules/stores/domain/models/IFindStores';
-import { Prisma, Stores } from '@prisma/client';
 import { IUpdateStore } from '@modules/stores/domain/models/IUpdateStore';
+import { Prisma, Stores } from '@prisma/client';
 
 type SearchParams = {
   page: number;
@@ -54,14 +54,14 @@ export default class StoresRepository implements IStoresRepository {
     return store;
   }
 
-  async findAll({ page, skip, take }: SearchParams): Promise<IStorePaginate> {
+  async findAll({ page, skip, take }: SearchParams): Promise<IPaginateStore> {
     const where: Prisma.CategoryWhereInput = { deleted_at: null };
 
     // if (name) where = { ...where, name: name };
 
-    const storesCount = await prisma.category.count({ where });
+    const storesCount = await prisma.stores.count({ where });
 
-    const stores = await prisma.category.findMany({
+    const stores = await prisma.stores.findMany({
       take: take,
       skip: skip,
       where,

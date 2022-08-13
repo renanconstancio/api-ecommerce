@@ -27,7 +27,7 @@ describe('UpdateStoreService', () => {
         city: 'city',
         state: 'state',
         zip_code: 'zip_code',
-        visible: false,
+        visible: 0,
         id: '',
       }),
     ).rejects.toBeInstanceOf(AppError);

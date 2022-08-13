@@ -1,5 +1,5 @@
 import { prisma } from '@shared/infra/prisma';
-import { ICustomerPaginate } from '@modules/customers/domain/models/ICustomerPaginate';
+import { ICustomerPaginate } from '@modules/customers/domain/models/IPaginateCustomer';
 import { ICreateCustomer } from '@modules/customers/domain/models/ICreateCustomer';
 import {
   CustomersParams,

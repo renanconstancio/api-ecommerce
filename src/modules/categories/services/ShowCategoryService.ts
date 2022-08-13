@@ -1,8 +1,8 @@
-import AppError from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
+import { Category } from '@prisma/client';
 import { ICategoriesRepository } from '../domain/repositories/ICategoriesRepository';
 import { IShowCategory } from '../domain/models/IShowCategory';
-import { ICategory } from '../domain/models/ICategory';
+import AppError from '@shared/errors/AppError';
 
 @injectable()
 export default class ShowCategoryService {
@@ -11,7 +11,7 @@ export default class ShowCategoryService {
     private categoriesRepository: ICategoriesRepository,
   ) {}
 
-  async execute({ id }: IShowCategory): Promise<ICategory> {
+  async execute({ id }: IShowCategory): Promise<Category> {
     const category = await this.categoriesRepository.findById(id);
 
     if (!category) {

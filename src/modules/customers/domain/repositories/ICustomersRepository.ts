@@ -1,7 +1,7 @@
-import { ICustomer } from '../models/ICustomer';
+import { Customers } from '@prisma/client';
 import { ICreateCustomer } from '../models/ICreateCustomer';
 import { IUpdateCustomer } from '../models/IUpdateCustomer';
-import { ICustomerPaginate } from '../models/ICustomerPaginate';
+import { IPaginateCustomer } from '../models/IPaginateCustomer';
 
 export type CustomersParams = {
   page: number;
@@ -10,12 +10,12 @@ export type CustomersParams = {
 };
 
 export interface ICustomersRepository {
-  findAll({ page, skip, take }: CustomersParams): Promise<ICustomerPaginate>;
-  findByName(name: string): Promise<ICustomer | null>;
-  findById(id: string): Promise<ICustomer | null>;
-  findByEmail(email: string): Promise<ICustomer | null>;
+  findAll({ page, skip, take }: CustomersParams): Promise<IPaginateCustomer>;
+  findByName(name: string): Promise<Customers | null>;
+  findById(id: string): Promise<Customers | null>;
+  findByEmail(email: string): Promise<Customers | null>;
 
-  create(data: ICreateCustomer): Promise<ICustomer>;
-  update(customer: IUpdateCustomer): Promise<ICustomer>;
+  create(data: ICreateCustomer): Promise<Customers>;
+  update(customer: IUpdateCustomer): Promise<Customers>;
   remove(id: string): Promise<void>;
 }

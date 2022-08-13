@@ -12,8 +12,8 @@ describe('CreateStoreService', () => {
     createStore = new CreateStoreService(fakeStoresRepository);
   });
 
-  it('should be able to create a new category', async () => {
-    const category = await createStore.execute({
+  it('should be able to create a new store', async () => {
+    const store = await createStore.execute({
       title: 'title',
       fantasy_name: 'fantasy_name',
       email: 'email',
@@ -26,14 +26,14 @@ describe('CreateStoreService', () => {
       city: 'city',
       state: 'state',
       zip_code: 'zip_code',
-      visible: false,
+      visible: 1,
     });
 
-    expect(category).toHaveProperty('id');
+    expect(store).toHaveProperty('id');
   });
 
-  it('should not be able to create two customers with the same email', async () => {
-    await createStore.execute({
+  it('should not be able to create two customers with the same fantasy_name', async () => {
+    const equalData = {
       title: 'title',
       fantasy_name: 'fantasy_name',
       email: 'email',
@@ -46,25 +46,11 @@ describe('CreateStoreService', () => {
       city: 'city',
       state: 'state',
       zip_code: 'zip_code',
-      visible: false,
-    });
+      visible: 1,
+    };
 
-    expect(
-      createStore.execute({
-        title: 'title',
-        fantasy_name: 'fantasy_name',
-        email: 'email',
-        phone: 'phone',
-        opening_hours: 'opening_hours',
-        address: 'address',
-        number: 'number',
-        district: 'district',
-        complement: 'complement',
-        city: 'city',
-        state: 'state',
-        zip_code: 'zip_code',
-        visible: false,
-      }),
-    ).rejects.toBeInstanceOf(AppError);
+    await createStore.execute(equalData);
+
+    expect(createStore.execute(equalData)).rejects.toBeInstanceOf(AppError);
   });
 });

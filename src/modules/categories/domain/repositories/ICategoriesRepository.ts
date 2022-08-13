@@ -1,4 +1,3 @@
-// import { ICategory } from '../models/ICategory';
 import { Category } from '@prisma/client';
 import { ICreateCategory } from '../models/ICreateCategory';
 import { IPaginateCategory } from '../models/IPaginateCategory';

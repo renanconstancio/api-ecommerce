@@ -12,34 +12,22 @@ export default class UpdateCategoryService {
     private categoriesRepository: ICategoriesRepository,
   ) {}
 
-  async execute({
-    id,
-    name,
-    description,
-    keywords,
-    position,
-    category_id,
-  }: IUpdateCategory): Promise<Category> {
-    const category = await this.categoriesRepository.findById(id);
+  async execute(data: IUpdateCategory): Promise<Category> {
+    const category = await this.categoriesRepository.findById(data.id);
 
     if (!category) {
       throw new AppError('Category not found.');
     }
 
-    const categoryExists = await this.categoriesRepository.findByName(name);
+    const categoryExists = await this.categoriesRepository.findByName(
+      data.name,
+    );
 
-    if (categoryExists && name !== category.name) {
+    if (categoryExists && data.name !== category.name) {
       throw new AppError('There is already one category with this name.');
     }
 
-    category.id = id;
-    category.category_id = category_id;
-    category.name = name;
-    category.description = description;
-    category.keywords = keywords;
-    category.position = position;
-
-    await this.categoriesRepository.update(category);
+    await this.categoriesRepository.update({ ...data });
 
     return category;
   }

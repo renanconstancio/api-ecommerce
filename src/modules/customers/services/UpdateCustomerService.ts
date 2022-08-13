@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
-import AppError from '@shared/errors/AppError';
 import { IUpdateCustomer } from '../domain/models/IUpdateCustomer';
 import { ICustomersRepository } from '../domain/repositories/ICustomersRepository';
-import { ICustomer } from '../domain/models/ICustomer';
+import AppError from '@shared/errors/AppError';
+import { Customers } from '@prisma/client';
 
 @injectable()
 export default class UpdateCustomerService {
@@ -11,33 +11,22 @@ export default class UpdateCustomerService {
     private customersRepository: ICustomersRepository,
   ) {}
 
-  async execute({
-    id,
-    name,
-    email,
-    cnpj,
-    cpf,
-    phone,
-  }: IUpdateCustomer): Promise<ICustomer> {
-    const customer = await this.customersRepository.findById(id);
+  async execute(data: IUpdateCustomer): Promise<Customers> {
+    const customer = await this.customersRepository.findById(data.id);
 
     if (!customer) {
       throw new AppError('Customer not found.');
     }
 
-    const customerExists = await this.customersRepository.findByEmail(email);
+    const customerExists = await this.customersRepository.findByEmail(
+      data.email,
+    );
 
-    if (customerExists && email !== customer.email) {
+    if (customerExists && data.email !== customer.email) {
       throw new AppError('There is already one customer with this email.');
     }
 
-    customer.name = name;
-    customer.email = email;
-    customer.cnpj = cnpj;
-    customer.cpf = cpf;
-    customer.phone = phone;
-
-    await this.customersRepository.save(customer);
+    await this.customersRepository.update({ ...data });
 
     return customer;
   }
