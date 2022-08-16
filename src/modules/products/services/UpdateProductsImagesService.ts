@@ -47,7 +47,7 @@ export default class UpdateProductsImagesService {
     //   image.image = filename;
     // }
 
-    await this.productsImagesRepository.save({
+    await this.productsImagesRepository.create({
       product_sku_id,
       image: imageFilename,
       position: imageCount + 1,

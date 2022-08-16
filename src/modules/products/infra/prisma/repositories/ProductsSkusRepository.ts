@@ -1,101 +1,102 @@
-import { Repository } from 'typeorm';
+import { prisma } from '@shared/infra/prisma';
+import { Products, ProductsSkus } from '@prisma/client';
+import { IUpdateStockProductsSkus } from '@modules/products/domain/models/IUpdateStockProductsSkus';
 import { IProductsSkusRepository } from '@modules/products/domain/repositories/IProductsSkusRepository';
 import { ICreateProductSku } from '@modules/products/domain/models/ICreateProductSku';
-import { IProduct } from '@modules/products/domain/models/IProduct';
-import { dataSource } from '@shared/infra/typeorm';
-import Product from '../entities/Product';
-import ProductSku from '../entities/ProductSku';
-import { IProductSku } from '@modules/products/domain/models/IProductSku';
+import { IUpdateProductSku } from '@modules/products/domain/models/IUpdateProductSku';
 
 export default class ProductsSkusRepository implements IProductsSkusRepository {
-  private ormSkuRepository: Repository<ProductSku>;
-  private ormProductRepository: Repository<Product>;
-
-  constructor() {
-    this.ormSkuRepository = dataSource.getRepository(ProductSku);
-    this.ormProductRepository = dataSource.getRepository(Product);
-  }
-
-  async create({
-    product_id,
-    sku,
-    price,
-    cost_price,
-    sale_price,
-    quantity,
-  }: ICreateProductSku): Promise<ProductSku> {
-    const productSku = this.ormSkuRepository.create({
-      product_id,
-      sku,
-      price,
-      cost_price,
-      sale_price,
-      quantity,
+  async create(data: ICreateProductSku): Promise<ProductsSkus> {
+    return prisma.productsSkus.create({
+      data: {
+        ...data,
+      },
     });
-
-    await this.ormSkuRepository.save(productSku);
-
-    return productSku;
   }
 
-  async save(sku: ProductSku): Promise<ProductSku> {
-    await this.ormSkuRepository.save(sku);
-
-    return sku;
+  async update(data: IUpdateProductSku): Promise<ProductsSkus> {
+    return await prisma.productsSkus.update({
+      data,
+      where: {
+        id: data.id,
+      },
+    });
   }
 
   async remove(id: string): Promise<void> {
-    await this.ormSkuRepository.softDelete(id);
-  }
-
-  async findBySku(sku: string): Promise<ProductSku | null> {
-    const productSku = await this.ormSkuRepository.findOneBy({
-      sku,
+    await prisma.productsSkus.update({
+      data: { deleted_at: new Date() },
+      where: { id },
     });
-
-    return productSku;
   }
 
-  async findById(product_id: string, id: string): Promise<IProduct | null> {
-    const productSku = await this.ormProductRepository.findOne({
-      relations: ['skus', 'skus.images'],
+  async findBySku(sku: string): Promise<ProductsSkus | null> {
+    return await prisma.productsSkus.findFirst({
+      where: {
+        sku,
+      },
+    });
+  }
+
+  async findById(product_id: string, id: string): Promise<Products | null> {
+    return await prisma.products.findFirst({
       where: {
         id: product_id,
-        skus: {
-          id,
-        },
       },
-      order: {
+      include: {
         skus: {
-          images: {
-            position: 'ASC',
+          include: {
+            images: {
+              orderBy: {
+                position: 'asc',
+              },
+            },
+          },
+          where: {
+            id,
           },
         },
       },
-    });
 
-    return productSku;
+      // order: {
+      //   skus: {
+      //     images: {
+      //       position: 'ASC',
+      //     },
+      //   },
+      // },
+    });
   }
 
-  async findByIdSku(id: string): Promise<IProductSku | null> {
-    const productSku = await this.ormSkuRepository.findOneBy({
-      id,
-    });
-    return productSku;
-  }
-
-  async findAll(product_id: string): Promise<IProduct | null> {
-    const productSku = await this.ormProductRepository.findOne({
-      relations: ['skus', 'skus.images'],
-      where: { id: product_id },
-      order: {
-        skus: {
-          images: {
-            position: 'ASC',
-          },
-        },
+  async findByIdSku(sku: string): Promise<ProductsSkus | null> {
+    return await prisma.productsSkus.findFirst({
+      where: {
+        sku,
       },
     });
-    return productSku;
+  }
+
+  async findAll(product_id: string): Promise<Products | null> {
+    return await prisma.products.findFirst({
+      where: {
+        id: product_id,
+      },
+      include: {
+        skus: true,
+      },
+    });
+  }
+
+  async updateStock(products: IUpdateStockProductsSkus[]): Promise<void> {
+    const updateProductsSkusMassive = products.map(rws =>
+      prisma.productsSkus.update({
+        where: { id: rws.id },
+        data: {
+          quantity: rws.quantity,
+        },
+      }),
+    );
+
+    await Promise.all(updateProductsSkusMassive);
   }
 }

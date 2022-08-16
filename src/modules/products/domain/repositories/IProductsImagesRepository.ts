@@ -4,6 +4,6 @@ import { IProductImage } from '../models/IProductImage';
 export interface IProductsImagesRepository {
   findBySkuIdCount(id: string): Promise<number>;
   findById(id: string): Promise<IProductImage | null>;
-  save(product: ICreateProductImage): Promise<IProductImage>;
+  create(product: ICreateProductImage): Promise<IProductImage>;
   remove(id: string): Promise<void>;
 }

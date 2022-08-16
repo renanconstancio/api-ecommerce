@@ -1,13 +1,16 @@
-import { IProductSku } from '../models/IProductSku';
+import { Products, ProductsSkus } from '@prisma/client';
+import { IUpdateStockProductsSkus } from '../models/IUpdateStockProductsSkus';
 import { ICreateProductSku } from '../models/ICreateProductSku';
-import { IProduct } from '../models/IProduct';
+import { IProductSku } from '../models/IProductSku';
 
 export interface IProductsSkusRepository {
-  findAll(product_id: string): Promise<IProduct | null>;
-  findById(product_id: string, id: string): Promise<IProduct | null>;
-  findByIdSku(id: string): Promise<IProductSku | null>;
-  findBySku(name: string): Promise<IProductSku | null>;
-  create(data: ICreateProductSku): Promise<IProductSku>;
-  save(product: IProductSku): Promise<IProductSku>;
+  findAll(product_id: string): Promise<Products | null>;
+  findById(product_id: string, id: string): Promise<Products | null>;
+  findByIdSku(sku: string): Promise<ProductsSkus | null>;
+  findBySku(sku: string): Promise<ProductsSkus | null>;
+
+  create(data: ICreateProductSku): Promise<ProductsSkus>;
+  update(data: IProductSku): Promise<ProductsSkus>;
+  updateStock(data: IUpdateStockProductsSkus[]): Promise<void>;
   remove(id: string): Promise<void>;
 }

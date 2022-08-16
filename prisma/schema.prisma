@@ -51,7 +51,7 @@ model Products {
   visible          products_visible @default(invisible)
   description_text String?          @db.Text
   description      String           @db.VarChar(505)
-  products_skus    ProductsSkus[]
+  skus             ProductsSkus[]
 
   @@map("products")
 }
@@ -64,25 +64,25 @@ model ProductsImages {
   created_at     DateTime      @default(now()) @db.DateTime(6)
   updated_at     DateTime      @default(now()) @db.DateTime(6)
   deleted_at     DateTime?     @db.DateTime(6)
-  products_skus  ProductsSkus? @relation(fields: [product_sku_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_d8ddccdc9bbd7345d257f6cb9fc")
+  sku            ProductsSkus? @relation(fields: [product_sku_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_d8ddccdc9bbd7345d257f6cb9fc")
 
   @@index([product_sku_id], map: "FK_d8ddccdc9bbd7345d257f6cb9fc")
   @@map("products_images")
 }
 
 model ProductsSkus {
-  id              String           @id @default(uuid()) @db.VarChar(36)
-  sku             String           @db.VarChar(20)
-  price           Decimal          @default(0) @db.Decimal(10, 0)
-  quantity        Int              @default(0)
-  created_at      DateTime         @default(now()) @db.DateTime(6)
-  updated_at      DateTime         @default(now()) @db.DateTime(6)
-  deleted_at      DateTime?        @db.DateTime(6)
-  cost_price      Decimal          @default(0) @db.Decimal(10, 0)
-  sale_price      Decimal          @default(0) @db.Decimal(10, 0)
-  product_id      String?          @db.VarChar(36)
-  products        Products?        @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_4a232ada01f43f6119ed6636985")
-  products_images ProductsImages[]
+  id         String           @id @default(uuid()) @db.VarChar(36)
+  sku        String           @db.VarChar(20)
+  price      Decimal          @default(0) @db.Decimal(10, 0)
+  quantity   Int              @default(0)
+  created_at DateTime         @default(now()) @db.DateTime(6)
+  updated_at DateTime         @default(now()) @db.DateTime(6)
+  deleted_at DateTime?        @db.DateTime(6)
+  cost_price Decimal          @default(0) @db.Decimal(10, 0)
+  sale_price Decimal          @default(0) @db.Decimal(10, 0)
+  product_id String?          @db.VarChar(36)
+  product    Products?        @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_4a232ada01f43f6119ed6636985")
+  images     ProductsImages[]
 
   @@index([product_id], map: "FK_4a232ada01f43f6119ed6636985")
   @@map("products_skus")

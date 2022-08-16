@@ -1,10 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
-
 import { Products } from '@prisma/client';
-import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
 import { ICreateProduct } from '@modules/products/domain/models/ICreateProduct';
 import { IPaginateProduct } from '@modules/products/domain/models/IPaginateProduct';
-import { IUpdateStockProduct } from '@modules/products/domain/models/IUpdateStockProduct';
+import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
+// import { IUpdateStockProduct } from '@modules/products/domain/models/IUpdateStockProductsSkus';
 
 export default class FakeProductsRepository implements IProductsRepository {
   private products: Products[] = [];

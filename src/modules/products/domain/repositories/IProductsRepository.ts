@@ -1,8 +1,8 @@
 import { Products } from '@prisma/client';
 import { IFindProducts } from '../models/IFindProducts';
-import { IUpdateStockProduct } from '../models/IUpdateStockProduct';
 import { IPaginateProduct } from '../models/IPaginateProduct';
 import { ICreateProduct } from '../models/ICreateProduct';
+import { IUpdateProduct } from '../models/IUpdateProduct';
 
 type SearchParams = {
   page: number;
@@ -18,7 +18,6 @@ export interface IProductsRepository {
   findAllByIds(id: IFindProducts[]): Promise<Products[]>;
 
   create(data: ICreateProduct): Promise<Products>;
-  update(data: IUpdateStockProduct): Promise<Products>;
-  updateStock(data: IUpdateStockProduct[]): Promise<void>;
+  update(data: IUpdateProduct): Promise<Products>;
   remove(id: string): Promise<void>;
 }

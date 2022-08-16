@@ -1,9 +1,10 @@
 import { inject, injectable } from 'tsyringe';
 // import redisCache from '@shared/cache/RedisCache';
-import AppError from '@shared/errors/AppError';
 import { IUpdateProduct } from '../domain/models/IUpdateProduct';
 import { IProductsRepository } from '../domain/repositories/IProductsRepository';
-import { IProduct } from '../domain/models/IProduct';
+
+import AppError from '@shared/errors/AppError';
+import { Products } from '@prisma/client';
 
 @injectable()
 export default class UpdateProductService {
@@ -12,35 +13,20 @@ export default class UpdateProductService {
     private productsRepository: IProductsRepository,
   ) {}
 
-  async execute({
-    id,
-    name,
-    description,
-    description_text,
-    keywords,
-    visible,
-  }: IUpdateProduct): Promise<IProduct> {
-    const product = await this.productsRepository.findById(id);
+  async execute(data: IUpdateProduct): Promise<Products> {
+    const product = await this.productsRepository.findById(data.id);
 
     if (!product) {
       throw new AppError('Product not found.');
     }
 
-    const productExists = await this.productsRepository.findByName(name);
+    const productExists = await this.productsRepository.findByName(data.name);
 
-    if (productExists && name !== product.name) {
+    if (productExists && data.name !== product.name) {
       throw new AppError('There is already one product with this name');
     }
 
     // await redisCache.invalidate('api-vendas-PRODUCT_LIST');
-    product.name = name;
-    product.description = description;
-    product.description_text = description_text;
-    product.keywords = keywords;
-    product.visible = visible;
-
-    await this.productsRepository.save(product);
-
-    return product;
+    return await this.productsRepository.update(data);
   }
 }

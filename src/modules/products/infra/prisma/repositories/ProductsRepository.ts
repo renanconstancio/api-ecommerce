@@ -1,9 +1,8 @@
 import { prisma } from '@shared/infra/prisma';
+import { Products, Prisma, ProductsImages } from '@prisma/client';
 import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
 import { IFindProducts } from '@modules/products/domain/models/IFindProducts';
 import { ICreateProduct } from '@modules/products/domain/models/ICreateProduct';
-import { IUpdateStockProduct } from '@modules/products/domain/models/IUpdateStockProduct';
-import { Products, Prisma } from '@prisma/client';
 import { IUpdateProduct } from '@modules/products/domain/models/IUpdateProduct';
 import { IPaginateProduct } from '@modules/products/domain/models/IPaginateProduct';
 
@@ -39,10 +38,6 @@ export default class ProductsRepository implements IProductsRepository {
     });
   }
 
-  async updateStock(products: IUpdateStockProduct[]): Promise<void> {
-    // await prisma.products.save(products);
-  }
-
   async findByName(name: string): Promise<Products | null> {
     return await prisma.products.findFirst({
       where: {
@@ -70,11 +65,22 @@ export default class ProductsRepository implements IProductsRepository {
 
     if (name) where = { ...where, name: name };
 
-    const categoriesCount = await prisma.products.count({ where });
+    const productsCount = await prisma.products.count({ where });
 
-    const categories = await prisma.products.findMany({
+    const products = await prisma.products.findMany({
       include: {
-        products_skus: true,
+        skus: {
+          include: {
+            images: {
+              select: {
+                image: true,
+              },
+              orderBy: {
+                position: 'asc',
+              },
+            },
+          },
+        },
       },
       take: take,
       skip: skip,
@@ -82,10 +88,10 @@ export default class ProductsRepository implements IProductsRepository {
     });
 
     return {
-      total: categoriesCount,
+      total: productsCount,
       per_page: take,
       current_page: page,
-      data: categories,
+      data: products,
     };
   }
 
