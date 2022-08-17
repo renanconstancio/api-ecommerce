@@ -4,7 +4,7 @@ import { messages } from 'joi-translation-pt-br';
 import { celebrate, Joi, Segments } from 'celebrate';
 import CreateCategoriesController from '@modules/categories/useCases/CreateCategories/CreateCategoriesController';
 import FindAllCategoriesController from '@modules/categories/useCases/FindAllCategories/FindAllCategoriesController';
-import FindCategoriesController' from '@modules/categories/useCases/FindCategories/FindCategoriesController';
+import FindCategoriesController from '@modules/categories/useCases/FindCategories/FindCategoriesController';
 import UpdateCategoriesController from '@modules/categories/useCases/UpdateCategories/UpdateCategoriesController';
 import DeleteCategoriesControllers from '@modules/categories/useCases/DeleteCategories/DeleteCategoriesControllers';
 

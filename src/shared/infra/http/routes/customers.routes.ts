@@ -1,11 +1,14 @@
 import { Router } from 'express';
 import { messages } from 'joi-translation-pt-br';
 import { celebrate, Joi, Segments } from 'celebrate';
-import CustomersController from '@modules/customers/infra/http/controllers/CustomersController';
 import isAuthenticated from '@shared/infra/http/middlewares/isAuthenticated';
+import CreateCustomersController from '@modules/customers/useCases/CreateCutomers/CreateCustomersController';
+import UpdateCustomersController from '@modules/customers/useCases/UpdateCustomers/UpdateCustomersController';
+import DeleteCustomersController from '@modules/customers/useCases/DeleteCustomers/DeleteCustomersController';
+import FindCustomersController from '@modules/customers/useCases/FindCustomers/FindCustomersController';
+import FindAllCustomersController from '@modules/customers/useCases/FindAllCustomers/FindAllCustomersController';
 
 const customersRouter = Router();
-const customersController = new CustomersController();
 
 customersRouter
   .post(
@@ -27,7 +30,7 @@ customersRouter
         messages: messages,
       },
     ),
-    customersController.create,
+    new CreateCustomersController().handle,
   )
   .put(
     '/:id',
@@ -51,7 +54,7 @@ customersRouter
       },
     ),
     isAuthenticated,
-    customersController.update,
+    new UpdateCustomersController().handle,
   )
   .delete(
     '/:id',
@@ -61,7 +64,7 @@ customersRouter
       },
     }),
     isAuthenticated,
-    customersController.delete,
+    new DeleteCustomersController().handle,
   )
   .get(
     '/:id',
@@ -70,8 +73,8 @@ customersRouter
         id: Joi.string().uuid().required(),
       },
     }),
-    customersController.show,
+    new FindCustomersController().handle,
   )
-  .get('/', customersController.index);
+  .get('/', new FindAllCustomersController().handle);
 
 export default customersRouter;
