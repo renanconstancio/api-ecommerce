@@ -1,15 +1,15 @@
 import 'reflect-metadata';
-import FakeCategoriesRepository from '@modules/categories/repositories/fakes/FakeCategoriesRepository';
+import IFakeCategoriesRepository from '@modules/categories/repositories/fakes/FakeCategoriesRepository';
 import CreateCategoriesUseCases from '@modules/categories/useCases/CreateCategories/CreateCategoriesUseCases';
 import FindAllCategoriesUseCases from '@modules/categories/useCases/FindAllCategories/FindAllCategoriesUseCases';
 
-let fakeCategoriesRepository: FakeCategoriesRepository;
+let fakeCategoriesRepository: IFakeCategoriesRepository;
 let listCategoriesService: FindAllCategoriesUseCases;
 let createCategory: CreateCategoriesUseCases;
 
 describe('FindAllCategoriesUseCases', () => {
   beforeEach(() => {
-    fakeCategoriesRepository = new FakeCategoriesRepository();
+    fakeCategoriesRepository = new IFakeCategoriesRepository();
     listCategoriesService = new FindAllCategoriesUseCases(
       fakeCategoriesRepository,
     );

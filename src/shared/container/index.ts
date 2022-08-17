@@ -1,10 +1,9 @@
 import { container, delay } from 'tsyringe';
 
-import '@modules/customers/providers';
 import '@modules/products/providers';
 
 import CustomersRepository from '@modules/customers/infra/prisma/repositories/CustomersRepository';
-import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
+import { ICustomersRepository } from '@modules/customers/repositories/ICustomersRepository';
 
 import CategoriesRepository from '@modules/categories/infra/prisma/repositories/CategoriesRepository';
 import { ICategoriesRepository } from '@modules/categories/repositories/ICategoriesRepository';
@@ -21,6 +20,9 @@ import { IProductsSkusRepository } from '@modules/products/domain/repositories/I
 import { IProductsImagesRepository } from '@modules/products/domain/repositories/IProductsImagesRepository';
 import ProductsImagesRepository from '@modules/products/infra/prisma/repositories/ProductsImagesRepository';
 
+import CustomersHashRepository from '@modules/customers/infra/prisma/repositories/CustomersHashRepository';
+import { ICustomersHashRepository } from '@modules/customers/repositories/ICustomersHashRepository';
+
 container.registerSingleton<ICategoriesRepository>(
   'CategoriesRepository',
   delay(() => CategoriesRepository),
@@ -29,6 +31,11 @@ container.registerSingleton<ICategoriesRepository>(
 container.registerSingleton<ICustomersRepository>(
   'CustomersRepository',
   delay(() => CustomersRepository),
+);
+
+container.registerSingleton<ICustomersHashRepository>(
+  'CustomersHashRepository',
+  delay(() => CustomersHashRepository),
 );
 
 container.registerSingleton<IStoresRepository>(

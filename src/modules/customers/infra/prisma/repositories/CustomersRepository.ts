@@ -1,10 +1,10 @@
 import {
   CustomersParams,
   ICustomersRepository,
-} from '@modules/customers/domain/repositories/ICustomersRepository';
-import { IPaginateCustomer } from '@modules/customers/domain/dtos/IPaginateCustomer';
-import { ICreateCustomer } from '@modules/customers/domain/dtos/ICreateCustomer';
-import { IUpdateCustomer } from '@modules/customers/domain/dtos/IUpdateCustomer';
+} from '@modules/customers/repositories/ICustomersRepository';
+import { IPaginateCustomer } from '@modules/customers/dtos/IPaginateCustomer';
+import { ICreateCustomer } from '@modules/customers/dtos/ICreateCustomer';
+import { IUpdateCustomer } from '@modules/customers/dtos/IUpdateCustomer';
 import { CustomersEntity } from '@modules/customers/infra/prisma/etities/Customers';
 import { prisma } from '@shared/infra/prisma';
 import { Prisma } from '@prisma/client';

@@ -1,14 +1,14 @@
 import 'reflect-metadata';
-import FakeCategoriesRepository from '@modules/categories/repositories/fakes/FakeCategoriesRepository';
+import IFakeCategoriesRepository from '@modules/categories/repositories/fakes/FakeCategoriesRepository';
 import UpdateCategoriesUseCases from '@modules/categories/useCases/UpdateCategories/UpdateCategoriesUseCases';
 import AppError from '@shared/errors/AppError';
 
-let fakeCategoriesRepository: FakeCategoriesRepository;
+let fakeCategoriesRepository: IFakeCategoriesRepository;
 let updateCategoryService: UpdateCategoriesUseCases;
 
 describe('UpdateCategoriesUseCases', () => {
   beforeEach(() => {
-    fakeCategoriesRepository = new FakeCategoriesRepository();
+    fakeCategoriesRepository = new IFakeCategoriesRepository();
     updateCategoryService = new UpdateCategoriesUseCases(
       fakeCategoriesRepository,
     );

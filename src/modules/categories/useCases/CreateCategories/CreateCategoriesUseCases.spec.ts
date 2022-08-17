@@ -1,14 +1,14 @@
 import 'reflect-metadata';
-import FakeCategoriesRepository from '@modules/categories/repositories/fakes/FakeCategoriesRepository';
+import IFakeCategoriesRepository from '@modules/categories/repositories/fakes/FakeCategoriesRepository';
 import CreateCategoriesUseCase from '@modules/categories/useCases/CreateCategories/CreateCategoriesUseCases';
 import AppError from '@shared/errors/AppError';
 
-let fakeCategoriesRepository: FakeCategoriesRepository;
+let fakeCategoriesRepository: IFakeCategoriesRepository;
 let createCategory: CreateCategoriesUseCase;
 
 describe('CreateCategoriesUseCases', () => {
   beforeEach(() => {
-    fakeCategoriesRepository = new FakeCategoriesRepository();
+    fakeCategoriesRepository = new IFakeCategoriesRepository();
     createCategory = new CreateCategoriesUseCase(fakeCategoriesRepository);
   });
 
