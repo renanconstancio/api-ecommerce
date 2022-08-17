@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import AppError from '@shared/errors/AppError';
-import FakeCustomersRepository from '../domain/repositories/fakes/FakeCustomersRepository';
-import CreateSessionsService from './CreateSessionsService';
-import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
+import FakeHashProvider from '@modules/customers/providers/HashProvider/fakes/FakeHashProvider';
+import FakeCustomersRepository from '@modules/customers/domain/repositories/fakes/FakeCustomersRepository';
+import CreateSessionsService from '@modules/customers/services/CreateSessionsService';
 
 let fakeCutomersRepository: FakeCustomersRepository;
 let createSession: CreateSessionsService;

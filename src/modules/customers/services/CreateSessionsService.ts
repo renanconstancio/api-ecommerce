@@ -1,11 +1,11 @@
 import { inject, injectable } from 'tsyringe';
-import AppError from '@shared/errors/AppError';
 import { sign, Secret } from 'jsonwebtoken';
+import { ICreateSession } from '@modules/customers/domain/dtos/ICreateSession';
+import { IHashProvider } from '@modules/customers/providers/HashProvider/dtos/IHashPovider';
+import { ICustomerAuthenticated } from '@modules/customers/domain/dtos/ICustomerAuthenticated';
+import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
+import AppError from '@shared/errors/AppError';
 import authConfig from '@config/auth';
-import { ICreateSession } from '../domain/models/ICreateSession';
-import { ICustomerAuthenticated } from '../domain/models/ICustomerAuthenticated';
-import { IHashProvider } from '../providers/HashProvider/models/IHashPovider';
-import { ICustomersRepository } from '../domain/repositories/ICustomersRepository';
 
 @injectable()
 export default class CreateSessionsService {

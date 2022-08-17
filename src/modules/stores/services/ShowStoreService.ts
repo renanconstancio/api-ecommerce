@@ -1,8 +1,9 @@
 import { inject, injectable } from 'tsyringe';
+import { StoresEntity } from '@modules/stores/infra/prisma/entities/Stores';
+import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
+import { IShowStore } from '@modules/stores/domain/dtos/IShowStore';
+
 import AppError from '@shared/errors/AppError';
-import { IStoresRepository } from '../domain/repositories/IStoresRepository';
-import { IShowStore } from '../domain/models/IShowStore';
-import { Stores } from '@prisma/client';
 
 @injectable()
 export default class ShowStoreService {
@@ -11,7 +12,7 @@ export default class ShowStoreService {
     private storesRepository: IStoresRepository,
   ) {}
 
-  async execute({ id }: IShowStore): Promise<Stores> {
+  async execute({ id }: IShowStore): Promise<StoresEntity> {
     const store = await this.storesRepository.findById(id);
 
     if (!store) {

@@ -1,10 +1,11 @@
 import { prisma } from '@shared/infra/prisma';
 import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
-import { ICreateStore } from '@modules/stores/domain/models/ICreateStore';
-import { IPaginateStore } from '@modules/stores/domain/models/IPaginateStore';
-import { IFindStores } from '@modules/stores/domain/models/IFindStores';
-import { IUpdateStore } from '@modules/stores/domain/models/IUpdateStore';
-import { Prisma, Stores } from '@prisma/client';
+import { ICreateStore } from '@modules/stores/domain/dtos/ICreateStore';
+import { IPaginateStore } from '@modules/stores/domain/dtos/IPaginateStore';
+import { IFindStores } from '@modules/stores/domain/dtos/IFindStores';
+import { IUpdateStore } from '@modules/stores/domain/dtos/IUpdateStore';
+import { StoresEntity } from '@modules/stores/infra/prisma/entities/Stores';
+import { Prisma } from '@prisma/client';
 
 type SearchParams = {
   page: number;
@@ -13,11 +14,11 @@ type SearchParams = {
 };
 
 export default class StoresRepository implements IStoresRepository {
-  async create(data: ICreateStore): Promise<Stores> {
+  async create(data: ICreateStore): Promise<StoresEntity> {
     return prisma.stores.create({ data: { ...data } });
   }
 
-  async update(data: IUpdateStore): Promise<Stores> {
+  async update(data: IUpdateStore): Promise<StoresEntity> {
     return await prisma.stores.update({
       data,
       where: {
@@ -33,7 +34,7 @@ export default class StoresRepository implements IStoresRepository {
     });
   }
 
-  async findByFantasyName(fantasy_name: string): Promise<Stores | null> {
+  async findByFantasyName(fantasy_name: string): Promise<StoresEntity | null> {
     const store = prisma.stores.findFirst({
       where: {
         fantasy_name,
@@ -44,7 +45,7 @@ export default class StoresRepository implements IStoresRepository {
     return store;
   }
 
-  async findById(id: string): Promise<Stores | null> {
+  async findById(id: string): Promise<StoresEntity | null> {
     const store = prisma.stores.findUnique({
       where: {
         id,
@@ -75,7 +76,7 @@ export default class StoresRepository implements IStoresRepository {
     };
   }
 
-  async findAllByIds(stores: IFindStores[]): Promise<Stores[]> {
+  async findAllByIds(stores: IFindStores[]): Promise<StoresEntity[]> {
     return await prisma.stores.findMany({
       where: {
         id: {

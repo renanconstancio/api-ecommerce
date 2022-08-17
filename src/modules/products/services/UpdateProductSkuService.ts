@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
-import AppError from '@shared/errors/AppError';
 import { IProductsSkusRepository } from '../domain/repositories/IProductsSkusRepository';
-import { IProductSku } from '../domain/models/IProductSku';
-import { IUpdateProductSku } from '../domain/models/IUpdateProductSku';
+import { IUpdateProductSku } from '../domain/dtos/IUpdateProductSku';
+import { ProductsSkusEntity } from '../infra/prisma/entities/ProductsSkus';
+import AppError from '@shared/errors/AppError';
 
 @injectable()
 export default class UpdateProductSkuService {
@@ -11,35 +11,23 @@ export default class UpdateProductSkuService {
     private productsSkusRepository: IProductsSkusRepository,
   ) {}
 
-  async execute({
-    id,
-    cost_price,
-    sale_price,
-    price,
-    quantity,
-    sku,
-  }: IUpdateProductSku): Promise<IProductSku> {
-    const productSku = await this.productsSkusRepository.findByIdSku(id);
+  async execute(data: IUpdateProductSku): Promise<ProductsSkusEntity> {
+    const productSku = await this.productsSkusRepository.findById(
+      data.product_id,
+      data.id,
+    );
 
     if (!productSku) {
-      throw new AppError('Product not found.');
+      throw new AppError('Product and Product Sku not found.');
     }
 
-    const productExists = await this.productsSkusRepository.findBySku(sku);
+    const productExists = await this.productsSkusRepository.findBySku(data.sku);
 
-    if (productExists && sku !== productSku.sku) {
+    if (productExists && data.sku !== productExists.sku) {
       throw new AppError('There is already one product sku with this sku');
     }
 
     // await redisCache.invalidate('api-vendas-PRODUCT_LIST');
-    productSku.cost_price = cost_price;
-    productSku.sale_price = sale_price;
-    productSku.price = price;
-    productSku.quantity = quantity;
-    productSku.sku = sku;
-
-    await this.productsSkusRepository.save(productSku);
-
-    return productSku;
+    return await this.productsSkusRepository.update({ ...data });
   }
 }

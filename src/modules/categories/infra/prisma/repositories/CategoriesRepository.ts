@@ -1,13 +1,14 @@
+import { ICreateCategory } from '@modules/categories/dtos/ICreateCategory';
+import { IPaginateCategory } from '@modules/categories/dtos/IPaginateCategory';
+import { ISearchCategory } from '@modules/categories/dtos/ISearchCategory';
+import { ICategoriesRepository } from '@modules/categories/repositories/ICategoriesRepository';
+import { IUpdateCategory } from '@modules/categories/dtos/IUpdateCategory';
+import { CategoryEntity } from '@modules/categories/infra/prisma/entities/Category';
 import { prisma } from '@shared/infra/prisma';
-import { ICreateCategory } from '@modules/categories/domain/models/ICreateCategory';
-import { IPaginateCategory } from '@modules/categories/domain/models/IPaginateCategory';
-import { ISearchCategory } from '@modules/categories/domain/models/ISearchCategory';
-import { ICategoriesRepository } from '@modules/categories/domain/repositories/ICategoriesRepository';
-import { IUpdateCategory } from '@modules/categories/domain/models/IUpdateCategory';
-import { Category, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
 export default class CategoriesRepository implements ICategoriesRepository {
-  async create(data: ICreateCategory): Promise<Category> {
+  async create(data: ICreateCategory): Promise<CategoryEntity> {
     return await prisma.category.create({
       data: {
         ...data,
@@ -15,7 +16,7 @@ export default class CategoriesRepository implements ICategoriesRepository {
     });
   }
 
-  async update(data: IUpdateCategory): Promise<Category> {
+  async update(data: IUpdateCategory): Promise<CategoryEntity> {
     return await prisma.category.update({
       data,
       where: {
@@ -25,14 +26,6 @@ export default class CategoriesRepository implements ICategoriesRepository {
   }
 
   async remove(id: string): Promise<void> {
-    // const formatedMysqlString = new Date(
-    //   new Date(new Date(new Date()).toISOString()).getTime() -
-    //     new Date().getTimezoneOffset() * 60000,
-    // )
-    //   .toISOString()
-    //   .slice(0, 19)
-    //   .replace('T', ' ');
-
     await prisma.category.update({
       data: { deleted_at: new Date() },
       where: { id },
@@ -68,7 +61,7 @@ export default class CategoriesRepository implements ICategoriesRepository {
     };
   }
 
-  async findById(id: string): Promise<Category | null> {
+  async findById(id: string): Promise<CategoryEntity | null> {
     return await prisma.category.findUnique({
       where: {
         id,
@@ -76,7 +69,7 @@ export default class CategoriesRepository implements ICategoriesRepository {
     });
   }
 
-  async findByName(name: string): Promise<Category | null> {
+  async findByName(name: string): Promise<CategoryEntity | null> {
     return await prisma.category.findFirst({
       where: { name, AND: { deleted_at: null } },
     });

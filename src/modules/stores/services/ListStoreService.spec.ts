@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 
-import ListStoreService from './ListStoreService';
-import CreateStoreService from './CreateStoreService';
-import FakeStoresRepository from '../domain/repositories/fakes/FakeStoresRepository';
+import ListStoreService from '@modules/stores/services/ListStoreService';
+import CreateStoreService from '@modules/stores/services/CreateStoreService';
+import FakeStoresRepository from '@modules/stores/domain/repositories/fakes/FakeStoresRepository';
 
 let fakeStoresRepository: FakeStoresRepository;
 let listStoresService: ListStoreService;

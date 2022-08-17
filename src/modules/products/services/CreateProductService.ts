@@ -1,9 +1,10 @@
 import { inject, injectable } from 'tsyringe';
-// import redisCache from '@shared/cache/RedisCache';
-import AppError from '@shared/errors/AppError';
-import { ICreateProduct } from '../domain/models/ICreateProduct';
+import { ICreateProduct } from '../domain/dtos/ICreateProduct';
+import { ProductsEntity } from '../infra/prisma/entities/Products';
 import { IProductsRepository } from '../domain/repositories/IProductsRepository';
-import { Products } from '@prisma/client';
+import AppError from '@shared/errors/AppError';
+
+// import redisCache from '@shared/cache/RedisCache';
 
 @injectable()
 export default class CreateProductService {
@@ -12,7 +13,7 @@ export default class CreateProductService {
     private productsRepository: IProductsRepository,
   ) {}
 
-  async execute(data: ICreateProduct): Promise<Products> {
+  async execute(data: ICreateProduct): Promise<ProductsEntity> {
     const productExists = await this.productsRepository.findByName(data.name);
 
     if (productExists) {

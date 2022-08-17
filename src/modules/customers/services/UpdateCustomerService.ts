@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
-import { IUpdateCustomer } from '../domain/models/IUpdateCustomer';
-import { ICustomersRepository } from '../domain/repositories/ICustomersRepository';
+import { IUpdateCustomer } from '@modules/customers/domain/dtos/IUpdateCustomer';
+import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
+import { CustomersEntity } from '../infra/prisma/etities/Customers';
 import AppError from '@shared/errors/AppError';
-import { Customers } from '@prisma/client';
 
 @injectable()
 export default class UpdateCustomerService {
@@ -11,7 +11,7 @@ export default class UpdateCustomerService {
     private customersRepository: ICustomersRepository,
   ) {}
 
-  async execute(data: IUpdateCustomer): Promise<Customers> {
+  async execute(data: IUpdateCustomer): Promise<CustomersEntity> {
     const customer = await this.customersRepository.findById(data.id);
 
     if (!customer) {

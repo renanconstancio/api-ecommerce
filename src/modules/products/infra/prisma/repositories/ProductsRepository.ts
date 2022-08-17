@@ -1,10 +1,11 @@
-import { prisma } from '@shared/infra/prisma';
-import { Products, Prisma, ProductsImages } from '@prisma/client';
+import { IFindProducts } from '@modules/products/domain/dtos/IFindProducts';
+import { ICreateProduct } from '@modules/products/domain/dtos/ICreateProduct';
+import { IUpdateProduct } from '@modules/products/domain/dtos/IUpdateProduct';
+import { IPaginateProduct } from '@modules/products/domain/dtos/IPaginateProduct';
 import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
-import { IFindProducts } from '@modules/products/domain/models/IFindProducts';
-import { ICreateProduct } from '@modules/products/domain/models/ICreateProduct';
-import { IUpdateProduct } from '@modules/products/domain/models/IUpdateProduct';
-import { IPaginateProduct } from '@modules/products/domain/models/IPaginateProduct';
+import { ProductsEntity } from '../entities/Products';
+import { prisma } from '@shared/infra/prisma';
+import { Prisma } from '@prisma/client';
 
 type SearchParams = {
   page: number;
@@ -14,7 +15,7 @@ type SearchParams = {
 };
 
 export default class ProductsRepository implements IProductsRepository {
-  async create(data: ICreateProduct): Promise<Products> {
+  async create(data: ICreateProduct): Promise<ProductsEntity> {
     return await prisma.products.create({
       data: {
         ...data,
@@ -22,7 +23,7 @@ export default class ProductsRepository implements IProductsRepository {
     });
   }
 
-  async update(data: IUpdateProduct): Promise<Products> {
+  async update(data: IUpdateProduct): Promise<ProductsEntity> {
     return await prisma.products.update({
       data,
       where: {
@@ -38,7 +39,7 @@ export default class ProductsRepository implements IProductsRepository {
     });
   }
 
-  async findByName(name: string): Promise<Products | null> {
+  async findByName(name: string): Promise<ProductsEntity | null> {
     return await prisma.products.findFirst({
       where: {
         name,
@@ -47,10 +48,24 @@ export default class ProductsRepository implements IProductsRepository {
     });
   }
 
-  async findById(id: string): Promise<Products | null> {
+  async findById(id: string): Promise<ProductsEntity | null> {
     return await prisma.products.findUnique({
       where: {
         id,
+      },
+      include: {
+        skus: {
+          include: {
+            images: {
+              select: {
+                image: true,
+              },
+              orderBy: {
+                position: 'asc',
+              },
+            },
+          },
+        },
       },
     });
   }
@@ -95,7 +110,7 @@ export default class ProductsRepository implements IProductsRepository {
     };
   }
 
-  async findAllByIds(products: IFindProducts[]): Promise<Products[]> {
+  async findAllByIds(products: IFindProducts[]): Promise<ProductsEntity[]> {
     const existentProducts = await prisma.products.findMany({
       where: {
         id: { in: products.map(product => product.id) },

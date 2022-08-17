@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
+import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
+import { IDeleteCustomer } from '@modules/customers/domain/dtos/IDeleteCustomer';
 import AppError from '@shared/errors/AppError';
-import { IDeleteCustomer } from '../domain/models/IDeleteCustomer';
-import { ICustomersRepository } from '../domain/repositories/ICustomersRepository';
 
 @injectable()
 export default class DeleteCustomerService {

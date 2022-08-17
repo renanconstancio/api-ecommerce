@@ -1,8 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
-
-import { ICreateStore } from '@modules/stores/domain/models/ICreateStore';
-import { IPaginateStore } from '@modules/stores/domain/models/IPaginateStore';
+import { ICreateStore } from '@modules/stores/domain/dtos/ICreateStore';
+import { IPaginateStore } from '@modules/stores/domain/dtos/IPaginateStore';
 import { Stores } from '@prisma/client';
 
 export default class FakeStoresRepository implements IStoresRepository {

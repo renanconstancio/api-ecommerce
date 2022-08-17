@@ -1,13 +1,14 @@
-import { Products } from '@prisma/client';
+import { Products, ProductsSkus } from '@prisma/client';
 
-export class ProductsEntity implements Products {
+export type ProductsEntity = {
   id: string;
   name: string;
-  description: string;
-  description_text: string;
   keywords: string;
+  description: string;
+  description_text: string | null;
   visible: 'visible' | 'invisible';
   created_at: Date;
   updated_at: Date;
   deleted_at: Date | null;
-}
+  skus?: ProductsSkus[];
+} & Products;

@@ -1,9 +1,9 @@
 import { inject, injectable } from 'tsyringe';
-import { ICreateCustomer } from '../domain/models/ICreateCustomer';
-import { ICustomersRepository } from '../domain/repositories/ICustomersRepository';
-import { IHashProvider } from '../providers/HashProvider/models/IHashPovider';
+import { ICreateCustomer } from '@modules/customers/domain/dtos/ICreateCustomer';
+import { IHashProvider } from '@modules/customers/providers/HashProvider/dtos/IHashPovider';
+import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
+import { CustomersEntity } from '@modules/customers/infra/prisma/etities/Customers';
 import AppError from '@shared/errors/AppError';
-import { Customers } from '@prisma/client';
 
 @injectable()
 export default class CreateCustomerService {
@@ -14,7 +14,7 @@ export default class CreateCustomerService {
     private hashProvider: IHashProvider,
   ) {}
 
-  async execute(data: ICreateCustomer): Promise<Customers> {
+  async execute(data: ICreateCustomer): Promise<CustomersEntity> {
     const emailExists = await this.customersRepository.findByEmail(data.email);
 
     if (emailExists) {

@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
-import { IStoresRepository } from '../domain/repositories/IStoresRepository';
-import { IUpdateStore } from '../domain/models/IUpdateStore';
-import { Stores } from '@prisma/client';
+import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
+import { IUpdateStore } from '@modules/stores/domain/dtos/IUpdateStore';
+import { StoresEntity } from '@modules/stores/infra/prisma/entities/Stores';
 import AppError from '@shared/errors/AppError';
 
 @injectable()
@@ -26,7 +26,7 @@ export default class UpdateStoreService {
     state,
     zip_code,
     visible,
-  }: IUpdateStore): Promise<Stores> {
+  }: IUpdateStore): Promise<StoresEntity> {
     const store = await this.storesRepository.findById(id);
 
     if (!store) {

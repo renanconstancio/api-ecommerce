@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { IProductsSkusRepository } from '../domain/repositories/IProductsSkusRepository';
-import { IProduct } from '../domain/models/IProduct';
+import { ProductsEntity } from '../infra/prisma/entities/Products';
 import AppError from '@shared/errors/AppError';
 
 @injectable()
@@ -10,7 +10,7 @@ export default class ListProductSkuService {
     private productsSkusRepository: IProductsSkusRepository,
   ) {}
 
-  async execute(product_id: string): Promise<IProduct> {
+  async execute(product_id: string): Promise<ProductsEntity> {
     const productSku = await this.productsSkusRepository.findAll(product_id);
 
     if (!productSku) {

@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { IProductsRepository } from '../domain/repositories/IProductsRepository';
-import { IPaginateProduct } from '../domain/models/IPaginateProduct';
+import { IPaginateProduct } from '../domain/dtos/IPaginateProduct';
 
 interface SearchParams {
   page: number;

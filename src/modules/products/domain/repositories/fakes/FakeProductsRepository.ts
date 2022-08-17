@@ -1,15 +1,15 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Products } from '@prisma/client';
-import { ICreateProduct } from '@modules/products/domain/models/ICreateProduct';
-import { IPaginateProduct } from '@modules/products/domain/models/IPaginateProduct';
+
+import { ICreateProduct } from '@modules/products/domain/dtos/ICreateProduct';
+import { IPaginateProduct } from '@modules/products/domain/dtos/IPaginateProduct';
 import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
-// import { IUpdateStockProduct } from '@modules/products/domain/models/IUpdateStockProductsSkus';
+import { ProductsEntity } from '@modules/products/infra/prisma/entities/Products';
 
 export default class FakeProductsRepository implements IProductsRepository {
-  private products: Products[] = [];
+  private products: ProductsEntity[] = [];
 
-  async create(data: ICreateProduct): Promise<Products> {
-    const product = {} as Products;
+  async create(data: ICreateProduct): Promise<ProductsEntity> {
+    const product = {} as ProductsEntity;
 
     product.id = uuidv4();
     product.name = data.name;
@@ -24,10 +24,10 @@ export default class FakeProductsRepository implements IProductsRepository {
     return product;
   }
 
-  async save(data: ICreateProduct): Promise<Products> {
+  async update(data: ICreateProduct): Promise<ProductsEntity> {
     Object.assign(this.products, data);
 
-    return data as Products;
+    return data as ProductsEntity;
   }
 
   async remove(id: string): Promise<void> {
@@ -39,24 +39,19 @@ export default class FakeProductsRepository implements IProductsRepository {
     return {} as IPaginateProduct;
   }
 
-  async findAllByIds(): Promise<Products[]> {
-    return [];
-  }
-
-  async findById(id: string): Promise<Products | null> {
+  async findById(id: string): Promise<ProductsEntity | null> {
     const product = this.products.find(products => products.id === id);
 
-    return product as Products;
+    return product as ProductsEntity;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async updateStock(_products: IUpdateStockProduct[]): Promise<void> {
-    return;
-  }
-
-  async findByName(name: string): Promise<Products | null> {
+  async findByName(name: string): Promise<ProductsEntity | null> {
     const product = this.products.find(products => products.name === name);
 
-    return product as Products;
+    return product as ProductsEntity;
+  }
+
+  async findAllByIds(): Promise<ProductsEntity[]> {
+    return [];
   }
 }

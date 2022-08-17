@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { Request, Response } from 'express';
 import CreateCustomerService from '@modules/customers/services/CreateCustomerService';
 import DeleteCustomerService from '@modules/customers/services/DeleteCustomerService';
 import ListCustomerService from '@modules/customers/services/ListCustomerService';

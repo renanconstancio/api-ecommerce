@@ -1,7 +1,7 @@
-import AppError from '@shared/errors/AppError';
 import 'reflect-metadata';
-import FakeCustomersRepository from '../domain/repositories/fakes/FakeCustomersRepository';
-import UpdateCustomerService from './UpdateCustomerService';
+import FakeCustomersRepository from '@modules/customers/domain/repositories/fakes/FakeCustomersRepository';
+import UpdateCustomerService from '@modules/customers/services/UpdateCustomerService';
+import AppError from '@shared/errors/AppError';
 // import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 // import CreateCustomerService from './CreateCustomerService';
 

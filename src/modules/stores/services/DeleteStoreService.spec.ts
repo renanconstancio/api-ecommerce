@@ -1,7 +1,7 @@
 import 'reflect-metadata';
-import FakeStoresRepository from '../domain/repositories/fakes/FakeStoresRepository';
-import CreateStoreService from './CreateStoreService';
-import DeleteStoreService from './DeleteStoreService';
+import FakeStoresRepository from '@modules/stores/domain/repositories/fakes/FakeStoresRepository';
+import CreateStoreService from '@modules/stores/services/CreateStoreService';
+import DeleteStoreService from '@modules/stores/services/DeleteStoreService';
 import AppError from '@shared/errors/AppError';
 
 let fakeStoriesRepository: FakeStoresRepository;

@@ -1,8 +1,8 @@
 import 'reflect-metadata';
-import FakeCustomersRepository from '../domain/repositories/fakes/FakeCustomersRepository';
-import ListCustomerService from './ListCustomerService';
-import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
-import CreateCustomerService from './CreateCustomerService';
+import FakeCustomersRepository from '@modules/customers/domain/repositories/fakes/FakeCustomersRepository';
+import ListCustomerService from '@modules/customers/services/ListCustomerService';
+import FakeHashProvider from '@modules/customers/providers/HashProvider/fakes/FakeHashProvider';
+import CreateCustomerService from '@modules/customers/services/CreateCustomerService';
 
 let fakeCustomersRepository: FakeCustomersRepository;
 let listCustomerService: ListCustomerService;

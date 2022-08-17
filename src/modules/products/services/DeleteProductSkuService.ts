@@ -1,8 +1,9 @@
 import { inject, injectable } from 'tsyringe';
-// import redisCache from '@shared/cache/RedisCache';
-import { IDeleteProductSku } from '../domain/models/IDeleteProductSku';
+import { IDeleteProductSku } from '../domain/dtos/IDeleteProductSku';
 import { IProductsSkusRepository } from '../domain/repositories/IProductsSkusRepository';
 import AppError from '@shared/errors/AppError';
+
+// import redisCache from '@shared/cache/RedisCache';
 
 @injectable()
 export default class DeleteProductSkuService {

@@ -1,15 +1,15 @@
 import { v4 as uuidv4 } from 'uuid';
-import { ICreateCustomer } from '@modules/customers/domain/models/ICreateCustomer';
+import { CustomersEntity } from '@modules/customers/infra/prisma/etities/Customers';
+import { ICreateCustomer } from '@modules/customers/domain/dtos/ICreateCustomer';
+import { IPaginateCustomer } from '@modules/customers/domain/dtos/IPaginateCustomer';
+import { IUpdateCustomer } from '@modules/customers/domain/dtos/IUpdateCustomer';
 import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
-import { Customers } from '@prisma/client';
-import { IPaginateCustomer } from '../../models/IPaginateCustomer';
-import { IUpdateCustomer } from '../../models/IUpdateCustomer';
 
-class FakeCustomersRepository implements ICustomersRepository {
-  private customers: Customers[] = [];
+export default class FakeCustomersRepository implements ICustomersRepository {
+  private customers: CustomersEntity[] = [];
 
-  async create(data: ICreateCustomer): Promise<Customers> {
-    const customer = {} as Customers;
+  async create(data: ICreateCustomer): Promise<CustomersEntity> {
+    const customer = {} as CustomersEntity;
 
     customer.id = uuidv4();
     customer.name = data.name;
@@ -24,10 +24,10 @@ class FakeCustomersRepository implements ICustomersRepository {
     return customer;
   }
 
-  async update(data: IUpdateCustomer): Promise<Customers> {
+  async update(data: IUpdateCustomer): Promise<CustomersEntity> {
     Object.assign(this.customers, data);
 
-    return data as Customers;
+    return data as CustomersEntity;
   }
 
   async remove(id: string): Promise<void> {
@@ -55,20 +55,18 @@ class FakeCustomersRepository implements ICustomersRepository {
     return customersPaginate;
   }
 
-  async findByName(name: string): Promise<Customers | null> {
+  async findByName(name: string): Promise<CustomersEntity | null> {
     const customer = this.customers.find(customer => customer.name === name);
-    return customer as Customers;
+    return customer as CustomersEntity;
   }
 
-  async findById(id: string): Promise<Customers | null> {
+  async findById(id: string): Promise<CustomersEntity | null> {
     const customer = this.customers.find(customer => customer.id === id);
-    return customer as Customers;
+    return customer as CustomersEntity;
   }
 
-  async findByEmail(email: string): Promise<Customers | null> {
+  async findByEmail(email: string): Promise<CustomersEntity | null> {
     const customer = this.customers.find(customer => customer.email === email);
-    return customer as Customers;
+    return customer as CustomersEntity;
   }
 }
-
-export default FakeCustomersRepository;

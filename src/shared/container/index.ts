@@ -7,7 +7,7 @@ import CustomersRepository from '@modules/customers/infra/prisma/repositories/Cu
 import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
 
 import CategoriesRepository from '@modules/categories/infra/prisma/repositories/CategoriesRepository';
-import { ICategoriesRepository } from '@modules/categories/domain/repositories/ICategoriesRepository';
+import { ICategoriesRepository } from '@modules/categories/repositories/ICategoriesRepository';
 
 import StoresRepository from '@modules/stores/infra/prisma/repositories/StoresRepository';
 import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';

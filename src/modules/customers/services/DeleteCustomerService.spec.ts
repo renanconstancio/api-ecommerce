@@ -1,9 +1,9 @@
 import 'reflect-metadata';
-import DeleteCustomerService from './DeleteCustomerService';
-import CreateCustomerService from './CreateCustomerService';
+import DeleteCustomerService from '@modules/customers/services/DeleteCustomerService';
+import CreateCustomerService from '@modules/customers/services/CreateCustomerService';
+import FakeCustomersRepository from '@modules/customers/domain/repositories/fakes/FakeCustomersRepository';
+import FakeHashProvider from '@modules/customers/providers/HashProvider/fakes/FakeHashProvider';
 import AppError from '@shared/errors/AppError';
-import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
-import FakeCustomersRepository from '../domain/repositories/fakes/FakeCustomersRepository';
 
 let fakeCustomersRepository: FakeCustomersRepository;
 let createDeleteCustomers: CreateCustomerService;

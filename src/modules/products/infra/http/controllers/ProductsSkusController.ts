@@ -46,12 +46,13 @@ export default class ProductsSkusController {
 
   async update(request: Request, response: Response): Promise<Response> {
     const { sku, cost_price, sale_price, price, quantity } = request.body;
-    const { id } = request.params;
+    const { product_id, id } = request.params;
 
     const updateProductSku = container.resolve(UpdateProductSkuService);
 
     const product = await updateProductSku.execute({
       id,
+      product_id,
       sku,
       cost_price,
       sale_price,

@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { celebrate, Joi, Segments } from 'celebrate';
 import { messages } from 'joi-translation-pt-br';
-import StoresController from '../controllers/StoresController';
+import { celebrate, Joi, Segments } from 'celebrate';
+import StoresController from '@modules/stores/infra/http/controllers/StoresController';
 
 const storesRouter = Router();
 const storesController = new StoresController();

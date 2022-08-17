@@ -1,12 +1,12 @@
 import { prisma } from '@shared/infra/prisma';
-import { ProductsImages } from '@prisma/client';
 import { IProductsImagesRepository } from '@modules/products/domain/repositories/IProductsImagesRepository';
-import { ICreateProductImage } from '@modules/products/domain/models/ICreateProductImage';
+import { ICreateProductImage } from '@modules/products/domain/dtos/ICreateProductImage';
+import { ProductsImagesEntity } from '../entities/ProductsImages';
 
 export default class ProductsImagesRepository
   implements IProductsImagesRepository
 {
-  async create(data: ICreateProductImage): Promise<ProductsImages> {
+  async create(data: ICreateProductImage): Promise<ProductsImagesEntity> {
     return await prisma.productsImages.create({
       data: {
         ...data,
@@ -24,7 +24,7 @@ export default class ProductsImagesRepository
     });
   }
 
-  async findById(id: string): Promise<ProductsImages | null> {
+  async findById(id: string): Promise<ProductsImagesEntity | null> {
     const productImage = await prisma.productsImages.findUnique({
       where: { id },
     });

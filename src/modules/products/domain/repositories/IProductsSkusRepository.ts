@@ -1,16 +1,17 @@
-import { Products, ProductsSkus } from '@prisma/client';
-import { IUpdateStockProductsSkus } from '../models/IUpdateStockProductsSkus';
-import { ICreateProductSku } from '../models/ICreateProductSku';
-import { IProductSku } from '../models/IProductSku';
+import { ICreateProductSku } from '../dtos/ICreateProductSku';
+import { IUpdateProductSku } from '../dtos/IUpdateProductSku';
+import { IUpdateStockProductsSkus } from '../dtos/IUpdateStockProductsSkus';
+import { ProductsSkusEntity } from '@modules/products/infra/prisma/entities/ProductsSkus';
+import { ProductsEntity } from '@modules/products/infra/prisma/entities/Products';
 
 export interface IProductsSkusRepository {
-  findAll(product_id: string): Promise<Products | null>;
-  findById(product_id: string, id: string): Promise<Products | null>;
-  findByIdSku(sku: string): Promise<ProductsSkus | null>;
-  findBySku(sku: string): Promise<ProductsSkus | null>;
+  findAll(product_id: string): Promise<ProductsEntity | null>;
+  findById(product_id: string, id: string): Promise<ProductsEntity | null>;
+  // findById(product_id: string, id: string): Promise<ProductsSkusEntity | null>;
+  findBySku(sku: string): Promise<ProductsSkusEntity | null>;
 
-  create(data: ICreateProductSku): Promise<ProductsSkus>;
-  update(data: IProductSku): Promise<ProductsSkus>;
   updateStock(data: IUpdateStockProductsSkus[]): Promise<void>;
+  update(data: IUpdateProductSku): Promise<ProductsSkusEntity>;
+  create(data: ICreateProductSku): Promise<ProductsSkusEntity>;
   remove(id: string): Promise<void>;
 }

@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { Request, Response } from 'express';
 import CreateSessionsService from '@modules/customers/services/CreateSessionsService';
 
 export default class SessionsController {

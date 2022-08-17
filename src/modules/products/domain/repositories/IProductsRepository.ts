@@ -1,8 +1,8 @@
 import { Products } from '@prisma/client';
-import { IFindProducts } from '../models/IFindProducts';
-import { IPaginateProduct } from '../models/IPaginateProduct';
-import { ICreateProduct } from '../models/ICreateProduct';
-import { IUpdateProduct } from '../models/IUpdateProduct';
+import { IFindProducts } from '../dtos/IFindProducts';
+import { IPaginateProduct } from '../dtos/IPaginateProduct';
+import { ICreateProduct } from '../dtos/ICreateProduct';
+import { IUpdateProduct } from '../dtos/IUpdateProduct';
 
 type SearchParams = {
   page: number;
@@ -13,8 +13,8 @@ type SearchParams = {
 
 export interface IProductsRepository {
   findAll({ page, skip, take, name }: SearchParams): Promise<IPaginateProduct>;
-  findByName(name: string): Promise<Products | null>;
   findById(id: string): Promise<Products | null>;
+  findByName(name: string): Promise<Products | null>;
   findAllByIds(id: IFindProducts[]): Promise<Products[]>;
 
   create(data: ICreateProduct): Promise<Products>;

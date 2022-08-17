@@ -1,12 +1,13 @@
 import { prisma } from '@shared/infra/prisma';
-import { Products, ProductsSkus } from '@prisma/client';
-import { IUpdateStockProductsSkus } from '@modules/products/domain/models/IUpdateStockProductsSkus';
+import { IUpdateStockProductsSkus } from '@modules/products/domain/dtos/IUpdateStockProductsSkus';
 import { IProductsSkusRepository } from '@modules/products/domain/repositories/IProductsSkusRepository';
-import { ICreateProductSku } from '@modules/products/domain/models/ICreateProductSku';
-import { IUpdateProductSku } from '@modules/products/domain/models/IUpdateProductSku';
+import { ICreateProductSku } from '@modules/products/domain/dtos/ICreateProductSku';
+import { IUpdateProductSku } from '@modules/products/domain/dtos/IUpdateProductSku';
+import { ProductsSkusEntity } from '../entities/ProductsSkus';
+import { ProductsEntity } from '../entities/Products';
 
 export default class ProductsSkusRepository implements IProductsSkusRepository {
-  async create(data: ICreateProductSku): Promise<ProductsSkus> {
+  async create(data: ICreateProductSku): Promise<ProductsSkusEntity> {
     return prisma.productsSkus.create({
       data: {
         ...data,
@@ -14,7 +15,7 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
     });
   }
 
-  async update(data: IUpdateProductSku): Promise<ProductsSkus> {
+  async update(data: IUpdateProductSku): Promise<ProductsSkusEntity> {
     return await prisma.productsSkus.update({
       data,
       where: {
@@ -30,7 +31,7 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
     });
   }
 
-  async findBySku(sku: string): Promise<ProductsSkus | null> {
+  async findBySku(sku: string): Promise<ProductsSkusEntity | null> {
     return await prisma.productsSkus.findFirst({
       where: {
         sku,
@@ -38,13 +39,19 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
     });
   }
 
-  async findById(product_id: string, id: string): Promise<Products | null> {
-    return await prisma.products.findFirst({
+  async findById(
+    product_id: string,
+    id: string,
+  ): Promise<ProductsEntity | null> {
+    return await prisma.products.findUnique({
       where: {
         id: product_id,
       },
       include: {
         skus: {
+          where: {
+            id: id,
+          },
           include: {
             images: {
               orderBy: {
@@ -52,31 +59,20 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
               },
             },
           },
-          where: {
-            id,
-          },
         },
       },
-
-      // order: {
-      //   skus: {
-      //     images: {
-      //       position: 'ASC',
-      //     },
-      //   },
-      // },
     });
   }
 
-  async findByIdSku(sku: string): Promise<ProductsSkus | null> {
-    return await prisma.productsSkus.findFirst({
-      where: {
-        sku,
-      },
-    });
-  }
+  // async findByIdSku(sku: string): Promise<ProductsSkusEntity | null> {
+  //   return await prisma.productsSkus.findFirst({
+  //     where: {
+  //       sku,
+  //     },
+  //   });
+  // }
 
-  async findAll(product_id: string): Promise<Products | null> {
+  async findAll(product_id: string): Promise<ProductsEntity | null> {
     return await prisma.products.findFirst({
       where: {
         id: product_id,

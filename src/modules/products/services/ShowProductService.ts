@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
-import AppError from '@shared/errors/AppError';
 import { IProductsRepository } from '../domain/repositories/IProductsRepository';
-import { IShowProduct } from '../domain/models/IShowProduct';
-import { IProduct } from '../domain/models/IProduct';
+import { ProductsEntity } from '../infra/prisma/entities/Products';
+import { IShowProduct } from '../domain/dtos/IShowProduct';
+import AppError from '@shared/errors/AppError';
 
 @injectable()
 export default class ShowProductService {
@@ -11,7 +11,7 @@ export default class ShowProductService {
     private productsRepository: IProductsRepository,
   ) {}
 
-  async execute({ id }: IShowProduct): Promise<IProduct> {
+  async execute({ id }: IShowProduct): Promise<ProductsEntity> {
     const product = await this.productsRepository.findById(id);
 
     if (!product) {
