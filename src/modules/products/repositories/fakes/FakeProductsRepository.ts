@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ICreateProduct } from '@modules/products/dtos/ICreateProduct';
 import { IPaginateProduct } from '@modules/products/dtos/IPaginateProduct';
 import { IProductsRepository } from '@modules/products/repositories/IProductsRepository';
-import { ProductsEntity } from '@modules/products/prisma/entities/Products';
+import { ProductsEntity } from '@modules/products/infra/prisma/entities/Products';
 
 export default class FakeProductsRepository implements IProductsRepository {
   private products: ProductsEntity[] = [];

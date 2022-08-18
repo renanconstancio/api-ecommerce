@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { ICreateProduct } from '@modules/products/dtos/ICreateProduct';
-import { ProductsEntity } from '@modules/products/prisma/entities/Products';
+import { ProductsEntity } from '@modules/products/infra/prisma/entities/Products';
 import { IProductsRepository } from '@modules/products/repositories/IProductsRepository';
 // import redisCache from '@shared/cache/RedisCache';
 import AppError from '@shared/errors/AppError';

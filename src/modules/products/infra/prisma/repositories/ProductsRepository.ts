@@ -3,7 +3,7 @@ import { ICreateProduct } from '@modules/products/dtos/ICreateProduct';
 import { IUpdateProduct } from '@modules/products/dtos/IUpdateProduct';
 import { IPaginateProduct } from '@modules/products/dtos/IPaginateProduct';
 import { IProductsRepository } from '@modules/products/repositories/IProductsRepository';
-import { ProductsEntity } from '@modules/products/prisma/entities/Products';
+import { ProductsEntity } from '@modules/products/infra/prisma/entities/Products';
 import { prisma } from '@shared/infra/prisma';
 import { Prisma } from '@prisma/client';
 

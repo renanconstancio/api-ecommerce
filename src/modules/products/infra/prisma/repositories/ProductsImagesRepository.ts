@@ -1,7 +1,7 @@
 import { prisma } from '@shared/infra/prisma';
 import { IProductsImagesRepository } from '@modules/products/repositories/IProductsImagesRepository';
 import { ICreateProductImage } from '@modules/products/dtos/ICreateProductImage';
-import { ProductsImagesEntity } from '@modules/products/prisma/entities/ProductsImages';
+import { ProductsImagesEntity } from '@modules/products/infra/prisma/entities/ProductsImages';
 
 export default class ProductsImagesRepository
   implements IProductsImagesRepository

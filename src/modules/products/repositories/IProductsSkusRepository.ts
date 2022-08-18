@@ -1,8 +1,8 @@
 import { ICreateProductSku } from '@modules/products/dtos/ICreateProductSku';
 import { IUpdateProductSku } from '@modules/products/dtos/IUpdateProductSku';
 import { IUpdateStockProductsSkus } from '@modules/products/dtos/IUpdateStockProductsSkus';
-import { ProductsSkusEntity } from '@modules/products/prisma/entities/ProductsSkus';
-import { ProductsEntity } from '@modules/products/prisma/entities/Products';
+import { ProductsSkusEntity } from '@modules/products/infra/prisma/entities/ProductsSkus';
+import { ProductsEntity } from '@modules/products/infra/prisma/entities/Products';
 
 export interface IProductsSkusRepository {
   findAll(product_id: string): Promise<ProductsEntity | null>;

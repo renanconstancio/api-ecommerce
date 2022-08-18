@@ -1,4 +1,4 @@
-import { ProductsImagesEntity } from '@modules/products/prisma/entities/ProductsImages';
+import { ProductsImagesEntity } from '@modules/products/infra/prisma/entities/ProductsImages';
 import { ICreateProductImage } from '@modules/products/dtos/ICreateProductImage';
 
 export interface IProductsImagesRepository {

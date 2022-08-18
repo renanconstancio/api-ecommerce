@@ -3,8 +3,8 @@ import { IUpdateStockProductsSkus } from '@modules/products/dtos/IUpdateStockPro
 import { IProductsSkusRepository } from '@modules/products/repositories/IProductsSkusRepository';
 import { ICreateProductSku } from '@modules/products/dtos/ICreateProductSku';
 import { IUpdateProductSku } from '@modules/products/dtos/IUpdateProductSku';
-import { ProductsSkusEntity } from '@modules/products/prisma/entities/ProductsSkus';
-import { ProductsEntity } from '@modules/products/prisma/entities/Products';
+import { ProductsSkusEntity } from '@modules/products/infra/prisma/entities/ProductsSkus';
+import { ProductsEntity } from '@modules/products/infra/prisma/entities/Products';
 
 export default class ProductsSkusRepository implements IProductsSkusRepository {
   async create(data: ICreateProductSku): Promise<ProductsSkusEntity> {

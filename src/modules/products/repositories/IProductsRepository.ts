@@ -2,7 +2,7 @@ import { IPaginateProduct } from '@modules/products/dtos/IPaginateProduct';
 import { IFindProducts } from '@modules/products/dtos/IFindProducts';
 import { ICreateProduct } from '@modules/products/dtos/ICreateProduct';
 import { IUpdateProduct } from '@modules/products/dtos/IUpdateProduct';
-import { ProductsEntity } from '@modules/products/prisma/entities/Products';
+import { ProductsEntity } from '@modules/products/infra/prisma/entities/Products';
 
 type SearchParams = {
   page: number;

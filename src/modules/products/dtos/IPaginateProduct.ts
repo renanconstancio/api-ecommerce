@@ -1,4 +1,4 @@
-import { ProductsEntity } from '@modules/products/prisma/entities/Products';
+import { ProductsEntity } from '@modules/products/infra/prisma/entities/Products';
 
 export interface IPaginateProduct {
   total: number;
