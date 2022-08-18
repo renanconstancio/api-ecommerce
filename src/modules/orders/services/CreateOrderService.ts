@@ -4,7 +4,7 @@ import { IRequestCreateOrder } from '../domain/models/IRequestCreateOrder';
 import { IOrdersRepository } from '../domain/repositories/IOrdersRepository';
 import { IOrder } from '../domain/models/IOrder';
 import { ICustomersRepository } from '@modules/customers/repositories/ICustomersRepository';
-import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
+import { IProductsRepository } from '@modules/products/repositories/IProductsRepository';
 
 @injectable()
 class CreateOrderService {

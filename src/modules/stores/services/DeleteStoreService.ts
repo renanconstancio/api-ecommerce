@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
-import { IDeleteProduct } from '@modules/products/domain/dtos/IDeleteProduct';
+import { IDeleteProduct } from '@modules/products/dtos/IDeleteProduct';
 import AppError from '@shared/errors/AppError';
 
 @injectable()

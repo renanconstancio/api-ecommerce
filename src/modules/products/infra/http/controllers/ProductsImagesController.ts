@@ -1,6 +1,6 @@
 import { container } from 'tsyringe';
 import { Request, Response } from 'express';
-import UpdateProductsImagesService from '@modules/products/services/UpdateProductsImagesService';
+import UpdateProductsImagesService from '@modules/products/useCases/UpdateProductsImages/UpdateProductsImagesUseCases';
 
 export default class ProductsImagesController {
   async update(request: Request, response: Response): Promise<Response> {

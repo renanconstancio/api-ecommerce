@@ -1,10 +1,10 @@
 import { container } from 'tsyringe';
 import { Request, Response } from 'express';
-import CreateProductSkuService from '@modules/products/services/CreateProductSkuService';
-import DeleteProductSkuService from '@modules/products/services/DeleteProductSkuService';
-import ListProductSkuService from '@modules/products/services/ListProductSkuService';
-import ShowProductSkuService from '@modules/products/services/ShowProductSkuService';
-import UpdateProductSkuService from '@modules/products/services/UpdateProductSkuService';
+import CreateProductSkuService from '@modules/products/useCases/CreateProductsSkus/CreateProductSkusUseCases';
+import DeleteProductSkuService from '@modules/products/useCases/DeleteProductsSkus/DeleteProductsSkusUseCases';
+import ListProductSkuService from '@modules/products/useCases/FindAllProductsSkus/FindProductsSkusUseCases';
+import ShowProductSkuService from '@modules/products/useCases/FindProductsSkus/FindProductsSkusUseCases';
+import UpdateProductSkuService from '@modules/products/useCases/UpdateProductsSkus/UpdateProductsSkusUseCases';
 
 export default class ProductsSkusController {
   async index(request: Request, response: Response): Promise<Response> {
