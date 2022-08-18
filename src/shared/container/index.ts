@@ -9,7 +9,7 @@ import CategoriesRepository from '@modules/categories/infra/prisma/repositories/
 import { ICategoriesRepository } from '@modules/categories/repositories/ICategoriesRepository';
 
 import StoresRepository from '@modules/stores/infra/prisma/repositories/StoresRepository';
-import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
+import { IStoresRepository } from '@modules/stores/repositories/IStoresRepository';
 
 import ProductsRepository from '@modules/products/infra/prisma/repositories/ProductsRepository';
 import { IProductsRepository } from '@modules/products/repositories/IProductsRepository';

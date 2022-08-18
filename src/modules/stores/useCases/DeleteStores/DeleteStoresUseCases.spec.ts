@@ -1,18 +1,18 @@
 import 'reflect-metadata';
-import FakeStoresRepository from '@modules/stores/domain/repositories/fakes/FakeStoresRepository';
-import CreateStoreService from '@modules/stores/services/CreateStoreService';
-import DeleteStoreService from '@modules/stores/services/DeleteStoreService';
+import FakeStoresRepository from '@modules/stores/repositories/fakes/FakeStoresRepository';
+import CreateStoresUsecases from '@modules/stores/useCases/CreateStores/CreateStoresUseCases';
+import DeleteStoresUseCases from '@modules/stores/useCases/DeleteStores/DeleteStoresUseCases';
 import AppError from '@shared/errors/AppError';
 
 let fakeStoriesRepository: FakeStoresRepository;
-let createDeleteStore: CreateStoreService;
-let deleteStore: DeleteStoreService;
+let createDeleteStore: CreateStoresUsecases;
+let deleteStore: DeleteStoresUseCases;
 
-describe('DeleteStoreService', () => {
+describe('DeleteStoresUseCases', () => {
   beforeEach(() => {
     fakeStoriesRepository = new FakeStoresRepository();
-    createDeleteStore = new CreateStoreService(fakeStoriesRepository);
-    deleteStore = new DeleteStoreService(fakeStoriesRepository);
+    createDeleteStore = new CreateStoresUsecases(fakeStoriesRepository);
+    deleteStore = new DeleteStoresUseCases(fakeStoriesRepository);
   });
 
   it('should be able to delete a store', async () => {

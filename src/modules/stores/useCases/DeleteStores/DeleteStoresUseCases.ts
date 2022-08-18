@@ -1,10 +1,10 @@
 import { inject, injectable } from 'tsyringe';
-import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
+import { IStoresRepository } from '@modules/stores/repositories/IStoresRepository';
 import { IDeleteProduct } from '@modules/products/dtos/IDeleteProduct';
 import AppError from '@shared/errors/AppError';
 
 @injectable()
-export default class DeleteStoreService {
+export default class DeleteStoresUseCases {
   constructor(
     @inject('StoresRepository')
     private storesRepository: IStoresRepository,

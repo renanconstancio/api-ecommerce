@@ -1,18 +1,18 @@
 import 'reflect-metadata';
-import FakeStoresRepository from '@modules/stores/domain/repositories/fakes/FakeStoresRepository';
-import CreateStoreService from '@modules/stores/services/CreateStoreService';
-import ShowStoreService from '@modules/stores/services/ShowStoreService';
+import FakeStoresRepository from '@modules/stores/repositories/fakes/FakeStoresRepository';
+import CreateStoresUseCases from '@modules/stores/useCases/CreateStores/CreateStoresUseCases';
+import FindStoresUseCases from '@modules/stores/useCases/FindStores/FindStoresUseCases';
 import AppError from '@shared/errors/AppError';
 
 let fakeCustomersRepository: FakeStoresRepository;
-let showStoreService: ShowStoreService;
-let createStore: CreateStoreService;
+let showStoreService: FindStoresUseCases;
+let createStore: CreateStoresUseCases;
 
-describe('ShowStoreService', () => {
+describe('FindStoresUseCases', () => {
   beforeEach(() => {
     fakeCustomersRepository = new FakeStoresRepository();
-    showStoreService = new ShowStoreService(fakeCustomersRepository);
-    createStore = new CreateStoreService(fakeCustomersRepository);
+    showStoreService = new FindStoresUseCases(fakeCustomersRepository);
+    createStore = new CreateStoresUseCases(fakeCustomersRepository);
   });
 
   it('must be able to list the stores', async () => {

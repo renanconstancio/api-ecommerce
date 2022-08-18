@@ -1,14 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
-import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
-import { ICreateStore } from '@modules/stores/domain/dtos/ICreateStore';
-import { IPaginateStore } from '@modules/stores/domain/dtos/IPaginateStore';
-import { Stores } from '@prisma/client';
+import { IStoresRepository } from '@modules/stores/repositories/IStoresRepository';
+import { ICreateStore } from '@modules/stores/dtos/ICreateStore';
+import { IPaginateStore } from '@modules/stores/dtos/IPaginateStore';
+import { StoresEntity } from '@modules/stores/infra/prisma/entities/Stores';
 
 export default class FakeStoresRepository implements IStoresRepository {
-  private stores: Stores[] = [];
+  private stores: StoresEntity[] = [];
 
-  async create(data: ICreateStore): Promise<Stores> {
-    const store = {} as Stores;
+  async create(data: ICreateStore): Promise<StoresEntity> {
+    const store = {} as StoresEntity;
 
     store.id = uuidv4();
     store.title = data.title;
@@ -30,10 +30,10 @@ export default class FakeStoresRepository implements IStoresRepository {
     return store;
   }
 
-  async update(data: ICreateStore): Promise<Stores> {
+  async update(data: ICreateStore): Promise<StoresEntity> {
     Object.assign(this.stores, data);
 
-    return data as Stores;
+    return data as StoresEntity;
   }
 
   async remove(id: string): Promise<void> {
@@ -45,17 +45,17 @@ export default class FakeStoresRepository implements IStoresRepository {
     return {} as IPaginateStore;
   }
 
-  async findById(id: string): Promise<Stores | null> {
+  async findById(id: string): Promise<StoresEntity | null> {
     const store = this.stores.find(stores => stores.id === id);
 
-    return store as Stores;
+    return store as StoresEntity;
   }
 
-  async findByFantasyName(fantasy_name: string): Promise<Stores | null> {
+  async findByFantasyName(fantasy_name: string): Promise<StoresEntity | null> {
     const store = this.stores.find(
       stores => stores.fantasy_name === fantasy_name,
     );
 
-    return store as Stores;
+    return store as StoresEntity;
   }
 }

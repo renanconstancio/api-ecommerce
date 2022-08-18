@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
-import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
-import { IPaginateStore } from '@modules/stores/domain/dtos/IPaginateStore';
+import { IStoresRepository } from '@modules/stores/repositories/IStoresRepository';
+import { IPaginateStore } from '@modules/stores/dtos/IPaginateStore';
 
 interface SearchParams {
   page: number;
@@ -8,7 +8,7 @@ interface SearchParams {
 }
 
 @injectable()
-export default class ListStoreService {
+export default class FindAllStoresUseCases {
   constructor(
     @inject('StoresRepository')
     private storesRepository: IStoresRepository,

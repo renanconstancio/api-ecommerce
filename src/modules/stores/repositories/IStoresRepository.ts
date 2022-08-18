@@ -1,6 +1,6 @@
-import { ICreateStore } from '@modules/stores/domain/dtos/ICreateStore';
-import { IUpdateStore } from '@modules/stores/domain/dtos/IUpdateStore';
-import { IPaginateStore } from '@modules/stores/domain/dtos/IPaginateStore';
+import { ICreateStore } from '@modules/stores/dtos/ICreateStore';
+import { IUpdateStore } from '@modules/stores/dtos/IUpdateStore';
+import { IPaginateStore } from '@modules/stores/dtos/IPaginateStore';
 import { StoresEntity } from '@modules/stores/infra/prisma/entities/Stores';
 
 type SearchParams = {

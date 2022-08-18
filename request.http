@@ -1,0 +1,24 @@
+@hostname = http://localhost
+@port = 8000
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+
+GET {{host}}/stores HTTP/1.1
+content-type: {{contentType}}
+
+{}
+
+GET {{host}}/categories?categories[name]=&limit=25&page=1 HTTP/1.1
+content-type: {{contentType}}
+
+{}
+
+POST  {{host}}/categories HTTP/1.1
+content-type: {{contentType}}
+
+{
+	"name": "Categoria A",
+	"keywords": "",
+	"description": "",
+	"position": 0
+}

@@ -1,9 +1,9 @@
 import { prisma } from '@shared/infra/prisma';
-import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
-import { ICreateStore } from '@modules/stores/domain/dtos/ICreateStore';
-import { IPaginateStore } from '@modules/stores/domain/dtos/IPaginateStore';
-import { IFindStores } from '@modules/stores/domain/dtos/IFindStores';
-import { IUpdateStore } from '@modules/stores/domain/dtos/IUpdateStore';
+import { IStoresRepository } from '@modules/stores/repositories/IStoresRepository';
+import { ICreateStore } from '@modules/stores/dtos/ICreateStore';
+import { IPaginateStore } from '@modules/stores/dtos/IPaginateStore';
+import { IFindStores } from '@modules/stores/dtos/IFindStores';
+import { IUpdateStore } from '@modules/stores/dtos/IUpdateStore';
 import { StoresEntity } from '@modules/stores/infra/prisma/entities/Stores';
 import { Prisma } from '@prisma/client';
 

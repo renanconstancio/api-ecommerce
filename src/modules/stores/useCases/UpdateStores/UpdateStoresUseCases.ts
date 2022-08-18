@@ -1,11 +1,11 @@
 import { inject, injectable } from 'tsyringe';
-import { IStoresRepository } from '@modules/stores/domain/repositories/IStoresRepository';
-import { IUpdateStore } from '@modules/stores/domain/dtos/IUpdateStore';
+import { IStoresRepository } from '@modules/stores/repositories/IStoresRepository';
+import { IUpdateStore } from '@modules/stores/dtos/IUpdateStore';
 import { StoresEntity } from '@modules/stores/infra/prisma/entities/Stores';
 import AppError from '@shared/errors/AppError';
 
 @injectable()
-export default class UpdateStoreService {
+export default class UpdateStoresUseCases {
   constructor(
     @inject('StoresRepository')
     private storesRepository: IStoresRepository,
