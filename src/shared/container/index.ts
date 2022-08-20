@@ -22,6 +22,8 @@ import ProductsImagesRepository from '@modules/products/infra/prisma/repositorie
 
 import CustomersHashRepository from '@modules/customers/infra/prisma/repositories/CustomersHashRepository';
 import { ICustomersHashRepository } from '@modules/customers/repositories/ICustomersHashRepository';
+import { ISalesRepository } from '@modules/sales/repositories/ISalesRepository';
+import SalesRepository from '@modules/sales/infra/prisma/repositories/SalesRepository';
 
 container.registerSingleton<ICategoriesRepository>(
   'CategoriesRepository',
@@ -58,10 +60,10 @@ container.registerSingleton<IProductsImagesRepository>(
   delay(() => ProductsImagesRepository),
 );
 
-// container.registerSingleton<IOrdersRepository>(
-//   'OrdersRepository',
-//   OrdersRepository,
-// );
+container.registerSingleton<ISalesRepository>(
+  'SalesRepository',
+  SalesRepository,
+);
 
 // container.registerSingleton<IUsersRepository>(
 //   'UsersRepository',

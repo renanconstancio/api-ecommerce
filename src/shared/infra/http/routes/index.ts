@@ -7,6 +7,7 @@ import customersRouter from '@shared/infra/http/routes/customers.routes';
 import productsRouter from '@shared/infra/http/routes/products.routes';
 import productsSkusRouter from '@shared/infra/http/routes/products.skus.routes';
 import productsImagesRouter from '@shared/infra/http/routes/products.images.routes';
+import salesRouter from '@shared/infra/http/routes/sales.routes';
 
 const routes = Router();
 
@@ -20,5 +21,6 @@ routes.use(
 );
 routes.use('/sessions', sessionsRouter);
 routes.use('/customers', customersRouter);
+routes.use('/sales', salesRouter);
 
 export default routes;

@@ -5,13 +5,13 @@
 
 # Send Request stores
 GET {{host}}/stores HTTP/1.1
-content-type: {{contentType}}
+Content-Type: {{contentType}}
 
 {}
 
 # Send Request is Create stores
 POST {{host}}/stores HTTP/1.1
-content-type: {{contentType}}
+Content-Type: {{contentType}}
 
 {
   "title": "Loja Teste",
@@ -30,7 +30,7 @@ content-type: {{contentType}}
 
 # Send Request is Update stores
 PUT {{host}}/stores/3a188ab3-8366-4228-a6f3-4a3ea753b7a2 HTTP/1.1
-content-type: {{contentType}}
+Content-Type: {{contentType}}
 
 {
   "title": "Loja Teste Updated",
@@ -49,24 +49,56 @@ content-type: {{contentType}}
 
 # Send Request is Update stores
 GET {{host}}/stores/3a188ab3-8366-4228-a6f3-4a3ea753b7a2 HTTP/1.1
-content-type: {{contentType}}
+Content-Type: {{contentType}}
 
 {
 }
 
 # Send Request is categories
 GET {{host}}/categories?categories[name]=&limit=25&page=1 HTTP/1.1
-content-type: {{contentType}}
+Content-Type: {{contentType}}
 
 {
 }
 
 POST  {{host}}/categories HTTP/1.1
-content-type: {{contentType}}
+Content-Type: {{contentType}}
 
 {
 	"name": "Categoria A",
 	"keywords": "",
 	"description": "",
 	"position": 0
+}
+
+
+# Find All Sales
+GET {{host}}/sales
+Content-Type: {{contentType}}
+
+{}
+
+
+# Create Sales
+POST {{host}}/sales
+Content-Type: {{contentType}}
+
+{
+  "customers_id": "",
+  "address_id": "",
+  "products": [{
+      "id": "",
+      "quantity": "",
+      "price_paid": ""
+    }
+  ],
+  "transations": [{
+    "flag": "",
+    "payment_methods": "",
+    "installment": "",
+    "discounts": "",
+    "discount_type": "",
+    }
+  ]
+
 }

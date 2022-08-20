@@ -25,20 +25,20 @@ model Category {
 }
 
 model Customers {
-  id             String           @id @default(uuid()) @db.VarChar(36)
-  name           String           @db.VarChar(105)
-  email          String           @db.VarChar(85)
-  password       String           @db.VarChar(86)
-  cpf            String?          @db.VarChar(20)
-  cnpj           String?          @db.VarChar(22)
-  phone          String?          @db.VarChar(20)
-  avatar         String?          @db.VarChar(41)
-  created_at     DateTime         @default(now()) @db.DateTime(6)
-  updated_at     DateTime         @updatedAt() @db.DateTime(6)
-  deleted_at     DateTime?        @db.DateTime(6)
-  birth_date     String?          @db.VarChar(20)
-  Adresses       Adresses[]
-  SalesAddresses SalesAddresses[]
+  id         String     @id @default(uuid()) @db.VarChar(36)
+  name       String     @db.VarChar(105)
+  email      String     @db.VarChar(85)
+  password   String     @db.VarChar(86)
+  cpf        String?    @db.VarChar(20)
+  cnpj       String?    @db.VarChar(22)
+  phone      String?    @db.VarChar(20)
+  avatar     String?    @db.VarChar(41)
+  created_at DateTime   @default(now()) @db.DateTime(6)
+  updated_at DateTime   @updatedAt() @db.DateTime(6)
+  deleted_at DateTime?  @db.DateTime(6)
+  birth_date String?    @db.VarChar(20)
+  adresses   Adresses[]
+  Sales      Sales[]
 
   @@map("customers")
 }
@@ -61,8 +61,7 @@ model Adresses {
   updated_at DateTime  @updatedAt() @db.DateTime(6)
   deleted_at DateTime? @db.DateTime(6)
 
-  customer       Customers        @relation(fields: [customes_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_CUSTOMERS")
-  SalesAddresses SalesAddresses[]
+  customer Customers @relation(fields: [customes_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_CUSTOMERS")
 
   @@index([customes_id], map: "FK_CUSTOMERS")
   @@map("adresses")
@@ -98,44 +97,47 @@ model ProductsImages {
 }
 
 model ProductsSkus {
-  id            String           @id @default(uuid()) @db.VarChar(36)
-  sku           String           @db.VarChar(20)
-  price         Decimal          @default(0) @db.Decimal(10, 0)
-  quantity      Int              @default(0)
-  created_at    DateTime         @default(now()) @db.DateTime(6)
-  updated_at    DateTime         @updatedAt() @db.DateTime(6)
-  deleted_at    DateTime?        @db.DateTime(6)
-  cost_price    Decimal          @default(0) @db.Decimal(10, 0)
-  sale_price    Decimal          @default(0) @db.Decimal(10, 0)
-  product_id    String?          @db.VarChar(36)
-  product       Products?        @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_4a232ada01f43f6119ed6636985")
-  images        ProductsImages[]
-  SalesProducts SalesProducts[]
+  id         String           @id @default(uuid()) @db.VarChar(36)
+  sku        String           @db.VarChar(20)
+  price      Decimal          @default(0) @db.Decimal(10, 0)
+  quantity   Int              @default(0)
+  created_at DateTime         @default(now()) @db.DateTime(6)
+  updated_at DateTime         @updatedAt() @db.DateTime(6)
+  deleted_at DateTime?        @db.DateTime(6)
+  cost_price Decimal          @default(0) @db.Decimal(10, 0)
+  sale_price Decimal          @default(0) @db.Decimal(10, 0)
+  product_id String           @db.VarChar(36)
+  images     ProductsImages[]
+  product    Products         @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_4a232ada01f43f6119ed6636985")
+  sales      SalesProducts[]
 
   @@index([product_id], map: "FK_4a232ada01f43f6119ed6636985")
   @@map("products_skus")
 }
 
 model Sales {
-  id                 String              @id @default(uuid()) @db.VarChar(36)
-  code               String              @db.VarChar(20)
-  date_of_sale       DateTime            @db.DateTime(6)
-  created_at         DateTime            @default(now()) @db.DateTime(6)
-  updated_at         DateTime            @updatedAt() @db.DateTime(6)
-  deleted_at         DateTime?           @db.DateTime(6)
-  sales_transactions SalesTransactions[]
-  SalesProducts      SalesProducts[]
+  id           String    @id @default(uuid()) @db.VarChar(36)
+  code         String    @db.VarChar(20)
+  date_of_sale DateTime  @db.DateTime(6)
+  customers_id String    @db.VarChar(36)
+  created_at   DateTime  @default(now()) @db.DateTime(6)
+  updated_at   DateTime  @updatedAt() @db.DateTime(6)
+  deleted_at   DateTime? @db.DateTime(6)
 
+  transactions SalesTransactions[]
+  addresses    SalesAddresses[]
+  products     SalesProducts[]
+  customer     Customers           @relation(fields: [customers_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_CUSTOMER")
+
+  @@index([customers_id], map: "FK_CUSTOMER")
   @@index([code, date_of_sale])
+  @@map("sales")
 }
 
 model SalesAddresses {
   id String @id @default(uuid()) @db.VarChar(36)
 
-  sales_id     String @db.VarChar(36)
-  customers_id String @db.VarChar(36)
-  addresses_id String @db.VarChar(36)
-
+  sales_id   String  @db.VarChar(36)
   recipient  String  @db.VarChar(55)
   address    String  @db.VarChar(65)
   number     String  @db.VarChar(5)
@@ -146,23 +148,24 @@ model SalesAddresses {
   state      String  @db.VarChar(2)
   zip_code   String  @db.VarChar(9)
 
-  addresse  Adresses  @relation(fields: [addresses_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_ADRESSS")
-  customers Customers @relation(fields: [customers_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_CUSTOMER")
+  sale Sales @relation(fields: [sales_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_SALE_ADDRESS")
 
-  @@index([addresses_id], map: "FK_ADRESSS")
-  @@index([customers_id], map: "FK_CUSTOMER")
+  @@index([sales_id], map: "FK_SALE_ADDRESS")
   @@map("sales_addresses")
 }
 
 model SalesProducts {
-  id                String       @id @default(uuid()) @db.VarChar(36)
-  sales_id          String       @db.VarChar(36)
-  produtcts_skus_id String       @db.VarChar(36)
-  sale              Sales        @relation(fields: [sales_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_SALE_PRODUCTS")
-  sku               ProductsSkus @relation(fields: [produtcts_skus_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_SALE_PRODUCTS_SKU")
+  id                String  @id @default(uuid()) @db.VarChar(36)
+  sales_id          String  @db.VarChar(36)
+  produtcts_skus_id String  @db.VarChar(36)
+  quantity          Int     @default(0) @db.Int()
+  price_paid        Decimal @default(0) @db.Decimal(10, 0)
+
+  sale Sales        @relation(fields: [sales_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_SALE_PRODUCTS")
+  sku  ProductsSkus @relation(fields: [produtcts_skus_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_SKU_PRODUCTS")
 
   @@index([sales_id], map: "FK_SALE_PRODUCTS")
-  @@index([produtcts_skus_id], map: "FK_SALE_PRODUCTS_SKU")
+  @@index([produtcts_skus_id], map: "FK_SKU_PRODUCTS")
   @@map("sales_products")
 }
 
@@ -173,13 +176,15 @@ model SalesTransactions {
   flag            String                           @db.VarChar(20)
   installment     Int                              @default(0) @db.TinyInt
   discounts       Decimal                          @default(0) @db.Decimal(10, 0)
+  total_price     Decimal                          @default(0) @db.Decimal(10, 0)
+  price_increase  Decimal                          @default(0) @db.Decimal(10, 0)
   created_at      DateTime                         @default(now()) @db.DateTime(6)
   updated_at      DateTime                         @updatedAt() @db.DateTime(6)
   deleted_at      DateTime?                        @db.DateTime(6)
   discount_type   sales_transactions_discount_type @default(percent)
-  sale            Sales                            @relation(fields: [sales_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_SALE_TRANSATION")
+  sale            Sales                            @relation(fields: [sales_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_SALE_TRANSATIONS")
 
-  @@index([sales_id], map: "FK_SALE_TRANSATION")
+  @@index([sales_id], map: "FK_SALE_TRANSATIONS")
   @@map("sales_transactions")
 }
 
