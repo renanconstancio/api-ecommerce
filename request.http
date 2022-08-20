@@ -3,15 +3,63 @@
 @host = {{hostname}}:{{port}}
 @contentType = application/json
 
+# Send Request stores
 GET {{host}}/stores HTTP/1.1
 content-type: {{contentType}}
 
 {}
 
+# Send Request is Create stores
+POST {{host}}/stores HTTP/1.1
+content-type: {{contentType}}
+
+{
+  "title": "Loja Teste",
+  "fantasy_name": "Loja Fantasia",
+  "email": "loja@loja.com",
+  "phone": "(00) 00000-0000",
+  "opening_hours": "",
+  "address": "address",
+  "number": "00nd",
+  "district": "Centro",
+  "complement": "",
+  "city": "Itápolis",
+  "state": "SP",
+  "zip_code": "14900-000"
+}
+
+# Send Request is Update stores
+PUT {{host}}/stores/3a188ab3-8366-4228-a6f3-4a3ea753b7a2 HTTP/1.1
+content-type: {{contentType}}
+
+{
+  "title": "Loja Teste Updated",
+  "fantasy_name": "Loja Fantasia Updated",
+  "email": "loja@loja.com",
+  "phone": "(00) 00000-0000",
+  "opening_hours": "",
+  "address": "address",
+  "number": "00nd",
+  "district": "Centro",
+  "complement": "",
+  "city": "Itápolis",
+  "state": "SP",
+  "zip_code": "14900-000"
+}
+
+# Send Request is Update stores
+GET {{host}}/stores/3a188ab3-8366-4228-a6f3-4a3ea753b7a2 HTTP/1.1
+content-type: {{contentType}}
+
+{
+}
+
+# Send Request is categories
 GET {{host}}/categories?categories[name]=&limit=25&page=1 HTTP/1.1
 content-type: {{contentType}}
 
-{}
+{
+}
 
 POST  {{host}}/categories HTTP/1.1
 content-type: {{contentType}}

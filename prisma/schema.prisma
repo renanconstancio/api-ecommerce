@@ -15,7 +15,7 @@ model Category {
   description    String?    @db.Text
   position       Int        @default(0)
   created_at     DateTime   @default(now()) @db.DateTime(6)
-  updated_at     DateTime   @default(now()) @db.DateTime(6)
+  updated_at     DateTime   @updatedAt() @db.DateTime(6)
   deleted_at     DateTime?  @db.DateTime(6)
   category       Category?  @relation("categoryTocategory", fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_cc7f32b7ab33c70b9e715afae84")
   other_category Category[] @relation("categoryTocategory")
@@ -34,7 +34,7 @@ model Customers {
   phone          String?          @db.VarChar(20)
   avatar         String?          @db.VarChar(41)
   created_at     DateTime         @default(now()) @db.DateTime(6)
-  updated_at     DateTime         @default(now()) @db.DateTime(6)
+  updated_at     DateTime         @updatedAt() @db.DateTime(6)
   deleted_at     DateTime?        @db.DateTime(6)
   birth_date     String?          @db.VarChar(20)
   Adresses       Adresses[]
@@ -58,7 +58,7 @@ model Adresses {
   status      adresses_status @default(yes)
 
   created_at DateTime  @default(now()) @db.DateTime(6)
-  updated_at DateTime  @default(now()) @db.DateTime(6)
+  updated_at DateTime  @updatedAt() @db.DateTime(6)
   deleted_at DateTime? @db.DateTime(6)
 
   customer       Customers        @relation(fields: [customes_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_CUSTOMERS")
@@ -72,7 +72,7 @@ model Products {
   id               String           @id @default(uuid()) @db.VarChar(36)
   name             String           @db.VarChar(155)
   created_at       DateTime         @default(now()) @db.DateTime(6)
-  updated_at       DateTime         @default(now()) @db.DateTime(6)
+  updated_at       DateTime         @updatedAt() @db.DateTime(6)
   deleted_at       DateTime?        @db.DateTime(6)
   keywords         String           @db.VarChar(255)
   visible          products_visible @default(invisible)
@@ -89,7 +89,7 @@ model ProductsImages {
   image          String        @db.VarChar(42)
   position       Int           @default(0)
   created_at     DateTime      @default(now()) @db.DateTime(6)
-  updated_at     DateTime      @default(now()) @db.DateTime(6)
+  updated_at     DateTime      @updatedAt() @db.DateTime(6)
   deleted_at     DateTime?     @db.DateTime(6)
   skus           ProductsSkus? @relation(fields: [product_sku_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_d8ddccdc9bbd7345d257f6cb9fc")
 
@@ -103,7 +103,7 @@ model ProductsSkus {
   price         Decimal          @default(0) @db.Decimal(10, 0)
   quantity      Int              @default(0)
   created_at    DateTime         @default(now()) @db.DateTime(6)
-  updated_at    DateTime         @default(now()) @db.DateTime(6)
+  updated_at    DateTime         @updatedAt() @db.DateTime(6)
   deleted_at    DateTime?        @db.DateTime(6)
   cost_price    Decimal          @default(0) @db.Decimal(10, 0)
   sale_price    Decimal          @default(0) @db.Decimal(10, 0)
@@ -121,7 +121,7 @@ model Sales {
   code               String              @db.VarChar(20)
   date_of_sale       DateTime            @db.DateTime(6)
   created_at         DateTime            @default(now()) @db.DateTime(6)
-  updated_at         DateTime            @default(now()) @db.DateTime(6)
+  updated_at         DateTime            @updatedAt() @db.DateTime(6)
   deleted_at         DateTime?           @db.DateTime(6)
   sales_transactions SalesTransactions[]
   SalesProducts      SalesProducts[]
@@ -174,7 +174,7 @@ model SalesTransactions {
   installment     Int                              @default(0) @db.TinyInt
   discounts       Decimal                          @default(0) @db.Decimal(10, 0)
   created_at      DateTime                         @default(now()) @db.DateTime(6)
-  updated_at      DateTime                         @default(now()) @db.DateTime(6)
+  updated_at      DateTime                         @updatedAt() @db.DateTime(6)
   deleted_at      DateTime?                        @db.DateTime(6)
   discount_type   sales_transactions_discount_type @default(percent)
   sale            Sales                            @relation(fields: [sales_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_SALE_TRANSATION")
@@ -189,17 +189,17 @@ model Stores {
   fantasy_name  String    @db.VarChar(105)
   email         String    @db.VarChar(55)
   phone         String    @db.VarChar(20)
-  opening_hours String    @db.VarChar(155)
+  opening_hours String?   @db.VarChar(155)
   address       String    @db.VarChar(55)
   number        String    @db.VarChar(4)
   district      String    @db.VarChar(35)
-  complement    String    @db.VarChar(45)
+  complement    String?   @db.VarChar(45)
   city          String    @db.VarChar(35)
   state         String    @db.VarChar(2)
   zip_code      String    @db.VarChar(9)
   visible       Int       @default(1) @db.TinyInt
   created_at    DateTime  @default(now()) @db.DateTime(6)
-  updated_at    DateTime  @default(now()) @db.DateTime(6)
+  updated_at    DateTime  @updatedAt() @db.DateTime(6)
   deleted_at    DateTime? @db.DateTime(6)
 
   @@map("stores")

@@ -4,12 +4,42 @@ import UpdateStoresUseCases from '@modules/stores/useCases/UpdateStores/UpdateSt
 
 export default class UpdateStoresController {
   async handle(request: Request, response: Response): Promise<Response> {
+    const {
+      title,
+      fantasy_name,
+      email,
+      phone,
+      opening_hours,
+      address,
+      number,
+      district,
+      complement,
+      city,
+      state,
+      zip_code,
+      visible,
+    } = request.body;
     const { id } = request.params;
 
-    const deleteStore = container.resolve(UpdateStoresUseCases);
+    const useCases = container.resolve(UpdateStoresUseCases);
 
-    await deleteStore.execute({ id });
+    const store = await useCases.execute({
+      id,
+      title,
+      fantasy_name,
+      email,
+      phone,
+      opening_hours,
+      address,
+      number,
+      district,
+      complement,
+      city,
+      state,
+      zip_code,
+      visible,
+    });
 
-    return response.json([]);
+    return response.json(store);
   }
 }

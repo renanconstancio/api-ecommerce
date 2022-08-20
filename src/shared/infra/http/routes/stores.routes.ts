@@ -1,10 +1,13 @@
 import { Router } from 'express';
 import { messages } from 'joi-translation-pt-br';
 import { celebrate, Joi, Segments } from 'celebrate';
-import StoresController from '@modules/stores/infra/http/controllers/StoresController';
+import CreateStoresController from '@modules/stores/useCases/CreateStores/CreateStoresController';
+import UpdateStoresController from '@modules/stores/useCases/UpdateStores/UpdateStoresController';
+import DeleteStoresController from '@modules/stores/useCases/DeleteStores/DeleteStoresController';
+import FindAllStoresController from '@modules/stores/useCases/FindAllStores/FindAllStoresController';
+import FindStoresController from '@modules/stores/useCases/FindStores/FindStoresController';
 
 const storesRouter = Router();
-const storesController = new StoresController();
 
 storesRouter
   .post(
@@ -26,7 +29,7 @@ storesRouter
         visible: Joi.boolean().default(0).optional(),
       },
     }),
-    storesController.create,
+    new CreateStoresController().handle,
   )
   .put(
     '/:id',
@@ -56,7 +59,7 @@ storesRouter
         messages: messages,
       },
     ),
-    storesController.update,
+    new UpdateStoresController().handle,
   )
   .delete(
     '/:id',
@@ -65,7 +68,7 @@ storesRouter
         id: Joi.string().uuid().required(),
       },
     }),
-    storesController.delete,
+    new DeleteStoresController().handle,
   )
   .get(
     '/:id',
@@ -74,8 +77,8 @@ storesRouter
         id: Joi.string().uuid().required(),
       },
     }),
-    storesController.show,
+    new FindStoresController().handle,
   )
-  .get('/', storesController.index);
+  .get('/', new FindAllStoresController().handle);
 
 export default storesRouter;

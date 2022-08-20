@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import categoriesRoutes from '@shared/infra/http/routes/category.routes';
-import storesRoutes from '@modules/stores/infra/http/routes/stores.routes';
+import storesRoutes from '@shared/infra/http/routes/stores.routes';
 import sessionsRouter from '@modules/users/infra/http/routes/sessions.routes';
 import customersRouter from '@shared/infra/http/routes/customers.routes';
 import productsRouter from '@shared/infra/http/routes/products.routes';
