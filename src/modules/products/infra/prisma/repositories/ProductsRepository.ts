@@ -1,9 +1,9 @@
 import { IFindProducts } from '@modules/products/dtos/IFindProducts';
 import { ICreateProduct } from '@modules/products/dtos/ICreateProduct';
 import { IUpdateProduct } from '@modules/products/dtos/IUpdateProduct';
-import { IPaginateProduct } from '@modules/products/dtos/IPaginateProduct';
+import { IPaginateProducts } from '@modules/products/dtos/IPaginateProducts';
 import { IProductsRepository } from '@modules/products/repositories/IProductsRepository';
-import { ProductsEntity } from '@modules/products/infra/prisma/entities/Products';
+import { Products } from '@modules/products/infra/prisma/entities/Products';
 import { prisma } from '@shared/infra/prisma';
 import { Prisma } from '@prisma/client';
 
@@ -15,7 +15,7 @@ type SearchParams = {
 };
 
 export default class ProductsRepository implements IProductsRepository {
-  async create(data: ICreateProduct): Promise<ProductsEntity> {
+  async create(data: ICreateProduct): Promise<Products> {
     return await prisma.products.create({
       data: {
         ...data,
@@ -23,7 +23,7 @@ export default class ProductsRepository implements IProductsRepository {
     });
   }
 
-  async update(data: IUpdateProduct): Promise<ProductsEntity> {
+  async update(data: IUpdateProduct): Promise<Products> {
     return await prisma.products.update({
       data,
       where: {
@@ -39,7 +39,7 @@ export default class ProductsRepository implements IProductsRepository {
     });
   }
 
-  async findByName(name: string): Promise<ProductsEntity | null> {
+  async findByName(name: string): Promise<Products | null> {
     return await prisma.products.findFirst({
       where: {
         name,
@@ -48,8 +48,8 @@ export default class ProductsRepository implements IProductsRepository {
     });
   }
 
-  async findById(id: string): Promise<ProductsEntity | null> {
-    return await prisma.products.findUnique({
+  async findById(id: string): Promise<Products | null> {
+    return (await prisma.products.findUnique({
       where: {
         id,
       },
@@ -67,7 +67,7 @@ export default class ProductsRepository implements IProductsRepository {
           },
         },
       },
-    });
+    })) as Products | null;
   }
 
   async findAll({
@@ -75,14 +75,14 @@ export default class ProductsRepository implements IProductsRepository {
     skip,
     take,
     name,
-  }: SearchParams): Promise<IPaginateProduct> {
+  }: SearchParams): Promise<IPaginateProducts> {
     let where: Prisma.ProductsWhereInput = { deleted_at: null };
 
     if (name) where = { ...where, name: name };
 
     const productsCount = await prisma.products.count({ where });
 
-    const products = await prisma.products.findMany({
+    const products = (await prisma.products.findMany({
       include: {
         skus: {
           include: {
@@ -100,7 +100,7 @@ export default class ProductsRepository implements IProductsRepository {
       take: take,
       skip: skip,
       where,
-    });
+    })) as Products[];
 
     return {
       total: productsCount,
@@ -110,7 +110,7 @@ export default class ProductsRepository implements IProductsRepository {
     };
   }
 
-  async findAllByIds(products: IFindProducts[]): Promise<ProductsEntity[]> {
+  async findAllByIds(products: IFindProducts[]): Promise<Products[]> {
     const existentProducts = await prisma.products.findMany({
       where: {
         id: { in: products.map(product => product.id) },

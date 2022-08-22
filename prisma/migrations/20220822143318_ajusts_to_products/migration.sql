@@ -1,0 +1,8 @@
+-- DropForeignKey
+ALTER TABLE `products_skus` DROP FOREIGN KEY `FK_4a232ada01f43f6119ed6636985`;
+
+-- AddForeignKey
+ALTER TABLE `products_skus` ADD CONSTRAINT `FK_PRODUCTS_SKUS` FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- RenameIndex
+ALTER TABLE `products_skus` RENAME INDEX `FK_4a232ada01f43f6119ed6636985` TO `FK_PRODUCTS_SKUS`;

@@ -3,11 +3,12 @@ import { IUpdateStockProductsSkus } from '@modules/products/dtos/IUpdateStockPro
 import { IProductsSkusRepository } from '@modules/products/repositories/IProductsSkusRepository';
 import { ICreateProductSku } from '@modules/products/dtos/ICreateProductSku';
 import { IUpdateProductSku } from '@modules/products/dtos/IUpdateProductSku';
-import { ProductsSkusEntity } from '@modules/products/infra/prisma/entities/ProductsSkus';
-import { ProductsEntity } from '@modules/products/infra/prisma/entities/Products';
+import { ProductsSkus } from '@modules/products/infra/prisma/entities/ProductsSkus';
+import { Products } from '@modules/products/infra/prisma/entities/Products';
+import { IFindProductsSkus } from '@modules/products/dtos/IFindProductsSkus';
 
 export default class ProductsSkusRepository implements IProductsSkusRepository {
-  async create(data: ICreateProductSku): Promise<ProductsSkusEntity> {
+  async create(data: ICreateProductSku): Promise<ProductsSkus> {
     return prisma.productsSkus.create({
       data: {
         ...data,
@@ -15,7 +16,7 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
     });
   }
 
-  async update(data: IUpdateProductSku): Promise<ProductsSkusEntity> {
+  async update(data: IUpdateProductSku): Promise<ProductsSkus> {
     return await prisma.productsSkus.update({
       data,
       where: {
@@ -31,19 +32,26 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
     });
   }
 
-  async findBySku(sku: string): Promise<ProductsSkusEntity | null> {
-    return await prisma.productsSkus.findFirst({
+  async findBySku(sku: string): Promise<ProductsSkus | null> {
+    return (await prisma.productsSkus.findFirst({
       where: {
         sku,
       },
-    });
+    })) as ProductsSkus;
   }
 
-  async findById(
-    product_id: string,
-    id: string,
-  ): Promise<ProductsEntity | null> {
-    return await prisma.products.findUnique({
+  async findAllByIds(ids: IFindProductsSkus[]): Promise<ProductsSkus[]> {
+    const existentProductsSkus = await prisma.productsSkus.findMany({
+      where: {
+        id: { in: ids.map(sku => sku.id) },
+      },
+    });
+
+    return existentProductsSkus as ProductsSkus[];
+  }
+
+  async findById(product_id: string, id: string): Promise<Products | null> {
+    return (await prisma.products.findUnique({
       where: {
         id: product_id,
       },
@@ -61,10 +69,10 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
           },
         },
       },
-    });
+    })) as Products;
   }
 
-  // async findByIdSku(sku: string): Promise<ProductsSkusEntity | null> {
+  // async findByIdSku(sku: string): Promise<ProductsSkus | null> {
   //   return await prisma.productsSkus.findFirst({
   //     where: {
   //       sku,
@@ -72,7 +80,7 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
   //   });
   // }
 
-  async findAll(product_id: string): Promise<ProductsEntity | null> {
+  async findAll(product_id: string): Promise<Products | null> {
     return await prisma.products.findFirst({
       where: {
         id: product_id,

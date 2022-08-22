@@ -1,0 +1,44 @@
+@hostname = http://localhost
+@port = 8000
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+
+###
+
+POST {{host}}/products HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+	"name": "Produto de Teste UPDATED",
+	"keywords": "keywords",
+	"description": "description",
+	"description_text": "description_text",
+	"visible": "visible"
+}
+
+###
+
+PUT {{host}}/products/7ed5bffc-e985-439a-970a-4a5e4659c111 HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+	"name": "Produto de Teste",
+	"keywords": "keywords",
+	"description": "description",
+	"description_text": "description_text",
+	"visible": "invisible"
+}
+
+###
+
+GET {{host}}/products/c982c3d2-20db-40c7-bae0-ad744d29b8c0 HTTP/1.1
+Content-Type: {{contentType}}
+
+{}
+###
+
+GET {{host}}/products HTTP/1.1
+Content-Type: {{contentType}}
+
+{}
+###

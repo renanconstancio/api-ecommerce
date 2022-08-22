@@ -4,15 +4,17 @@ import CreateSalesUseCases from './CreateSalesUseCases';
 
 export default class CreateSalesController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { customer_id, products_skus_id } = request.body;
+    const { customers_id, address_id, products, transations } = request.body;
 
-    const createOrder = container.resolve(CreateSalesUseCases);
+    const useCases = container.resolve(CreateSalesUseCases);
 
-    const order = await createOrder.execute({
-      customer_id,
+    const sale = await useCases.execute({
+      customers_id,
+      address_id,
       products,
+      transations,
     });
 
-    return response.json(order);
+    return response.json(sale);
   }
 }

@@ -49,6 +49,19 @@ export default class CustomersRepository implements ICustomersRepository {
     const customers = await prisma.customers.findMany({
       take: take,
       skip: skip,
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        birth_date: true,
+        cpf: true,
+        cnpj: true,
+        phone: true,
+        avatar: true,
+        created_at: true,
+        updated_at: true,
+        deleted_at: true,
+      },
       where,
     });
 
@@ -69,18 +82,17 @@ export default class CustomersRepository implements ICustomersRepository {
   }
 
   async findById(id: string): Promise<CustomersEntity | null> {
-    return {} as CustomersEntity;
-    // const category = await prisma.category.findOneBy({
-    //   id,
-    // });
-    // return category;
+    return await prisma.customers.findUnique({
+      where: { id },
+    });
   }
 
   async findByEmail(email: string): Promise<CustomersEntity | null> {
-    return {} as CustomersEntity;
-    // const category = await prisma.category.findOneBy({
-    //   id,
-    // });
-    // return category;
+    const category = await prisma.customers.findFirst({
+      where: {
+        email,
+      },
+    });
+    return category;
   }
 }

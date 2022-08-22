@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 // import isAuthenticated from '@shared/infra/http/middlewares/isAuthenticated';
 import FindAllSalesController from '@modules/sales/useCases/FindAllSales/FindAllSalesController';
+import CreateSalesController from '@modules/sales/useCases/CreateSales/CreateSalesController';
 
 const salesRouter = Router();
 
@@ -10,13 +11,13 @@ const salesRouter = Router();
 salesRouter
   .post(
     '/',
-    celebrate({
-      [Segments.BODY]: {
-        customer_id: Joi.string().uuid().required(),
-        products: Joi.required(),
-      },
-    }),
-    salesController.create,
+    // celebrate({
+    //   [Segments.BODY]: {
+    //     // customers_id: Joi.string().uuid().required(),
+    //     // products: Joi.required(),
+    //   },
+    // }),
+    new CreateSalesController().handle,
   )
   .get('/', new FindAllSalesController().handle);
 

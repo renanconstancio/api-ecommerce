@@ -1,4 +1,4 @@
-export interface ICreateSales {
+export interface IRequestCreateSales {
   customers_id: string;
   address_id: string;
   products: {

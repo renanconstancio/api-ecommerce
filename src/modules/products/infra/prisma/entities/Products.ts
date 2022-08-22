@@ -1,6 +1,7 @@
-import { Products, ProductsSkus } from '@prisma/client';
+import { Products as ProductsEntity } from '@prisma/client';
+import { ProductsSkus } from './ProductsSkus';
 
-export type ProductsEntity = {
+export type Products = {
   id: string;
   name: string;
   keywords: string;
@@ -11,4 +12,4 @@ export type ProductsEntity = {
   updated_at: Date;
   deleted_at: Date | null;
   skus?: ProductsSkus[];
-} & Products;
+} & ProductsEntity;

@@ -47,7 +47,7 @@ export default class SalesRepository implements ISalesRepository {
     // return result;
   }
 
-  async create({ customer, products }: ICreateSales): Promise<SalesEntity> {
+  async create(data: ICreateSales): Promise<SalesEntity> {
     return {} as SalesEntity;
     // const order = prisma.sales.create({
     //   customer,

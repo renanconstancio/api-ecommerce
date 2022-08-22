@@ -22,12 +22,22 @@ import ProductsImagesRepository from '@modules/products/infra/prisma/repositorie
 
 import CustomersHashRepository from '@modules/customers/infra/prisma/repositories/CustomersHashRepository';
 import { ICustomersHashRepository } from '@modules/customers/repositories/ICustomersHashRepository';
+
 import { ISalesRepository } from '@modules/sales/repositories/ISalesRepository';
 import SalesRepository from '@modules/sales/infra/prisma/repositories/SalesRepository';
+import { ISalesCustomersRepository } from '@modules/sales/repositories/ISalesCustomersRepository';
+import SalesCustomersRepository from '@modules/sales/infra/prisma/repositories/SalesCustomersRepository';
+import { ISalesProductsRepository } from '@modules/sales/repositories/ISalesProductsRepository';
+import SalesProductsRepository from '@modules/sales/infra/prisma/repositories/SalesProductsRepository';
 
 container.registerSingleton<ICategoriesRepository>(
   'CategoriesRepository',
   delay(() => CategoriesRepository),
+);
+
+container.registerSingleton<ICustomersHashRepository>(
+  'CustomersHashRepository',
+  delay(() => CustomersHashRepository),
 );
 
 container.registerSingleton<ICustomersRepository>(
@@ -63,6 +73,16 @@ container.registerSingleton<IProductsImagesRepository>(
 container.registerSingleton<ISalesRepository>(
   'SalesRepository',
   SalesRepository,
+);
+
+container.registerSingleton<ISalesCustomersRepository>(
+  'SalesCustomersRepository',
+  SalesCustomersRepository,
+);
+
+container.registerSingleton<ISalesProductsRepository>(
+  'SalesProductsRepository',
+  SalesProductsRepository,
 );
 
 // container.registerSingleton<IUsersRepository>(

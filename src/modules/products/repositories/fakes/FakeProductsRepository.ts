@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { ICreateProduct } from '@modules/products/dtos/ICreateProduct';
-import { IPaginateProduct } from '@modules/products/dtos/IPaginateProduct';
 import { IProductsRepository } from '@modules/products/repositories/IProductsRepository';
 import { ProductsEntity } from '@modules/products/infra/prisma/entities/Products';
+import { IPaginateProducts } from '@modules/products/dtos/IPaginateProducts';
+import { ICreateProduct } from '@modules/products/dtos/ICreateProduct';
 
 export default class FakeProductsRepository implements IProductsRepository {
   private products: ProductsEntity[] = [];
@@ -35,8 +35,8 @@ export default class FakeProductsRepository implements IProductsRepository {
     return;
   }
 
-  async findAll(): Promise<IPaginateProduct> {
-    return {} as IPaginateProduct;
+  async findAll(): Promise<IPaginateProducts> {
+    return {} as IPaginateProducts;
   }
 
   async findById(id: string): Promise<ProductsEntity | null> {

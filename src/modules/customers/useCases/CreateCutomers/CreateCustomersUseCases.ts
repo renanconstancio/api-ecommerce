@@ -10,8 +10,8 @@ export default class CreateCustomersUseCases {
   constructor(
     @inject('CustomersRepository')
     private customersRepository: ICustomersRepository,
-    @inject('HashProvider')
-    private hashProvider: ICustomersHashRepository,
+    @inject('CustomersHashRepository')
+    private customersHashRepository: ICustomersHashRepository,
   ) {}
 
   async execute(data: ICreateCustomer): Promise<CustomersEntity> {
@@ -21,7 +21,9 @@ export default class CreateCustomersUseCases {
       throw new AppError('Email address already used.');
     }
 
-    const hashedPassword = await this.hashProvider.generateHash(data.password);
+    const hashedPassword = await this.customersHashRepository.generateHash(
+      data.password,
+    );
 
     const customer = await this.customersRepository.create({
       ...data,

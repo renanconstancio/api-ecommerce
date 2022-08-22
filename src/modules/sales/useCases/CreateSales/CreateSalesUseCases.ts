@@ -1,9 +1,10 @@
 import { inject, injectable } from 'tsyringe';
-import { IRequestCreateOrder } from '../../dtos/IRequestCreateOrder';
-import { IOrder } from '../../dtos/ISales';
-import { ICustomersRepository } from '@modules/customers/repositories/ICustomersRepository';
-import { IProductsRepository } from '@modules/products/repositories/IProductsRepository';
+import { SalesEntity } from '@modules/sales/infra/prisma/entities/Sales';
+
 import { ISalesRepository } from '@modules/sales/repositories/ISalesRepository';
+import { ICreateSales } from '@modules/sales/dtos/ICreateSales';
+import { ISalesProductsRepository } from '@modules/sales/repositories/ISalesProductsRepository';
+import { ISalesCustomersRepository } from '@modules/sales/repositories/ISalesCustomersRepository';
 import AppError from '@shared/errors/AppError';
 
 @injectable()
@@ -12,45 +13,55 @@ export default class CreateSalesUseCases {
     @inject('SalesRepository')
     private salesRepository: ISalesRepository,
 
-    @inject('CustomersRepository')
-    private customersRepository: ICustomersRepository,
+    @inject('SalesCustomersRepository')
+    private salesCustomersRepository: ISalesCustomersRepository,
 
-    @inject('ProductsRepository')
-    private productsRepository: IProductsRepository,
+    @inject('SalesProductsRepository')
+    private salesPproductsRepository: ISalesProductsRepository,
   ) {}
 
-  async execute({
-    customer_id,
-    products,
-  }: IRequestCreateOrder): Promise<IOrder> {
-    const customerExists = await this.customersRepository.findById(customer_id);
+  async execute(data: ICreateSales): Promise<SalesEntity> {
+    const customerExists = await this.salesCustomersRepository.findById(
+      data.customers_id,
+    );
 
     if (!customerExists) {
       throw new AppError('Could not find any customer with the given id.');
     }
 
-    const existsProducts = await this.productsRepository.findAllByIds(products);
+    // const addressExists = await this.salesCustomersRepository.findById(
+    //   data.customers_id,
+    // );
+
+    // if (!addressExists) {
+    //   throw new AppError('Could not find any customer with the given id.');
+    // }
+
+    const existsProducts = await this.salesPproductsRepository.findAllByIds(
+      data.products,
+    );
 
     if (!existsProducts.length) {
-      throw new AppError('Could not find any products with the given ids.');
+      throw new AppError(
+        'Could not find any products skus with the given ids.',
+      );
     }
 
-    const existsProductsIds = existsProducts.map(product => product.id);
+    const existsProductsIds = existsProducts.map(sku => sku.id);
 
-    const checkInexistentProducts = products.filter(
-      product => !existsProductsIds.includes(product.id),
+    const checkInexistentProducts = data.products.filter(
+      sku => !existsProductsIds.includes(sku.id),
     );
 
     if (checkInexistentProducts.length) {
       throw new AppError(
-        `Could not find product ${checkInexistentProducts[0].id}.`,
+        `Could not find skus ${checkInexistentProducts[0].id}.`,
       );
     }
 
-    const quantityAvailable = products.filter(
-      product =>
-        existsProducts.filter(p => p.id === product.id)[0].quantity <
-        product.quantity,
+    const quantityAvailable = data.products.filter(
+      sku =>
+        existsProducts.filter(p => p.id === sku.id)[0].quantity < sku.quantity,
     );
 
     if (quantityAvailable.length) {
@@ -60,28 +71,28 @@ export default class CreateSalesUseCases {
       );
     }
 
-    const serializedProducts = products.map(product => ({
-      product_id: product.id,
-      quantity: product.quantity,
-      price: existsProducts.filter(p => p.id === product.id)[0].price,
+    const serializedProducts = data.products.map(sku => ({
+      produtcts_skus_id: sku.id,
+      quantity: sku.quantity,
+      price_paid: existsProducts.filter(p => p.id === sku.id)[0].sale_price,
     }));
 
-    const order = await this.salesRepository.create({
-      customer: customerExists,
-      products: serializedProducts,
-    });
+    // const order = await this.salesRepository.create({
+    //   customer: customerExists,
+    //   products: serializedProducts,
+    // });
 
-    const { order_products } = order;
+    // const { products } = order;
 
-    const updatedProductsQuantity = order_products.map(product => ({
-      id: product.product_id,
-      quantity:
-        existsProducts.filter(p => p.id === product.product_id)[0].quantity -
-        product.quantity,
-    }));
+    // const updatedProductsQuantity = products.map(sku => ({
+    //   id: sku.produtcts_skus_id,
+    //   quantity:
+    //     existsProducts.filter(p => p.id === sku.produtcts_skus_id)[0].quantity -
+    //     sku.quantity,
+    // }));
 
-    await this.productsRepository.updateStock(updatedProductsQuantity);
+    // await this.salesPproductsRepository.updateStock(updatedProductsQuantity);
 
-    return order;
+    return { code: 'test' } as SalesEntity;
   }
 }

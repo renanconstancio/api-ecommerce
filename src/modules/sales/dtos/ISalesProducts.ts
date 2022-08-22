@@ -1,12 +1,5 @@
-import { IOrder } from './ISales';
-import { IProduct } from '@modules/products/domain/models/IProduct';
-
-export interface IOrderProducts {
+export interface ISalesProductsSkus {
   id: string;
-  order: IOrder;
-  product: IProduct;
-  price: number;
   quantity: number;
-  created_at: Date;
-  updated_at: Date;
+  price_paid: number;
 }
