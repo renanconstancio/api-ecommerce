@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { SalesEntity } from '@modules/sales/infra/prisma/entities/Sales';
+import { Sales } from '@modules/sales/infra/prisma/entities/Sales';
 
 import { ISalesRepository } from '@modules/sales/repositories/ISalesRepository';
 import { ICreateSales } from '@modules/sales/dtos/ICreateSales';
@@ -20,7 +20,7 @@ export default class CreateSalesUseCases {
     private salesPproductsRepository: ISalesProductsRepository,
   ) {}
 
-  async execute(data: ICreateSales): Promise<SalesEntity> {
+  async execute(data: ICreateSales): Promise<Sales> {
     const customerExists = await this.salesCustomersRepository.findById(
       data.customers_id,
     );
@@ -66,8 +66,7 @@ export default class CreateSalesUseCases {
 
     if (quantityAvailable.length) {
       throw new AppError(
-        `The quantity ${quantityAvailable[0].quantity}
-         is not available for ${quantityAvailable[0].id}.`,
+        `The quantity ${quantityAvailable[0].quantity} is not available for ${quantityAvailable[0].id}`,
       );
     }
 
@@ -77,8 +76,10 @@ export default class CreateSalesUseCases {
       price_paid: existsProducts.filter(p => p.id === sku.id)[0].sale_price,
     }));
 
+    const codeSale = await this.salesRepository.nextCode();
+
     // const order = await this.salesRepository.create({
-    //   customer: customerExists,
+    //   customers_id: customerExists,
     //   products: serializedProducts,
     // });
 
@@ -93,6 +94,6 @@ export default class CreateSalesUseCases {
 
     // await this.salesPproductsRepository.updateStock(updatedProductsQuantity);
 
-    return { code: 'test' } as SalesEntity;
+    return { code: `B ${codeSale}` } as Sales;
   }
 }

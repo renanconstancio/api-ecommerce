@@ -1,4 +1,4 @@
-export type CustomersEntity = {
+export type Customers = {
   id: string;
   name: string;
   email: string;

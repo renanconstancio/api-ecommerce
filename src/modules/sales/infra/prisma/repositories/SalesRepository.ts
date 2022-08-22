@@ -1,5 +1,5 @@
+import { Sales } from '@modules/sales/infra/prisma/entities/Sales';
 import { ISalesRepository } from '@modules/sales/repositories/ISalesRepository';
-import { SalesEntity } from '@modules/sales/infra/prisma/entities/Sales';
 import { IPaginateSales } from '@modules/sales/dtos/IPaginateSales';
 import { ICreateSales } from '@modules/sales/dtos/ICreateSales';
 import { prisma } from '@shared/infra/prisma';
@@ -12,8 +12,8 @@ type SearchParams = {
 };
 
 export default class SalesRepository implements ISalesRepository {
-  async findById(id: string): Promise<SalesEntity | null> {
-    return {} as SalesEntity;
+  async findById(id: string): Promise<Sales | null> {
+    return {} as Sales;
     // return prisma.sales.findFirst({
     //   where: { id },
     //   include: {
@@ -43,19 +43,19 @@ export default class SalesRepository implements ISalesRepository {
       current_page: page,
       data: sales,
     };
-
-    // return result;
   }
 
-  async create(data: ICreateSales): Promise<SalesEntity> {
-    return {} as SalesEntity;
+  async create(data: ICreateSales): Promise<Sales> {
+    return {} as Sales;
     // const order = prisma.sales.create({
     //   customer,
     //   order_products: products,
-    // });
+    // }) as Sales;
+  }
 
-    // await prisma.sales.save(order);
+  async nextCode(): Promise<string> {
+    const countSales = await prisma.sales.count();
 
-    // return order;
+    return `A-${countSales}`;
   }
 }

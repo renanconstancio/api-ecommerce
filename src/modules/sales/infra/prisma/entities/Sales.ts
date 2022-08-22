@@ -1,17 +1,10 @@
-import { Sales } from '@prisma/client';
-import { SalesAddressesEntity } from './SalesAddresses';
-import { SalesProductsEntity } from './SalesProducts';
-import { SalesTransactionsEntity } from './SalesTransactions';
+import { Sales as SalesEntity } from '@prisma/client';
+import { SalesAddresses } from './SalesAddresses';
+import { SalesProducts } from './SalesProducts';
+import { SalesTransactions } from './SalesTransactions';
 
-export type SalesEntity = {
-  id: string;
-  code: string;
-  date_of_sale: Date;
-  customers_id: string;
-  created_at: Date;
-  updated_at: Date;
-  deleted_at: Date | null;
-  addresses: SalesAddressesEntity;
-  products: SalesProductsEntity[];
-  transactions: SalesTransactionsEntity[];
-} & Sales;
+export type Sales = {
+  addresses: SalesAddresses;
+  products: SalesProducts[];
+  transactions: SalesTransactions[];
+} & SalesEntity;

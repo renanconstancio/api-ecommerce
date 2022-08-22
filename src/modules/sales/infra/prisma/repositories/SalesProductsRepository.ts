@@ -1,18 +1,21 @@
 import { ISalesProductsRepository } from '@modules/sales/repositories/ISalesProductsRepository';
-import { ProductsSkusEntity } from '@modules/products/infra/prisma/entities/ProductsSkus';
+import { ProductsSkus } from '@modules/products/infra/prisma/entities/ProductsSkus';
+import { SalesProducts } from '@modules/sales/infra/prisma/entities/SalesProducts';
 import { IFindSalesProducts } from '@modules/sales/dtos/IFindSalesProducts';
 import { ICreateSalesProducts } from '@modules/sales/dtos/ICreateSalesProducts';
 import { IUpdateStockSalesProducts } from '@modules/sales/dtos/IUpdateStockSalesProducts';
-import { SalesProductsEntity } from '@modules/sales/infra/prisma/entities/SalesProducts';
 import { prisma } from '@shared/infra/prisma';
 
 export default class SalesProductsRepository
   implements ISalesProductsRepository
 {
-  async findAllByIds(ids: IFindSalesProducts[]): Promise<ProductsSkusEntity[]> {
+  async findAllByIds(ids: IFindSalesProducts[]): Promise<ProductsSkus[]> {
     const existentProductsSkus = await prisma.productsSkus.findMany({
       where: {
         id: { in: ids.map(sku => sku.id) },
+      },
+      include: {
+        product: true,
       },
     });
 
@@ -31,9 +34,8 @@ export default class SalesProductsRepository
 
     await Promise.all(updateProductsSkusMassive);
   }
-
-  async create(data: ICreateSalesProducts): Promise<SalesProductsEntity> {
-    return {} as SalesProductsEntity;
+  async create(data: ICreateSalesProducts): Promise<SalesProducts> {
+    return {} as SalesProducts;
     // const order = prisma.sales.create({
     //   customer,
     //   order_products: products,

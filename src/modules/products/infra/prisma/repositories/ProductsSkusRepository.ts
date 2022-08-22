@@ -72,14 +72,6 @@ export default class ProductsSkusRepository implements IProductsSkusRepository {
     })) as Products;
   }
 
-  // async findByIdSku(sku: string): Promise<ProductsSkus | null> {
-  //   return await prisma.productsSkus.findFirst({
-  //     where: {
-  //       sku,
-  //     },
-  //   });
-  // }
-
   async findAll(product_id: string): Promise<Products | null> {
     return await prisma.products.findFirst({
       where: {

@@ -1,6 +1,6 @@
-import { SalesTransactions } from '@prisma/client';
+import { SalesTransactions as SalesTransactionsEntity } from '@prisma/client';
 
-export type SalesTransactionsEntity = {
+export type SalesTransactions = {
   id: string;
   sales_id: string;
   flag: string;
@@ -11,4 +11,4 @@ export type SalesTransactionsEntity = {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date | null;
-} & SalesTransactions;
+} & SalesTransactionsEntity;

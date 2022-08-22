@@ -1,6 +1,6 @@
-import { SalesAddresses } from '@prisma/client';
+import { SalesAddresses as SalesAddressesEntity } from '@prisma/client';
 
-export type SalesAddressesEntity = {
+export type SalesAddresses = {
   id: string;
   sales_id: string;
   customers_id: string;
@@ -14,4 +14,4 @@ export type SalesAddressesEntity = {
   city: string;
   state: string;
   zip_code: string;
-} & SalesAddresses;
+} & SalesAddressesEntity;

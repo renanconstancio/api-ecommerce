@@ -1,9 +1,9 @@
-import { SalesProducts } from '@prisma/client';
+import { SalesProducts as SalesProductsEntity } from '@prisma/client';
 
-export type SalesProductsEntity = {
+export type SalesProducts = {
   id: string;
   sales_id: string;
   produtcts_skus_id: string;
   quantity: number;
   price_paid: number;
-} & SalesProducts;
+} & SalesProductsEntity;
