@@ -1,7 +1,9 @@
-import { CustomersEntity } from '@modules/customers/infra/prisma/etities/Customers';
+import { Customers } from '@modules/customers/infra/prisma/etities/Customers';
 import { IPaginateCustomer } from '@modules/customers/dtos/IPaginateCustomer';
 import { ICreateCustomer } from '@modules/customers/dtos/ICreateCustomer';
 import { IUpdateCustomer } from '@modules/customers/dtos/IUpdateCustomer';
+import { IDeleteCustomer } from '@modules/customers/dtos/IDeleteCustomer';
+import { IFindCustomer } from '@modules/customers/dtos/IFindCustomer';
 
 export type CustomersParams = {
   page: number;
@@ -11,11 +13,11 @@ export type CustomersParams = {
 
 export interface ICustomersRepository {
   findAll({ page, skip, take }: CustomersParams): Promise<IPaginateCustomer>;
-  findByName(name: string): Promise<CustomersEntity | null>;
-  findByEmail(email: string): Promise<CustomersEntity | null>;
-  findById(id: string): Promise<CustomersEntity | null>;
+  findByName(name: string): Promise<Customers | null>;
+  findByEmail(email: string): Promise<Customers | null>;
+  findById(data: IFindCustomer): Promise<Customers | null>;
 
-  create(data: ICreateCustomer): Promise<CustomersEntity>;
-  update(customer: IUpdateCustomer): Promise<CustomersEntity>;
-  remove(id: string): Promise<void>;
+  create(data: ICreateCustomer): Promise<Customers>;
+  update(data: IUpdateCustomer): Promise<Customers>;
+  remove(data: IDeleteCustomer): Promise<void>;
 }

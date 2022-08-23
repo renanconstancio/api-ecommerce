@@ -5,22 +5,22 @@ import {
 import { IPaginateCustomer } from '@modules/customers/dtos/IPaginateCustomer';
 import { ICreateCustomer } from '@modules/customers/dtos/ICreateCustomer';
 import { IUpdateCustomer } from '@modules/customers/dtos/IUpdateCustomer';
-import { CustomersEntity } from '@modules/customers/infra/prisma/etities/Customers';
+import { Customers } from '@modules/customers/infra/prisma/etities/Customers';
 import { prisma } from '@shared/infra/prisma';
 import { Prisma } from '@prisma/client';
+import { IDeleteCustomer } from '@modules/customers/dtos/IDeleteCustomer';
+import { IFindCustomer } from '@modules/customers/dtos/IFindCustomer';
 
 export default class CustomersRepository implements ICustomersRepository {
-  async create(data: ICreateCustomer): Promise<CustomersEntity> {
-    const customer = await prisma.customers.create({
+  async create(data: ICreateCustomer): Promise<Customers> {
+    return await prisma.customers.create({
       data: {
         ...data,
       },
     });
-
-    return customer;
   }
 
-  async update(data: IUpdateCustomer): Promise<CustomersEntity> {
+  async update(data: IUpdateCustomer): Promise<Customers> {
     const customer = await prisma.customers.update({
       where: {
         id: data.id,
@@ -31,7 +31,8 @@ export default class CustomersRepository implements ICustomersRepository {
     return customer;
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(data: IDeleteCustomer): Promise<void> {
+    return;
     // await prisma.category.softDelete(id);
   }
 
@@ -73,26 +74,27 @@ export default class CustomersRepository implements ICustomersRepository {
     };
   }
 
-  async findByName(name: string): Promise<CustomersEntity | null> {
-    return {} as CustomersEntity;
-    // const category = await prisma.category.findOneBy({
-    //   name,
-    // });
-    // return category;
-  }
-
-  async findById(id: string): Promise<CustomersEntity | null> {
-    return await prisma.customers.findUnique({
-      where: { id },
+  async findByName(name: string): Promise<Customers | null> {
+    return await prisma.customers.findFirst({
+      where: {
+        name,
+      },
     });
   }
 
-  async findByEmail(email: string): Promise<CustomersEntity | null> {
-    const category = await prisma.customers.findFirst({
+  async findById({ id }: IFindCustomer): Promise<Customers | null> {
+    return await prisma.customers.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async findByEmail(email: string): Promise<Customers | null> {
+    return await prisma.customers.findFirst({
       where: {
         email,
       },
     });
-    return category;
   }
 }

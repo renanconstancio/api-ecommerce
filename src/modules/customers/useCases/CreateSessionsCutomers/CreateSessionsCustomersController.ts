@@ -6,9 +6,9 @@ export default class CreateSessionsCustomersController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { email, password } = request.body;
 
-    const createSession = container.resolve(CreateSessionsCustomersUseCases);
+    const useCases = container.resolve(CreateSessionsCustomersUseCases);
 
-    const customer = await createSession.execute({
+    const customer = await useCases.execute({
       email,
       password,
     });

@@ -1,5 +1,6 @@
 export interface ICreateSalesProducts {
+  sales_id: string;
   products_skus_id: string;
-  price: number;
+  price_paid: number;
   quantity: number;
 }

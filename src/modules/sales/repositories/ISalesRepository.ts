@@ -9,7 +9,7 @@ type SearchParams = {
 };
 
 export interface ISalesRepository {
-  nextCode(): Promise<string>;
+  nextSalesCode(): Promise<string>;
   findById(id: string): Promise<Sales | null>;
   findAll({ page, skip, take }: SearchParams): Promise<IPaginateSales>;
   create(data: ICreateSales): Promise<Sales>;

@@ -44,39 +44,39 @@ model Customers {
 }
 
 model Adresses {
-  id          String          @id @default(uuid()) @db.VarChar(36)
-  customes_id String          @db.VarChar(36)
-  recipient   String          @db.VarChar(55)
-  address     String          @db.VarChar(65)
-  number      String          @db.VarChar(5)
-  district    String          @db.VarChar(45)
-  complement  String?         @db.VarChar(85)
-  reference   String?         @db.VarChar(85)
-  city        String          @db.VarChar(45)
-  state       String          @db.VarChar(2)
-  zip_code    String          @db.VarChar(9)
-  status      adresses_status @default(yes)
+  id           String          @id @default(uuid()) @db.VarChar(36)
+  customers_id String          @db.VarChar(36)
+  recipient    String          @db.VarChar(55)
+  address      String          @db.VarChar(65)
+  number       String          @db.VarChar(5)
+  district     String          @db.VarChar(45)
+  complement   String?         @db.VarChar(85)
+  reference    String?         @db.VarChar(85)
+  city         String          @db.VarChar(45)
+  state        String          @db.VarChar(2)
+  zip_code     String          @db.VarChar(9)
+  for_sales    adresses_status @default(yes)
 
   created_at DateTime  @default(now()) @db.DateTime(6)
   updated_at DateTime  @updatedAt() @db.DateTime(6)
   deleted_at DateTime? @db.DateTime(6)
 
-  customer Customers @relation(fields: [customes_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_CUSTOMERS")
+  customer Customers @relation(fields: [customers_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_CUSTOMERS")
 
-  @@index([customes_id], map: "FK_CUSTOMERS")
+  @@index([customers_id], map: "FK_CUSTOMERS")
   @@map("adresses")
 }
 
 model Products {
-  id               String           @id @default(uuid()) @db.VarChar(36)
-  name             String           @db.VarChar(155)
-  keywords         String           @db.VarChar(255)
-  visible          products_visible @default(invisible)
-  description_text String?          @db.Text
-  description      String           @db.VarChar(505)
-  created_at       DateTime         @default(now()) @db.DateTime(6)
-  updated_at       DateTime         @updatedAt() @db.DateTime(6)
-  deleted_at       DateTime?        @db.DateTime(6)
+  id               String                    @id @default(uuid()) @db.VarChar(36)
+  name             String                    @db.VarChar(155)
+  keywords         String                    @db.VarChar(255)
+  visible          visible_or_invisible_enum @default(invisible)
+  description_text String?                   @db.Text
+  description      String                    @db.VarChar(505)
+  created_at       DateTime                  @default(now()) @db.DateTime(6)
+  updated_at       DateTime                  @updatedAt() @db.DateTime(6)
+  deleted_at       DateTime?                 @db.DateTime(6)
   skus             ProductsSkus[]
 
   @@map("products")
@@ -127,6 +127,7 @@ model Sales {
   transactions SalesTransactions[]
   addresses    SalesAddresses[]
   products     SalesProducts[]
+  status       SalesStatus[]
   customer     Customers           @relation(fields: [customers_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_CUSTOMER")
 
   @@index([customers_id], map: "FK_CUSTOMER")
@@ -188,29 +189,40 @@ model SalesTransactions {
   @@map("sales_transactions")
 }
 
+model SalesStatus {
+  id         String            @id @default(uuid()) @db.VarChar(36)
+  sales_id   String            @db.VarChar(36)
+  status     sales_status_type @default(ORDER_MADE)
+  created_at DateTime          @default(now()) @db.DateTime(6)
+  sale       Sales?            @relation(fields: [sales_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_SALE_STATUS")
+
+  @@index([sales_id], map: "FK_SALE_STATUS")
+  @@map("sales_status")
+}
+
 model Stores {
-  id            String    @id @default(uuid()) @db.VarChar(36)
-  title         String    @db.VarChar(105)
-  fantasy_name  String    @db.VarChar(105)
-  email         String    @db.VarChar(55)
-  phone         String    @db.VarChar(20)
-  opening_hours String?   @db.VarChar(155)
-  address       String    @db.VarChar(55)
-  number        String    @db.VarChar(4)
-  district      String    @db.VarChar(35)
-  complement    String?   @db.VarChar(45)
-  city          String    @db.VarChar(35)
-  state         String    @db.VarChar(2)
-  zip_code      String    @db.VarChar(9)
-  visible       Int       @default(1) @db.TinyInt
-  created_at    DateTime  @default(now()) @db.DateTime(6)
-  updated_at    DateTime  @updatedAt() @db.DateTime(6)
-  deleted_at    DateTime? @db.DateTime(6)
+  id            String                    @id @default(uuid()) @db.VarChar(36)
+  title         String                    @db.VarChar(105)
+  fantasy_name  String                    @db.VarChar(105)
+  email         String                    @db.VarChar(55)
+  phone         String                    @db.VarChar(20)
+  opening_hours String?                   @db.VarChar(155)
+  address       String                    @db.VarChar(55)
+  number        String                    @db.VarChar(4)
+  district      String                    @db.VarChar(35)
+  complement    String?                   @db.VarChar(45)
+  city          String                    @db.VarChar(35)
+  state         String                    @db.VarChar(2)
+  zip_code      String                    @db.VarChar(9)
+  visible       visible_or_invisible_enum @default(visible)
+  created_at    DateTime                  @default(now()) @db.DateTime(6)
+  updated_at    DateTime                  @updatedAt() @db.DateTime(6)
+  deleted_at    DateTime?                 @db.DateTime(6)
 
   @@map("stores")
 }
 
-enum products_visible {
+enum visible_or_invisible_enum {
   visible
   invisible
 }
@@ -223,4 +235,19 @@ enum sales_transactions_discount_type {
 enum adresses_status {
   yes
   no
+}
+
+enum sales_status_type {
+  ORDER_MADE // pedido realizado
+  AWAITING_PAYMENT // aguardando pagamento
+  PAYMENT_UNDER_REVIEW // pagamento em análise
+  PAYMENT_ACCEPT // pagamento aprovado
+  PAYMENT_NOT_APPROVED // pagamento não aprovado
+  PAYMENT_NOT_MADE // pagamento não efetuado
+  ORDER_IN_PRODUCTION // pedido em produção
+  ORDER_IN_STOCK_PICKING // pedido em separação de estoque
+  ORDER_IN_TRANSPORT // pedido em transporte
+  AWAITING_WITHDRAWAL // aguardando retirada
+  ORDER_DELIVERED // pedido entregue
+  ORDER_CANCELED // pedido cancelado
 }

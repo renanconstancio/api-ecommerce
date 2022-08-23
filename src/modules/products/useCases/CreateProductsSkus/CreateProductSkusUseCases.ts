@@ -1,8 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import { ICreateProductSku } from '@modules/products/dtos/ICreateProductSku';
-import { ProductsSkusEntity } from '@modules/products/infra/prisma/entities/ProductsSkus';
 import { IProductsSkusRepository } from '@modules/products/repositories/IProductsSkusRepository';
-
+import { ProductsSkus } from '@modules/products/infra/prisma/entities/ProductsSkus';
 import AppError from '@shared/errors/AppError';
 
 // import redisCache from '@shared/cache/RedisCache';
@@ -14,7 +13,7 @@ export default class CreateProductSkusUseCases {
     private productsSkusRepository: IProductsSkusRepository,
   ) {}
 
-  async execute(data: ICreateProductSku): Promise<ProductsSkusEntity> {
+  async execute(data: ICreateProductSku): Promise<ProductsSkus> {
     const productSkuExists = await this.productsSkusRepository.findBySku(
       data.sku,
     );

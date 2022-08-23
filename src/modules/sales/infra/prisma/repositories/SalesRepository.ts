@@ -25,20 +25,51 @@ export default class SalesRepository implements ISalesRepository {
   async findAll({ page, skip, take }: SearchParams): Promise<IPaginateSales> {
     const where: Prisma.SalesWhereInput = { deleted_at: null };
 
+    const salesCount = await prisma.sales.count({ where });
+
     const sales = await prisma.sales.findMany({
       take: take,
       skip: skip,
       where,
-      include: {
+      select: {
+        id: true,
+        code: true,
+        date_of_sale: true,
+        customer: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            phone: true,
+            cpf: true,
+            cnpj: true,
+            birth_date: true,
+            avatar: true,
+          },
+        },
+        products: {
+          select: {
+            quantity: true,
+            price_paid: true,
+            sku: {
+              select: {
+                sku: true,
+                product: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+          },
+        },
         addresses: true,
-        customer: true,
-        products: true,
         transactions: true,
       },
     });
 
     return {
-      total: 1,
+      total: salesCount,
       per_page: take,
       current_page: page,
       data: sales,
@@ -46,16 +77,22 @@ export default class SalesRepository implements ISalesRepository {
   }
 
   async create(data: ICreateSales): Promise<Sales> {
-    return {} as Sales;
-    // const order = prisma.sales.create({
-    //   customer,
-    //   order_products: products,
-    // }) as Sales;
+    const { customers_id } = data;
+
+    const codeSale = await this.nextSalesCode();
+
+    const dateOfSale = new Date();
+
+    return prisma.sales.create({
+      data: {
+        code: codeSale,
+        date_of_sale: dateOfSale,
+        customers_id,
+      },
+    }) as unknown as Sales;
   }
 
-  async nextCode(): Promise<string> {
-    const countSales = await prisma.sales.count();
-
-    return `A-${countSales}`;
+  async nextSalesCode(): Promise<string> {
+    return `00000000${await prisma.sales.count()}`.substring(-8);
   }
 }

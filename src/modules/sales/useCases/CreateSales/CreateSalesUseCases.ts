@@ -1,10 +1,15 @@
 import { inject, injectable } from 'tsyringe';
 import { Sales } from '@modules/sales/infra/prisma/entities/Sales';
+import { IEnumSalesStatus } from '@modules/sales/dtos/IEnumSalesStatus';
 
 import { ISalesRepository } from '@modules/sales/repositories/ISalesRepository';
-import { ICreateSales } from '@modules/sales/dtos/ICreateSales';
+import { ISalesStatusRepository } from '@modules/sales/repositories/ISalesStatusRepository';
 import { ISalesProductsRepository } from '@modules/sales/repositories/ISalesProductsRepository';
-import { ISalesCustomersRepository } from '@modules/sales/repositories/ISalesCustomersRepository';
+
+import { ISalesAddressesRepository } from '@modules/sales/repositories/ISalesAddressesRepository';
+import { ICustomersRepository } from '@modules/customers/repositories/ICustomersRepository';
+
+import { IRequestCreateSales } from '@modules/sales/dtos/IRequestCreateSales';
 import AppError from '@shared/errors/AppError';
 
 @injectable()
@@ -13,15 +18,21 @@ export default class CreateSalesUseCases {
     @inject('SalesRepository')
     private salesRepository: ISalesRepository,
 
-    @inject('SalesCustomersRepository')
-    private salesCustomersRepository: ISalesCustomersRepository,
+    @inject('CustomersRepository')
+    private customersRepository: ICustomersRepository,
 
     @inject('SalesProductsRepository')
-    private salesPproductsRepository: ISalesProductsRepository,
+    private salesProductsRepository: ISalesProductsRepository,
+
+    @inject('SalesStatusRepository')
+    private salesStatusRepository: ISalesStatusRepository,
+
+    @inject('SalesAddressesRepository')
+    private salesAddressesRepository: ISalesAddressesRepository,
   ) {}
 
-  async execute(data: ICreateSales): Promise<Sales> {
-    const customerExists = await this.salesCustomersRepository.findById(
+  async execute(data: IRequestCreateSales): Promise<Sales> {
+    const customerExists = await this.customersRepository.findById(
       data.customers_id,
     );
 
@@ -29,7 +40,7 @@ export default class CreateSalesUseCases {
       throw new AppError('Could not find any customer with the given id.');
     }
 
-    // const addressExists = await this.salesCustomersRepository.findById(
+    // const addressExists = await this.customersRepository.findById(
     //   data.customers_id,
     // );
 
@@ -37,7 +48,7 @@ export default class CreateSalesUseCases {
     //   throw new AppError('Could not find any customer with the given id.');
     // }
 
-    const existsProducts = await this.salesPproductsRepository.findAllByIds(
+    const existsProducts = await this.salesProductsRepository.findAllByIds(
       data.products,
     );
 
@@ -69,31 +80,33 @@ export default class CreateSalesUseCases {
         `The quantity ${quantityAvailable[0].quantity} is not available for ${quantityAvailable[0].id}`,
       );
     }
+    const sale = await this.salesRepository.create({
+      customers_id: customerExists.id,
+    });
 
     const serializedProducts = data.products.map(sku => ({
-      produtcts_skus_id: sku.id,
+      sales_id: sale.id,
+      products_skus_id: sku.id,
       quantity: sku.quantity,
-      price_paid: existsProducts.filter(p => p.id === sku.id)[0].sale_price,
+      price_paid: sku.price_paid,
     }));
 
-    const codeSale = await this.salesRepository.nextCode();
+    await this.salesProductsRepository.create(serializedProducts);
 
-    // const order = await this.salesRepository.create({
-    //   customers_id: customerExists,
-    //   products: serializedProducts,
-    // });
+    const updatedProductsQuantity = serializedProducts.map(sku => ({
+      id: sku.products_skus_id,
+      quantity:
+        existsProducts.filter(p => p.id === sku.products_skus_id)[0].quantity -
+        sku.quantity,
+    }));
 
-    // const { products } = order;
+    await this.salesProductsRepository.updateStock(updatedProductsQuantity);
 
-    // const updatedProductsQuantity = products.map(sku => ({
-    //   id: sku.produtcts_skus_id,
-    //   quantity:
-    //     existsProducts.filter(p => p.id === sku.produtcts_skus_id)[0].quantity -
-    //     sku.quantity,
-    // }));
+    await this.salesStatusRepository.create({
+      sales_id: sale.id,
+      status: IEnumSalesStatus.ORDER_MADE,
+    });
 
-    // await this.salesPproductsRepository.updateStock(updatedProductsQuantity);
-
-    return { code: `B ${codeSale}` } as Sales;
+    return sale as any;
   }
 }

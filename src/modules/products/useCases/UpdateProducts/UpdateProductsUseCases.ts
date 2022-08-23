@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { IUpdateProduct } from '@modules/products/dtos/IUpdateProduct';
-import { ProductsEntity } from '@modules/products/infra/prisma/entities/Products';
+import { Products } from '@modules/products/infra/prisma/entities/Products';
 import { IProductsRepository } from '@modules/products/repositories/IProductsRepository';
 // import redisCache from '@shar../../infra/prisma/entities/Products
 import AppError from '@shared/errors/AppError';
@@ -12,7 +12,7 @@ export default class UpdateProductsUseCases {
     private productsRepository: IProductsRepository,
   ) {}
 
-  async execute(data: IUpdateProduct): Promise<ProductsEntity> {
+  async execute(data: IUpdateProduct): Promise<Products> {
     const product = await this.productsRepository.findById(data.id);
 
     if (!product) {

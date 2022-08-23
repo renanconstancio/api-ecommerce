@@ -25,10 +25,18 @@ import { ICustomersHashRepository } from '@modules/customers/repositories/ICusto
 
 import { ISalesRepository } from '@modules/sales/repositories/ISalesRepository';
 import SalesRepository from '@modules/sales/infra/prisma/repositories/SalesRepository';
-import { ISalesCustomersRepository } from '@modules/sales/repositories/ISalesCustomersRepository';
-import SalesCustomersRepository from '@modules/sales/infra/prisma/repositories/SalesCustomersRepository';
+
+import { ISalesAddressesRepository } from '@modules/sales/repositories/ISalesAddressesRepository';
+import SalesAddessesRepository from '@modules/sales/infra/prisma/repositories/SalesAddessesRepository';
+
 import { ISalesProductsRepository } from '@modules/sales/repositories/ISalesProductsRepository';
 import SalesProductsRepository from '@modules/sales/infra/prisma/repositories/SalesProductsRepository';
+
+import SalesStatusRepository from '@modules/sales/infra/prisma/repositories/SalesStatusRepository';
+import { ISalesStatusRepository } from '@modules/sales/repositories/ISalesStatusRepository';
+
+import { IAdressesRepository } from '@modules/adresses/repositories/IAdressesRepository';
+import AdressesRepository from '@modules/adresses/infra/prisma/repositories/AdressesRepository';
 
 container.registerSingleton<ICategoriesRepository>(
   'CategoriesRepository',
@@ -45,9 +53,9 @@ container.registerSingleton<ICustomersRepository>(
   delay(() => CustomersRepository),
 );
 
-container.registerSingleton<ICustomersHashRepository>(
-  'CustomersHashRepository',
-  delay(() => CustomersHashRepository),
+container.registerSingleton<IAdressesRepository>(
+  'AdressesRepository',
+  delay(() => AdressesRepository),
 );
 
 container.registerSingleton<IStoresRepository>(
@@ -72,25 +80,20 @@ container.registerSingleton<IProductsImagesRepository>(
 
 container.registerSingleton<ISalesRepository>(
   'SalesRepository',
-  SalesRepository,
+  delay(() => SalesRepository),
 );
 
-container.registerSingleton<ISalesCustomersRepository>(
-  'SalesCustomersRepository',
-  SalesCustomersRepository,
+container.registerSingleton<ISalesAddressesRepository>(
+  'SalesAddressesRepository',
+  delay(() => SalesAddessesRepository),
+);
+
+container.registerSingleton<ISalesStatusRepository>(
+  'SalesStatusRepository',
+  delay(() => SalesStatusRepository),
 );
 
 container.registerSingleton<ISalesProductsRepository>(
   'SalesProductsRepository',
-  SalesProductsRepository,
+  delay(() => SalesProductsRepository),
 );
-
-// container.registerSingleton<IUsersRepository>(
-//   'UsersRepository',
-//   UsersRepository,
-// );
-
-// container.registerSingleton<IUserTokensRepository>(
-//   'UserTokensRepository',
-//   UserTokensRepository,
-// );

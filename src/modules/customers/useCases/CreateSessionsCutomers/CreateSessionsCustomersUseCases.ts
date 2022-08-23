@@ -11,24 +11,28 @@ import authConfig from '@config/auth';
 export default class CreateSessionsCustomersUseCases {
   constructor(
     @inject('CustomersRepository')
-    private customerRepository: ICustomersRepository,
-    @inject('HashProvider')
-    private hashProvider: ICustomersHashRepository,
+    private customersRepository: ICustomersRepository,
+    @inject('CustomersHashRepository')
+    private customerssHashRepository: ICustomersHashRepository,
   ) {}
 
   async execute({
     email,
     password,
   }: ICreateSession): Promise<ICustomerAuthenticated> {
-    const customer = await this.customerRepository.findByEmail(email);
+    const customers = await this.customersRepository.findByEmail(email);
 
-    if (!customer) {
+    if (!customers) {
       throw new AppError('Incorrect email/password combination.', 401);
     }
 
-    const passwordConfirmed = await this.hashProvider.compareHash(
+    if (!customers?.password) {
+      throw new AppError('Incorrect email/password combination.', 401);
+    }
+
+    const passwordConfirmed = await this.customerssHashRepository.compareHash(
       password,
-      customer.password,
+      customers.password,
     );
 
     if (!passwordConfirmed) {
@@ -36,12 +40,22 @@ export default class CreateSessionsCustomersUseCases {
     }
 
     const token = sign({}, authConfig.jwt.secret as Secret, {
-      subject: customer.id,
+      subject: customers.id,
       expiresIn: authConfig.jwt.expiresIn,
     });
 
+    const { avatar, birth_date, cnpj, cpf, id, name, phone } = customers;
     return {
-      customer,
+      customer: {
+        id,
+        email,
+        name,
+        cnpj,
+        cpf,
+        phone,
+        birth_date,
+        avatar,
+      },
       token,
     };
   }

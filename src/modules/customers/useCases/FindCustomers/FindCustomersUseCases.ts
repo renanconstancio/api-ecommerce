@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
-import { IShowCustomer } from '@modules/customers/dtos/IShowCustomer';
+import { Customers } from '@modules/customers/infra/prisma/etities/Customers';
 import { ICustomersRepository } from '@modules/customers/repositories/ICustomersRepository';
-import { CustomersEntity } from '@modules/customers/infra/prisma/etities/Customers';
+import { IFindCustomer } from '@modules/customers/dtos/IFindCustomer';
 import AppError from '@shared/errors/AppError';
 
 @injectable()
@@ -11,7 +11,7 @@ export default class FindCustomersUseCases {
     private customersRepository: ICustomersRepository,
   ) {}
 
-  async execute({ id }: IShowCustomer): Promise<CustomersEntity> {
+  async execute({ id }: IFindCustomer): Promise<Customers> {
     const customer = await this.customersRepository.findById(id);
 
     if (!customer) {
