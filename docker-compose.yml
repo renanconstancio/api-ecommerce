@@ -1,44 +1,18 @@
-version: '3'
+version: "3.9"
 
 services:
-  api_ecommerce:
-    build: .
-    entrypoint: .docker/entrypoint.sh
-    container_name: api_ecommerce
+  app.sat.docker:
+    container_name: ecommerce_api_1.0
+    image: ecommerce_api_1.0
+    user: root
+    working_dir: /app/
+    restart: always
     ports:
-      - '8000:8000'
+      - 8001:3333
+    expose:
+      - 8001
     volumes:
-      - ./:/home/node/app
-    # depends_on:
-    #   - redis
-
-  # redis:
-  #   container_name: redis
-  #   image: 'bitnami/redis:latest'
-  #   environment:
-  #     - ALLOW_EMPTY_PASSWORD=yes
-
-  # db:
-  #   build: .docker/postgres
-  #   container_name: apivendas-db
-  #   restart: always
-  #   tty: true
-  #   ports:
-  #     - '5432:5432'
-  #   volumes:
-  #     - .docker/dbdata:/var/lib/postgresql/data
-  #   environment:
-  #     - POSTGRES_PASSWORD=docker
-  #     - POSTGRES_DB=apivendas
-
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   container_name: apivendas-pgadmin
-  #   tty: true
-  #   environment:
-  #     - PGADMIN_DEFAULT_EMAIL=admin@admin.com
-  #     - PGADMIN_DEFAULT_PASSWORD=admin
-  #   ports:
-  #     - '8000:80'
-  #   depends_on:
-  #     - db
+      - .:/app
+    env_file:
+      - ./.docker/loopback/docker.env
+    command: "/./app/.docker/loopback/start.sh"
