@@ -1,9 +1,9 @@
+import { format } from 'date-fns';
 import { IFindProducts } from '@modules/products/dtos/IFindProducts';
-import { ICreateProduct } from '@modules/products/dtos/ICreateProduct';
-import { IUpdateProduct } from '@modules/products/dtos/IUpdateProduct';
 import { IPaginateProducts } from '@modules/products/dtos/IPaginateProducts';
 import { IProductsRepository } from '@modules/products/repositories/IProductsRepository';
-import { Products } from '@modules/products/infra/prisma/entities/Products';
+import { IRequestProduct } from '@modules/products/dtos/IRequestProduct';
+import { IResponseProduct } from '@modules/products/dtos/IResponseProduct';
 import { prisma } from '@shared/infra/prisma';
 import { Prisma } from '@prisma/client';
 
@@ -15,31 +15,28 @@ type SearchParams = {
 };
 
 export default class ProductsRepository implements IProductsRepository {
-  async create(data: ICreateProduct): Promise<Products> {
+  async save(data: IRequestProduct): Promise<IResponseProduct> {
+    if (data.id)
+      return await prisma.products.update({
+        data,
+        where: {
+          id: data.id,
+        },
+      });
+
     return await prisma.products.create({
-      data: {
-        ...data,
-      },
-    });
-  }
-
-  async update(data: IUpdateProduct): Promise<Products> {
-    return await prisma.products.update({
       data,
-      where: {
-        id: data.id,
-      },
     });
   }
 
-  async remove(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     await prisma.products.update({
       data: { deleted_at: new Date() },
       where: { id },
     });
   }
 
-  async findByName(name: string): Promise<Products | null> {
+  async findByName(name: string): Promise<IResponseProduct | null> {
     return await prisma.products.findFirst({
       where: {
         name,
@@ -48,26 +45,48 @@ export default class ProductsRepository implements IProductsRepository {
     });
   }
 
-  async findById(id: string): Promise<Products | null> {
-    return (await prisma.products.findUnique({
-      where: {
-        id,
-      },
-      include: {
-        skus: {
-          include: {
-            images: {
-              select: {
-                image: true,
-              },
-              orderBy: {
-                position: 'asc',
+  async findById(id: string): Promise<IResponseProduct | null> {
+    return (await prisma.products
+      .findUnique({
+        where: {
+          id,
+        },
+        include: {
+          skus: {
+            include: {
+              images: {
+                orderBy: {
+                  position: 'asc',
+                },
               },
             },
           },
         },
-      },
-    })) as Products | null;
+      })
+      .then(({ ...prod }) => ({
+        ...prod,
+        created_at: format(prod.created_at, 'yyyy-MM-dd HH:ii:ss'),
+        updated_at: format(prod.updated_at, 'yyyy-MM-dd HH:ii:ss'),
+        deleted_at:
+          prod.deleted_at && format(prod.deleted_at, 'yyyy-MM-dd HH:ii:ss'),
+        skus: prod.skus?.map(({ images, ...skus }) => {
+          return {
+            ...skus,
+            created_at: format(skus.created_at, 'yyyy-MM-dd HH:ii:ss'),
+            updated_at: format(skus.updated_at, 'yyyy-MM-dd HH:ii:ss'),
+            deleted_at:
+              skus.deleted_at && format(skus.deleted_at, 'yyyy-MM-dd HH:ii:ss'),
+            images: images?.map(({ id, image }) => {
+              return {
+                id: id,
+                image_lg: `${process.env.BASE_AVATAR_URL}/images/${image}`,
+                image_md: `${process.env.BASE_AVATAR_URL}/images/md/${image}`,
+                image_xs: `${process.env.BASE_AVATAR_URL}/images/xs/${image}`,
+              };
+            }),
+          };
+        }),
+      }))) as IResponseProduct;
   }
 
   async findAll({
@@ -82,25 +101,52 @@ export default class ProductsRepository implements IProductsRepository {
 
     const productsCount = await prisma.products.count({ where });
 
-    const products = (await prisma.products.findMany({
-      include: {
-        skus: {
-          include: {
-            images: {
-              select: {
-                image: true,
-              },
-              orderBy: {
-                position: 'asc',
+    const products = (await prisma.products
+      .findMany({
+        include: {
+          skus: {
+            include: {
+              images: {
+                orderBy: {
+                  position: 'asc',
+                },
               },
             },
           },
         },
-      },
-      take: take,
-      skip: skip,
-      where,
-    })) as Products[];
+        take: take,
+        skip: skip,
+        where,
+      })
+      .then(products =>
+        products.map(({ skus, ...prod }) => {
+          return {
+            ...prod,
+            created_at: format(prod.created_at, 'yyyy-MM-dd HH:ii:ss'),
+            updated_at: format(prod.updated_at, 'yyyy-MM-dd HH:ii:ss'),
+            deleted_at:
+              prod.deleted_at && format(prod.deleted_at, 'yyyy-MM-dd HH:ii:ss'),
+            skus: skus.map(({ images, ...skus }) => {
+              return {
+                ...skus,
+                created_at: format(skus.created_at, 'yyyy-MM-dd HH:ii:ss'),
+                updated_at: format(skus.updated_at, 'yyyy-MM-dd HH:ii:ss'),
+                deleted_at:
+                  skus.deleted_at &&
+                  format(skus.deleted_at, 'yyyy-MM-dd HH:ii:ss'),
+                images: images.map(({ id, image }) => {
+                  return {
+                    id: id,
+                    image_lg: `${process.env.BASE_AVATAR_URL}/images/${image}`,
+                    image_md: `${process.env.BASE_AVATAR_URL}/images/md/${image}`,
+                    image_xs: `${process.env.BASE_AVATAR_URL}/images/xs/${image}`,
+                  };
+                }),
+              };
+            }),
+          };
+        }),
+      )) as IResponseProduct[];
 
     return {
       total: productsCount,
@@ -110,7 +156,7 @@ export default class ProductsRepository implements IProductsRepository {
     };
   }
 
-  async findAllByIds(products: IFindProducts[]): Promise<Products[]> {
+  async findAllByIds(products: IFindProducts[]): Promise<IResponseProduct[]> {
     const existentProducts = await prisma.products.findMany({
       where: {
         id: { in: products.map(product => product.id) },

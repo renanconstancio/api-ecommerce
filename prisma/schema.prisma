@@ -14,9 +14,9 @@ model Category {
   keywords       String?    @db.VarChar(255)
   description    String?    @db.Text
   position       Int        @default(0)
-  created_at     DateTime   @default(now()) @db.DateTime(6)
-  updated_at     DateTime   @updatedAt() @db.DateTime(6)
-  deleted_at     DateTime?  @db.DateTime(6)
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @updatedAt()
+  deleted_at     DateTime?
   category       Category?  @relation("categoryTocategory", fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_cc7f32b7ab33c70b9e715afae84")
   other_category Category[] @relation("categoryTocategory")
 
@@ -33,9 +33,9 @@ model Customers {
   cnpj       String?    @db.VarChar(22)
   phone      String?    @db.VarChar(20)
   avatar     String?    @db.VarChar(41)
-  created_at DateTime   @default(now()) @db.DateTime(6)
-  updated_at DateTime   @updatedAt() @db.DateTime(6)
-  deleted_at DateTime?  @db.DateTime(6)
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt()
+  deleted_at DateTime?
   birth_date String?    @db.VarChar(20)
   adresses   Adresses[]
   orders     Orders[]
@@ -44,22 +44,22 @@ model Customers {
 }
 
 model Adresses {
-  id           String          @id @default(uuid()) @db.VarChar(36)
-  customers_id String          @db.VarChar(36)
-  recipient    String          @db.VarChar(55)
-  address      String          @db.VarChar(65)
-  number       String          @db.VarChar(5)
-  district     String          @db.VarChar(45)
-  complement   String?         @db.VarChar(85)
-  reference    String?         @db.VarChar(85)
-  city         String          @db.VarChar(45)
-  state        String          @db.VarChar(2)
-  zip_code     String          @db.VarChar(9)
-  for_orders   adresses_status @default(yes)
+  id           String  @id @default(uuid()) @db.VarChar(36)
+  customers_id String  @db.VarChar(36)
+  recipient    String  @db.VarChar(55)
+  address      String  @db.VarChar(65)
+  number       String  @db.VarChar(5)
+  district     String  @db.VarChar(45)
+  complement   String? @db.VarChar(85)
+  reference    String? @db.VarChar(85)
+  city         String  @db.VarChar(45)
+  state        String  @db.VarChar(2)
+  zip_code     String  @db.VarChar(9)
+  for_orders   Boolean @default(true)
 
-  created_at DateTime  @default(now()) @db.DateTime(6)
-  updated_at DateTime  @updatedAt() @db.DateTime(6)
-  deleted_at DateTime? @db.DateTime(6)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt()
+  deleted_at DateTime?
 
   customer Customers @relation(fields: [customers_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_CUSTOMERS")
 
@@ -68,15 +68,15 @@ model Adresses {
 }
 
 model Products {
-  id               String                    @id @default(uuid()) @db.VarChar(36)
-  name             String                    @db.VarChar(155)
-  keywords         String                    @db.VarChar(255)
-  visible          visible_or_invisible_enum @default(invisible)
-  description      String                    @db.VarChar(505)
-  description_text String?                   @db.Text
-  created_at       DateTime                  @default(now()) @db.DateTime(6)
-  updated_at       DateTime                  @updatedAt() @db.DateTime(6)
-  deleted_at       DateTime?                 @db.DateTime(6)
+  id               String         @id @default(uuid()) @db.VarChar(36)
+  name             String         @db.VarChar(155)
+  keywords         String         @db.VarChar(255)
+  visible          Boolean        @default(false)
+  description      String         @db.VarChar(505)
+  description_text String?        @db.Text
+  created_at       DateTime       @default(now())
+  updated_at       DateTime       @updatedAt()
+  deleted_at       DateTime?
   skus             ProductsSkus[]
 
   @@map("products")
@@ -87,9 +87,9 @@ model ProductsImages {
   product_sku_id String?       @db.VarChar(36)
   image          String        @db.VarChar(42)
   position       Int           @default(0)
-  created_at     DateTime      @default(now()) @db.DateTime(6)
-  updated_at     DateTime      @updatedAt() @db.DateTime(6)
-  deleted_at     DateTime?     @db.DateTime(6)
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @updatedAt()
+  deleted_at     DateTime?
   skus           ProductsSkus? @relation(fields: [product_sku_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_PRODUCTS_IMAGES")
 
   @@index([product_sku_id], map: "FK_PRODUCTS_IMAGES")
@@ -104,9 +104,9 @@ model ProductsSkus {
   quantity   Int              @default(0)
   cost_price Decimal          @default(0) @db.Decimal(10, 0)
   sale_price Decimal          @default(0) @db.Decimal(10, 0)
-  created_at DateTime         @default(now()) @db.DateTime(6)
-  updated_at DateTime         @updatedAt() @db.DateTime(6)
-  deleted_at DateTime?        @db.DateTime(6)
+  created_at DateTime         @default(now())
+  updated_at DateTime         @updatedAt()
+  deleted_at DateTime?
   product    Products?        @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_PRODUCTS_SKUS")
   images     ProductsImages[]
   orders     OrdersProducts[]
@@ -118,11 +118,11 @@ model ProductsSkus {
 model Orders {
   id            String    @id @default(uuid()) @db.VarChar(36)
   code          String    @db.VarChar(20)
-  date_of_order DateTime  @db.DateTime(6)
+  date_of_order DateTime
   customers_id  String    @db.VarChar(36)
-  created_at    DateTime  @default(now()) @db.DateTime(6)
-  updated_at    DateTime  @updatedAt() @db.DateTime(6)
-  deleted_at    DateTime? @db.DateTime(6)
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt()
+  deleted_at    DateTime?
 
   transactions OrdersTransactions[]
   addresses    OrdersAddresses[]
@@ -180,9 +180,9 @@ model OrdersTransactions {
   discount_type   orders_transactions_discount_type @default(percent)
   total_price     Decimal                           @default(0) @db.Decimal(10, 0)
   price_increase  Decimal                           @default(0) @db.Decimal(10, 0)
-  created_at      DateTime                          @default(now()) @db.DateTime(6)
-  updated_at      DateTime                          @updatedAt() @db.DateTime(6)
-  deleted_at      DateTime?                         @db.DateTime(6)
+  created_at      DateTime                          @default(now())
+  updated_at      DateTime                          @updatedAt()
+  deleted_at      DateTime?
   order           Orders                            @relation(fields: [orders_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_ORDER_TRANSATIONS")
 
   @@index([orders_id], map: "FK_ORDER_TRANSATIONS")
@@ -193,7 +193,7 @@ model OrdersStatus {
   id         String             @id @default(uuid()) @db.VarChar(36)
   orders_id  String             @db.VarChar(36)
   status     orders_status_type @default(ORDER_MADE)
-  created_at DateTime           @default(now()) @db.DateTime(6)
+  created_at DateTime           @default(now())
   order      Orders?            @relation(fields: [orders_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_ORDER_STATUS")
 
   @@index([orders_id], map: "FK_ORDER_STATUS")
@@ -201,40 +201,30 @@ model OrdersStatus {
 }
 
 model Stores {
-  id            String                    @id @default(uuid()) @db.VarChar(36)
-  title         String                    @db.VarChar(105)
-  fantasy_name  String                    @db.VarChar(105)
-  email         String                    @db.VarChar(55)
-  phone         String                    @db.VarChar(20)
-  opening_hours String?                   @db.VarChar(155)
-  address       String                    @db.VarChar(55)
-  number        String                    @db.VarChar(4)
-  district      String                    @db.VarChar(35)
-  complement    String?                   @db.VarChar(45)
-  city          String                    @db.VarChar(35)
-  state         String                    @db.VarChar(2)
-  zip_code      String                    @db.VarChar(9)
-  visible       visible_or_invisible_enum @default(visible)
-  created_at    DateTime                  @default(now()) @db.DateTime(6)
-  updated_at    DateTime                  @updatedAt() @db.DateTime(6)
-  deleted_at    DateTime?                 @db.DateTime(6)
+  id            String    @id @default(uuid()) @db.VarChar(36)
+  title         String    @db.VarChar(105)
+  fantasy_name  String    @db.VarChar(105)
+  email         String    @db.VarChar(55)
+  phone         String    @db.VarChar(20)
+  opening_hours String?   @db.VarChar(155)
+  address       String    @db.VarChar(55)
+  number        String    @db.VarChar(4)
+  district      String    @db.VarChar(35)
+  complement    String?   @db.VarChar(45)
+  city          String    @db.VarChar(35)
+  state         String    @db.VarChar(2)
+  zip_code      String    @db.VarChar(9)
+  visible       Boolean   @default(true)
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt()
+  deleted_at    DateTime?
 
   @@map("stores")
-}
-
-enum visible_or_invisible_enum {
-  visible
-  invisible
 }
 
 enum orders_transactions_discount_type {
   price
   percent
-}
-
-enum adresses_status {
-  yes
-  no
 }
 
 enum orders_status_type {

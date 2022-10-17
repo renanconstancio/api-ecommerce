@@ -1,8 +1,8 @@
-import { Products } from '@modules/products/infra/prisma/entities/Products';
+import { IResponseProduct } from './IResponseProduct';
 
 export interface IPaginateProducts {
   total: number;
   per_page: number;
   current_page: number;
-  data: Products[];
+  data: IResponseProduct[];
 }
