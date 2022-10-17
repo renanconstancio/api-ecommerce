@@ -1,6 +1,6 @@
 import fs from 'fs';
 import sharp from 'sharp';
-import { IResizeImage } from '../model/IResizeImage';
+import { IResizeImage } from './dtos/IResizeImage';
 import resizeImage from '@config/resizeImage';
 
 export default class ResizeImage implements IResizeImage {

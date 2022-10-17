@@ -1,13 +1,12 @@
-import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
-import cors from 'cors';
+import express, { NextFunction, Request, Response } from 'express';
 import { CelebrateError, errors } from 'celebrate';
-import routes from './routes';
+import cors from 'cors';
 import AppError from '@shared/errors/AppError';
-// import '@shared/infra/typeorm';
-import '@shared/container';
+import routes from './routes';
 import uploadConfig from '@config/upload';
-import rateLimiter from '@shared/infra/http/middlewares/rateLimiter';
+import '@shared/container';
+// import rateLimiter from '@shared/infra/http/middlewares/rateLimiter';
 
 const app = express();
 

@@ -1,7 +1,5 @@
 import { container, delay } from 'tsyringe';
 
-import '@modules/products/providers';
-
 import CustomersRepository from '@modules/customers/infra/prisma/repositories/CustomersRepository';
 import { ICustomersRepository } from '@modules/customers/repositories/ICustomersRepository';
 
@@ -37,6 +35,11 @@ import { ISalesStatusRepository } from '@modules/sales/repositories/ISalesStatus
 
 import { IAdressesRepository } from '@modules/adresses/repositories/IAdressesRepository';
 import AdressesRepository from '@modules/adresses/infra/prisma/repositories/AdressesRepository';
+
+import { IResizeImage } from './providers/ResizeImage/dtos/IResizeImage';
+import ResizeImage from './providers/ResizeImage/ResizeImage';
+
+container.registerSingleton<IResizeImage>('ResizeImage', ResizeImage);
 
 container.registerSingleton<ICategoriesRepository>(
   'CategoriesRepository',

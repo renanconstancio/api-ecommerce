@@ -1,11 +1,11 @@
 import { inject, injectable } from 'tsyringe';
-import AppError from '@shared/errors/AppError';
 import uploadConfig from '@config/upload';
-import DiskStorageProvider from '@shared/providers/StorageProvider/DiskStorageProvider';
-import S3StorageProvider from '@shared/providers/StorageProvider/S3StorageProvider';
+import DiskStorageProvider from '@shared/container/providers/StorageProvider/DiskStorageProvider';
+import S3StorageProvider from '@shared/container/providers/StorageProvider/S3StorageProvider';
 import { IUpdateUserAvatar } from '../domain/models/IUpdateUserAvatar';
-import { IUser } from '../domain/models/IUser';
 import { IUsersRepository } from '../domain/repositories/IUsersRepository';
+import { IUser } from '../domain/models/IUser';
+import AppError from '@shared/errors/AppError';
 
 @injectable()
 class UpdateUserAvatarService {

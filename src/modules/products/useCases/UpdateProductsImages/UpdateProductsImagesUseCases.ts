@@ -7,7 +7,7 @@ import { inject, injectable } from 'tsyringe';
 import { IUpdateProductImage } from '@modules/products/dtos/IUpdateProductImage';
 import { IProductsImagesRepository } from '@modules/products/repositories/IProductsImagesRepository';
 import { ICreateProductImage } from '@modules/products/dtos/ICreateProductImage';
-import { IResizeImage } from '@modules/products/providers/model/IResizeImage';
+import { IResizeImage } from '@shared/container/providers/ResizeImage/dtos/IResizeImage';
 
 @injectable()
 export default class UpdateProductsImagesUseCases {

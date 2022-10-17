@@ -5,7 +5,7 @@ import UpdateProductsImagesUseCases from '@modules/products/useCases/UpdateProdu
 export default class UpdateProductsImagesController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id, product_sku_id } = request.body;
-    const { filename } = request.file;
+    const { filename } = request.file as { filename: string };
 
     const useCases = container.resolve(UpdateProductsImagesUseCases);
     const image = await useCases.execute({
