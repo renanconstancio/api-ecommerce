@@ -1,102 +1,38 @@
 import { container, delay } from 'tsyringe';
 
-import CustomersRepository from '@modules/customers/infra/prisma/repositories/CustomersRepository';
-import { ICustomersRepository } from '@modules/customers/repositories/ICustomersRepository';
+// import StoreRepository from '@modules/stores/infra/prisma/repositories/StoreRepository';
+// import { IStoreRepository } from '@modules/stores/repositories/IStoreRepository';
 
-import CategoriesRepository from '@modules/categories/infra/prisma/repositories/CategoriesRepository';
-import { ICategoriesRepository } from '@modules/categories/repositories/ICategoriesRepository';
+import ProductRepository from '@modules/products/infra/prisma/repositories/productRepository';
+import { IProductRepository } from '@modules/products/repositories/IProductRepository';
 
-import StoresRepository from '@modules/stores/infra/prisma/repositories/StoresRepository';
-import { IStoresRepository } from '@modules/stores/repositories/IStoresRepository';
+// import ProductSkuRepository from '@modules/products/infra/prisma/repositories/ProductSkuRepository';
+// import { IProductSkuRepository } from '@modules/products/repositories/IProductSkuRepository';
 
-import ProductsRepository from '@modules/products/infra/prisma/repositories/productRepository';
-import { IProductsRepository } from '@modules/products/repositories/IProductRepository';
+// import { IProductImageRepository } from '@modules/products/repositories/IProductImageRepository';
+// import ProductImageRepository from '@modules/products/infra/prisma/repositories/productsImageRepository';
 
-import ProductsSkusRepository from '@modules/products/infra/prisma/repositories/ProductsSkusRepository';
-import { IProductsSkusRepository } from '@modules/products/repositories/IProductsSkusRepository';
+// import { IResizeImage } from './providers/resizeImage/dtos/IResizeImage';
+// import ResizeImage from './providers/resizeImage/ResizeImage';
 
-import { IProductsImagesRepository } from '@modules/products/repositories/IProductsImagesRepository';
-import ProductsImagesRepository from '@modules/products/infra/prisma/repositories/productsImageRepository';
+// container.registerSingleton<IResizeImage>('ResizeImage', ResizeImage);
 
-import CustomersHashRepository from '@modules/customers/infra/prisma/repositories/CustomersHashRepository';
-import { ICustomersHashRepository } from '@modules/customers/repositories/ICustomersHashRepository';
+// container.registerSingleton<IStoreRepository>(
+//   'StoreRepository',
+//   delay(() => StoreRepository),
+// );
 
-import { ISalesRepository } from '@modules/sales/repositories/ISalesRepository';
-import SalesRepository from '@modules/sales/infra/prisma/repositories/SalesRepository';
-
-import { ISalesAddressesRepository } from '@modules/sales/repositories/ISalesAddressesRepository';
-import SalesAddessesRepository from '@modules/sales/infra/prisma/repositories/SalesAddessesRepository';
-
-import { ISalesProductsRepository } from '@modules/sales/repositories/ISalesProductsRepository';
-import SalesProductsRepository from '@modules/sales/infra/prisma/repositories/SalesProductsRepository';
-
-import SalesStatusRepository from '@modules/sales/infra/prisma/repositories/SalesStatusRepository';
-import { ISalesStatusRepository } from '@modules/sales/repositories/ISalesStatusRepository';
-
-import { IAdressesRepository } from '@modules/addresses/repositories/IAdressesRepository';
-import AdressesRepository from '@modules/addresses/infra/prisma/repositories/AdressesRepository';
-
-import { IResizeImage } from './providers/ResizeImage/dtos/IResizeImage';
-import ResizeImage from './providers/ResizeImage/ResizeImage';
-
-container.registerSingleton<IResizeImage>('ResizeImage', ResizeImage);
-
-container.registerSingleton<ICategoriesRepository>(
-  'CategoriesRepository',
-  delay(() => CategoriesRepository),
+container.registerSingleton<IProductRepository>(
+  'ProductRepository',
+  delay(() => ProductRepository),
 );
 
-container.registerSingleton<ICustomersHashRepository>(
-  'CustomersHashRepository',
-  delay(() => CustomersHashRepository),
-);
+// container.registerSingleton<IProductSkuRepository>(
+//   'ProductSkuRepository',
+//   delay(() => ProductSkuRepository),
+// );
 
-container.registerSingleton<ICustomersRepository>(
-  'CustomersRepository',
-  delay(() => CustomersRepository),
-);
-
-container.registerSingleton<IAdressesRepository>(
-  'AdressesRepository',
-  delay(() => AdressesRepository),
-);
-
-container.registerSingleton<IStoresRepository>(
-  'StoresRepository',
-  delay(() => StoresRepository),
-);
-
-container.registerSingleton<IProductsRepository>(
-  'ProductsRepository',
-  delay(() => ProductsRepository),
-);
-
-container.registerSingleton<IProductsSkusRepository>(
-  'ProductsSkusRepository',
-  delay(() => ProductsSkusRepository),
-);
-
-container.registerSingleton<IProductsImagesRepository>(
-  'ProductsImagesRepository',
-  delay(() => ProductsImagesRepository),
-);
-
-container.registerSingleton<ISalesRepository>(
-  'SalesRepository',
-  delay(() => SalesRepository),
-);
-
-container.registerSingleton<ISalesAddressesRepository>(
-  'SalesAddressesRepository',
-  delay(() => SalesAddessesRepository),
-);
-
-container.registerSingleton<ISalesStatusRepository>(
-  'SalesStatusRepository',
-  delay(() => SalesStatusRepository),
-);
-
-container.registerSingleton<ISalesProductsRepository>(
-  'SalesProductsRepository',
-  delay(() => SalesProductsRepository),
-);
+// container.registerSingleton<IProductImageRepository>(
+//   'ProductImageRepository',
+//   delay(() => ProductImageRepository),
+// );

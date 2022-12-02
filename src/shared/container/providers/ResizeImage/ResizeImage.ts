@@ -1,7 +1,7 @@
 import fs from 'fs';
 import sharp from 'sharp';
-import { IResizeImage } from './dtos/IResizeImage';
 import resizeImage from '@config/resizeImage';
+import { IResizeImage } from './dtos/IResizeImage';
 
 export default class ResizeImage implements IResizeImage {
   async xs(image: string): Promise<string> {

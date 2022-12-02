@@ -1,6 +1,3 @@
-// import { ProductsSkus as ProductsSkusEntity } from '@prisma/client';
-import { ProductImage } from './productImage';
-
 export type ProductSku = {
   id?: string;
   product_id?: string;
@@ -12,5 +9,10 @@ export type ProductSku = {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
-  images?: ProductImage[];
+  images?: {
+    id: string;
+    image_lg: string;
+    image_md: string;
+    image_xs: string;
+  }[];
 };

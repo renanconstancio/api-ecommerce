@@ -1,24 +1,24 @@
 import { inject, injectable } from 'tsyringe';
-import { IStoresRepository } from '@modules/stores/repositories/IStoresRepository';
+import { IStoreRepository } from '@modules/stores/repositories/IStoreRepository';
 import { IUpdateStore } from '@modules/stores/dtos/IUpdateStore';
 import { StoresEntity } from '@modules/stores/infra/prisma/entities/Stores';
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/errors/appError';
 
 @injectable()
 export default class UpdateStoresUseCases {
   constructor(
-    @inject('StoresRepository')
-    private storesRepository: IStoresRepository,
+    @inject('StoreRepository')
+    private StoreRepository: IStoreRepository,
   ) {}
 
   async execute(data: IUpdateStore): Promise<StoresEntity> {
-    const store = await this.storesRepository.findById(data.id);
+    const store = await this.StoreRepository.findById(data.id);
 
     if (!store) {
       throw new AppError('Store not found.');
     }
 
-    const storeExists = await this.storesRepository.findByFantasyName(
+    const storeExists = await this.StoreRepository.findByFantasyName(
       data.fantasy_name,
     );
 
@@ -28,6 +28,6 @@ export default class UpdateStoresUseCases {
       );
     }
 
-    return await this.storesRepository.update(data);
+    return await this.StoreRepository.update(data);
   }
 }

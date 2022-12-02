@@ -1,15 +1,15 @@
 import 'reflect-metadata';
-import FakeStoresRepository from '@modules/stores/repositories/fakes/FakeStoresRepository';
+import FakeStoreRepository from '@modules/stores/repositories/fakes/FakeStoreRepository';
 import UpdateStoresUseCases from '@modules/stores/useCases/UpdateStores/UpdateStoresUseCases';
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/errors/appError';
 
-let fakeStoresRepository: FakeStoresRepository;
+let fakeStoreRepository: FakeStoreRepository;
 let updateStoreService: UpdateStoresUseCases;
 
 describe('UpdateStoresUseCases', () => {
   beforeEach(() => {
-    fakeStoresRepository = new FakeStoresRepository();
-    updateStoreService = new UpdateStoresUseCases(fakeStoresRepository);
+    fakeStoreRepository = new FakeStoreRepository();
+    updateStoreService = new UpdateStoresUseCases(fakeStoreRepository);
   });
 
   it('must be able to list the customers', async () => {

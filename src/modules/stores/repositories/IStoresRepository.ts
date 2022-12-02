@@ -9,7 +9,7 @@ type SearchParams = {
   take: number;
 };
 
-export interface IStoresRepository {
+export interface IStoreRepository {
   findAll({ page, skip, take }: SearchParams): Promise<IPaginateStore>;
   findById(id: string): Promise<StoresEntity | null>;
   findByFantasyName(fantasy_name: string): Promise<StoresEntity | null>;

@@ -5,7 +5,7 @@ import { IFindProductsSkus } from '@modules/products/dtos/IFindProductsSkus';
 import { ProductsSkusEntity } from '@modules/products/infra/prisma/dtos/productSku';
 import { ProductsEntity } from '@modules/products/infra/prisma/dtos/productDTOs';
 
-export interface IProductsSkusRepository {
+export interface IProductSkuRepository {
   findBySku(sku: string): Promise<ProductsSkusEntity | null>;
   findAll(product_id: string): Promise<ProductsEntity | null>;
   findById(product_id: string, id: string): Promise<ProductsEntity | null>;

@@ -1,5 +1,5 @@
 import { prisma } from '@shared/infra/prisma';
-import { IStoresRepository } from '@modules/stores/repositories/IStoresRepository';
+import { IStoreRepository } from '@modules/stores/repositories/IStoreRepository';
 import { ICreateStore } from '@modules/stores/dtos/ICreateStore';
 import { IPaginateStore } from '@modules/stores/dtos/IPaginateStore';
 import { IFindStores } from '@modules/stores/dtos/IFindStores';
@@ -13,7 +13,7 @@ type SearchParams = {
   take: number;
 };
 
-export default class StoresRepository implements IStoresRepository {
+export default class StoreRepository implements IStoreRepository {
   async create(data: ICreateStore): Promise<StoresEntity> {
     return prisma.stores.create({ data: { ...data } });
   }

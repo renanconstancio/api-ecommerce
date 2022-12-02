@@ -5,15 +5,15 @@ import { inject, injectable } from 'tsyringe';
 // import S3StorageProvider from '@shared/providers/StorageProvider/S3StorageProvider';
 
 import { IUpdateProductImage } from '@modules/products/dtos/IUpdateProductImage';
-import { IProductsImagesRepository } from '@modules/products/repositories/IProductsImagesRepository';
+import { IProductImageRepository } from '@modules/products/repositories/IProductImageRepository';
 import { ICreateProductImage } from '@modules/products/dtos/ICreateProductImage';
-import { IResizeImage } from '@shared/container/providers/ResizeImage/dtos/IResizeImage';
+import { IResizeImage } from '@shared/container/providers/resizeImage/dtos/IResizeImage';
 
 @injectable()
 export default class UpdateProductsImagesUseCases {
   constructor(
-    @inject('ProductsImagesRepository')
-    private productsImagesRepository: IProductsImagesRepository,
+    @inject('ProductImageRepository')
+    private ProductImageRepository: IProductImageRepository,
     @inject('ResizeImage')
     private resizeImage: IResizeImage,
   ) {}
@@ -23,7 +23,7 @@ export default class UpdateProductsImagesUseCases {
     product_sku_id,
     imageFilename,
   }: IUpdateProductImage): Promise<void> {
-    const imageCount = await this.productsImagesRepository.findBySkuIdCount(
+    const imageCount = await this.ProductImageRepository.findBySkuIdCount(
       product_sku_id,
     );
 
@@ -47,7 +47,7 @@ export default class UpdateProductsImagesUseCases {
     //   image.image = filename;
     // }
 
-    await this.productsImagesRepository.create({
+    await this.ProductImageRepository.create({
       product_sku_id,
       image: imageFilename,
       position: imageCount + 1,

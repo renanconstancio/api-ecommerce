@@ -2,7 +2,7 @@ import 'express-async-errors';
 import express, { NextFunction, Request, Response } from 'express';
 import { CelebrateError, errors } from 'celebrate';
 import cors from 'cors';
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/errors/appError';
 import routes from './routes';
 import uploadConfig from '@config/upload';
 import '@shared/container';

@@ -1,16 +1,16 @@
 import 'reflect-metadata';
-import FakeStoresRepository from '@modules/stores/repositories/fakes/FakeStoresRepository';
+import FakeStoreRepository from '@modules/stores/repositories/fakes/FakeStoreRepository';
 import CreateStoresUsecases from '@modules/stores/useCases/CreateStores/CreateStoresUseCases';
 import DeleteStoresUseCases from '@modules/stores/useCases/DeleteStores/DeleteStoresUseCases';
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/errors/appError';
 
-let fakeStoriesRepository: FakeStoresRepository;
+let fakeStoriesRepository: FakeStoreRepository;
 let createDeleteStore: CreateStoresUsecases;
 let deleteStore: DeleteStoresUseCases;
 
 describe('DeleteStoresUseCases', () => {
   beforeEach(() => {
-    fakeStoriesRepository = new FakeStoresRepository();
+    fakeStoriesRepository = new FakeStoreRepository();
     createDeleteStore = new CreateStoresUsecases(fakeStoriesRepository);
     deleteStore = new DeleteStoresUseCases(fakeStoriesRepository);
   });

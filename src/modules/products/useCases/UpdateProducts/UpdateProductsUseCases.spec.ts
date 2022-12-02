@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import FakeProductsRepository from '@modules/products/repositories/fakes/FakeProductsRepository';
 import UpdateProductsUseCases from '@modules/products/useCases/UpdateProducts/UpdateProductsUseCases';
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/errors/appError';
 
 let fakeProductsRepository: FakeProductsRepository;
 let updateProductService: UpdateProductsUseCases;

@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import { IProductsRepository } from '@modules/products/repositories/IProductRepository';
 import { ProductsEntity } from '@modules/products/infra/prisma/dtos/productDTOs';
 import { IShowProduct } from '@modules/products/dtos/IShowProduct';
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/errors/appError';
 
 @injectable()
 export default class FindProductsUseCases {

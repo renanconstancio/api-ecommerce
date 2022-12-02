@@ -1,15 +1,15 @@
 import 'reflect-metadata';
 import CreateStoresUseCases from '@modules/stores/useCases/CreateStores/CreateStoresUseCases';
-import FakeStoresRepository from '@modules/stores/repositories/fakes/FakeStoresRepository';
-import AppError from '@shared/errors/AppError';
+import FakeStoreRepository from '@modules/stores/repositories/fakes/FakeStoreRepository';
+import AppError from '@shared/errors/appError';
 
-let fakeStoresRepository: FakeStoresRepository;
+let fakeStoreRepository: FakeStoreRepository;
 let createStore: CreateStoresUseCases;
 
 describe('CreateStoresUseCases', () => {
   beforeEach(() => {
-    fakeStoresRepository = new FakeStoresRepository();
-    createStore = new CreateStoresUseCases(fakeStoresRepository);
+    fakeStoreRepository = new FakeStoreRepository();
+    createStore = new CreateStoresUseCases(fakeStoreRepository);
   });
 
   it('should be able to create a new store', async () => {

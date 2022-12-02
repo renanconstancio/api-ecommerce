@@ -1,4 +1,3 @@
-// import { Products as ProductsEntity } from '@prisma/client';
 import { ProductSku } from './productSku';
 
 export type ProductDTOs = {
@@ -8,8 +7,8 @@ export type ProductDTOs = {
   visible: string;
   description: string;
   description_text?: string;
-  created_at: Date;
-  updated_at: Date;
-  deleted_at: Date;
+  created_at?: Date | string;
+  updated_at?: Date | string;
+  deleted_at?: Date | string | null;
   skus?: ProductSku[];
 };

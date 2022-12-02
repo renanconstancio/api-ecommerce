@@ -2,8 +2,8 @@ import 'reflect-metadata';
 
 import FindProductsUseCases from '@modules/products/useCases/FindProducts/FindProductsUseCases';
 import FakeProductsRepository from '@modules/products/repositories/fakes/FakeProductsRepository';
-import CreateProductsUseCases from '@modules/products/useCases/CreateProducts/CreateProductsUseCases';
-import AppError from '@shared/errors/AppError';
+import CreateProductsUseCases from '@modules/products/useCases/patchProduct/patchProductUseCase';
+import AppError from '@shared/errors/appError';
 
 let fakeCustomersRepository: FakeProductsRepository;
 let showProductService: FindProductsUseCases;

@@ -1,7 +1,7 @@
 import 'reflect-metadata';
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/errors/appError';
 import FakeProductsRepository from '@modules/products/repositories/fakes/FakeProductsRepository';
-import CreateProductsUseCases from '@modules/products/useCases/CreateProducts/CreateProductsUseCases';
+import CreateProductsUseCases from '@modules/products/useCases/patchProduct/patchProductUseCase';
 import DeleteProductsUseCases from '@modules/products/useCases/DeleteProducts/DeleteProductsUseCases';
 
 let fakeProductsRepository: FakeProductsRepository;

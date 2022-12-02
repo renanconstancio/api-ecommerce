@@ -1,21 +1,12 @@
-import { format } from 'date-fns';
-import { IFindProducts } from '@modules/products/dtos/IFindProducts';
-import { IPaginateProducts } from '@modules/products/dtos/IPaginateProducts';
-import { IProductsRepository } from '@modules/products/repositories/IProductRepository';
-import { IRequestProduct } from '@modules/products/dtos/IRequestProduct';
-import { IResponseProduct } from '@modules/products/dtos/IResponseProduct';
 import { prisma } from '@shared/infra/prisma';
-import { Prisma } from '@prisma/client';
-
-type SearchParams = {
-  page: number;
-  skip: number;
-  take: number;
-  name: string;
-};
+import { IProductRepository } from '@modules/products/repositories/IProductRepository';
+import { PaginationDTOs } from '../dtos/paginationDTOs';
+import { ProductDTOs } from '../dtos/productDTOs';
+import { RequestDTOs } from '../dtos/requestDTOs';
+import { dateString } from '@shared/utils/functions';
 
 export default class ProductRepository implements IProductRepository {
-  async save(data: IRequestProduct): Promise<IResponseProduct> {
+  async save(data: ProductDTOs): Promise<ProductDTOs> {
     if (data.id)
       return await prisma.products.update({
         where: {
@@ -36,7 +27,7 @@ export default class ProductRepository implements IProductRepository {
     });
   }
 
-  async findByName(name: string): Promise<IResponseProduct | null> {
+  async findByName(name: string): Promise<ProductDTOs | null> {
     return await prisma.products.findFirst({
       where: {
         name,
@@ -45,8 +36,8 @@ export default class ProductRepository implements IProductRepository {
     });
   }
 
-  async findById(id: string): Promise<IResponseProduct | null> {
-    return (await prisma.products
+  async findById(id: string): Promise<ProductDTOs | null> {
+    return await prisma.products
       .findUnique({
         where: {
           id,
@@ -65,39 +56,33 @@ export default class ProductRepository implements IProductRepository {
       })
       .then(({ ...prod }) => ({
         ...prod,
-        created_at: format(prod.created_at, 'yyyy-MM-dd HH:ii:ss'),
-        updated_at: format(prod.updated_at, 'yyyy-MM-dd HH:ii:ss'),
-        deleted_at:
-          prod.deleted_at && format(prod.deleted_at, 'yyyy-MM-dd HH:ii:ss'),
-        skus: prod.skus?.map(({ images, ...skus }) => {
-          return {
-            ...skus,
-            created_at: format(skus.created_at, 'yyyy-MM-dd HH:ii:ss'),
-            updated_at: format(skus.updated_at, 'yyyy-MM-dd HH:ii:ss'),
-            deleted_at:
-              skus.deleted_at && format(skus.deleted_at, 'yyyy-MM-dd HH:ii:ss'),
-            images: images?.map(({ id, image }) => {
-              return {
-                id: id,
-                image_lg: `${process.env.BASE_AVATAR_URL}/images/${image}`,
-                image_md: `${process.env.BASE_AVATAR_URL}/images/md/${image}`,
-                image_xs: `${process.env.BASE_AVATAR_URL}/images/xs/${image}`,
-              };
-            }),
-          };
-        }),
-      }))) as IResponseProduct;
+        created_at: dateString(prod.created_at),
+        updated_at: dateString(prod.updated_at),
+        deleted_at: prod.deleted_at && dateString(prod.deleted_at),
+        skus: prod.skus?.map(({ ...skus }) => ({
+          ...skus,
+          created_at: dateString(skus.created_at),
+          updated_at: dateString(skus.updated_at),
+          deleted_at: skus.deleted_at && dateString(skus.deleted_at),
+          images: skus?.images?.map(({ id, image }) => ({
+            id: id,
+            image_lg: `${process.env.APP_API_URL}/images/${image}`,
+            image_md: `${process.env.APP_API_URL}/images/md/${image}`,
+            image_xs: `${process.env.APP_API_URL}/images/xs/${image}`,
+          })),
+        })),
+      }));
   }
 
   async findAll({
+    limit,
+    order,
     page,
-    skip,
-    take,
-    name,
-  }: SearchParams): Promise<IPaginateProducts> {
-    let where: Prisma.ProductsWhereInput = { deleted_at: null };
+    search,
+  }: RequestDTOs): Promise<PaginationDTOs<ProductDTOs[]>> {
+    const where = { deleted_at: null };
 
-    if (name) where = { ...where, name: name };
+    // if (name) where = { ...where, name: name };
 
     const productsCount = await prisma.products.count({ where });
 
@@ -114,32 +99,29 @@ export default class ProductRepository implements IProductRepository {
             },
           },
         },
-        take: take,
-        skip: skip,
+        take: limit,
+        skip: (Number(page) - 1) * page,
         where,
       })
       .then(products =>
         products.map(({ skus, ...prod }) => {
           return {
             ...prod,
-            created_at: format(prod.created_at, 'yyyy-MM-dd HH:ii:ss'),
-            updated_at: format(prod.updated_at, 'yyyy-MM-dd HH:ii:ss'),
-            deleted_at:
-              prod.deleted_at && format(prod.deleted_at, 'yyyy-MM-dd HH:ii:ss'),
+            created_at: dateString(prod.created_at),
+            updated_at: dateString(prod.updated_at),
+            deleted_at: prod.deleted_at && dateString(prod.deleted_at),
             skus: skus.map(({ images, ...skus }) => {
               return {
                 ...skus,
-                created_at: format(skus.created_at, 'yyyy-MM-dd HH:ii:ss'),
-                updated_at: format(skus.updated_at, 'yyyy-MM-dd HH:ii:ss'),
-                deleted_at:
-                  skus.deleted_at &&
-                  format(skus.deleted_at, 'yyyy-MM-dd HH:ii:ss'),
+                created_at: dateString(skus.created_at),
+                updated_at: dateString(skus.updated_at),
+                deleted_at: skus.deleted_at && dateString(skus.deleted_at),
                 images: images.map(({ id, image }) => {
                   return {
                     id: id,
-                    image_lg: `${process.env.BASE_AVATAR_URL}/images/${image}`,
-                    image_md: `${process.env.BASE_AVATAR_URL}/images/md/${image}`,
-                    image_xs: `${process.env.BASE_AVATAR_URL}/images/xs/${image}`,
+                    image_lg: `${process.env.APP_API_URL}/images/${image}`,
+                    image_md: `${process.env.APP_API_URL}/images/md/${image}`,
+                    image_xs: `${process.env.APP_API_URL}/images/xs/${image}`,
                   };
                 }),
               };
@@ -149,9 +131,9 @@ export default class ProductRepository implements IProductRepository {
       )) as IResponseProduct[];
 
     return {
+      limit,
+      page,
       total: productsCount,
-      per_page: take,
-      current_page: page,
       data: products,
     };
   }

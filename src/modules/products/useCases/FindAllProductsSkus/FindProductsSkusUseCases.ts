@@ -1,17 +1,17 @@
 import { inject, injectable } from 'tsyringe';
-import { IProductsSkusRepository } from '@modules/products/repositories/IProductsSkusRepository';
+import { IProductSkuRepository } from '@modules/products/repositories/IProductSkuRepository';
 import { ProductsEntity } from '@modules/products/infra/prisma/dtos/productDTOs';
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/errors/appError';
 
 @injectable()
 export default class FindProductsSkusUseCases {
   constructor(
-    @inject('ProductsSkusRepository')
-    private productsSkusRepository: IProductsSkusRepository,
+    @inject('ProductSkuRepository')
+    private ProductSkuRepository: IProductSkuRepository,
   ) {}
 
   async execute(product_id: string): Promise<ProductsEntity> {
-    const productSku = await this.productsSkusRepository.findAll(product_id);
+    const productSku = await this.ProductSkuRepository.findAll(product_id);
 
     if (!productSku) {
       throw new AppError('Product Sku not found.');

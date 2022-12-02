@@ -1,10 +1,10 @@
 import { prisma } from '@shared/infra/prisma';
-import { IProductsImagesRepository } from '@modules/products/repositories/IProductsImagesRepository';
+import { IProductImageRepository } from '@modules/products/repositories/IProductImageRepository';
 import { ICreateProductImage } from '@modules/products/dtos/ICreateProductImage';
 import { ProductsImages } from '@modules/products/infra/prisma/dtos/productImage';
 
 export default class ProductImageRepository
-  implements IProductsImagesRepository
+  implements IProductImageRepository
 {
   async create(data: ICreateProductImage): Promise<ProductsImages> {
     return await prisma.productsImages.create({

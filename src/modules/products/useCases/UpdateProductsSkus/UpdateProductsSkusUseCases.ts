@@ -1,18 +1,18 @@
 import { inject, injectable } from 'tsyringe';
-import { IProductsSkusRepository } from '@modules/products/repositories/IProductsSkusRepository';
+import { IProductSkuRepository } from '@modules/products/repositories/IProductSkuRepository';
 import { IUpdateProductSku } from '@modules/products/dtos/IUpdateProductSku';
 import { ProductsSkusEntity } from '@modules/products/infra/prisma/dtos/productSku';
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/errors/appError';
 
 @injectable()
 export default class UpdateProductsSkusUseCases {
   constructor(
-    @inject('ProductsSkusRepository')
-    private productsSkusRepository: IProductsSkusRepository,
+    @inject('ProductSkuRepository')
+    private ProductSkuRepository: IProductSkuRepository,
   ) {}
 
   async execute(data: IUpdateProductSku): Promise<ProductsSkusEntity> {
-    const productSku = await this.productsSkusRepository.findById(
+    const productSku = await this.ProductSkuRepository.findById(
       data.product_id,
       data.id,
     );
@@ -21,13 +21,13 @@ export default class UpdateProductsSkusUseCases {
       throw new AppError('Product and Product Sku not found.');
     }
 
-    const productExists = await this.productsSkusRepository.findBySku(data.sku);
+    const productExists = await this.ProductSkuRepository.findBySku(data.sku);
 
     if (productExists && data.sku !== productExists.sku) {
       throw new AppError('There is already one product sku with this sku');
     }
 
     // await redisCache.invalidate('api-vendas-PRODUCT_LIST');
-    return await this.productsSkusRepository.update({ ...data });
+    return await this.ProductSkuRepository.update({ ...data });
   }
 }

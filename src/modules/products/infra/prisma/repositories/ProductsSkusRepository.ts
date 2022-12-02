@@ -1,13 +1,13 @@
 import { prisma } from '@shared/infra/prisma';
 import { IUpdateStockProductsSkus } from '@modules/products/dtos/IUpdateStockProductsSkus';
-import { IProductsSkusRepository } from '@modules/products/repositories/IProductsSkusRepository';
+import { IProductSkuRepository } from '@modules/products/repositories/IProductSkuRepository';
 import { ICreateProductSku } from '@modules/products/dtos/ICreateProductSku';
 import { IUpdateProductSku } from '@modules/products/dtos/IUpdateProductSku';
 import { ProductsSkus } from '@modules/products/infra/prisma/dtos/productSku';
 import { Products } from '@modules/products/infra/prisma/dtos/productDTOs';
 import { IFindProductsSkus } from '@modules/products/dtos/IFindProductsSkus';
 
-export default class ProductsSkusRepository implements IProductsSkusRepository {
+export default class ProductSkuRepository implements IProductSkuRepository {
   async create(data: ICreateProductSku): Promise<ProductsSkus> {
     return prisma.productsSkus.create({
       data: {

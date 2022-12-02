@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
-import { IStoresRepository } from '@modules/stores/repositories/IStoresRepository';
+import { IStoreRepository } from '@modules/stores/repositories/IStoreRepository';
 import { ICreateStore } from '@modules/stores/dtos/ICreateStore';
 import { IPaginateStore } from '@modules/stores/dtos/IPaginateStore';
 import { StoresEntity } from '@modules/stores/infra/prisma/entities/Stores';
 
-export default class FakeStoresRepository implements IStoresRepository {
+export default class FakeStoreRepository implements IStoreRepository {
   private stores: StoresEntity[] = [];
 
   async create(data: ICreateStore): Promise<StoresEntity> {

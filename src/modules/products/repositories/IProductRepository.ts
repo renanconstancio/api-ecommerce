@@ -1,18 +1,16 @@
-import { IPaginateProducts } from '@modules/products/dtos/IPaginateProducts';
-import { IRequestProduct } from '../dtos/IRequestProduct';
-import { IResponseProduct } from '../dtos/IResponseProduct';
-
-type SearchParams = {
-  page: number;
-  skip: number;
-  take: number;
-  name: string;
-};
+import { PaginationDTOs } from '../infra/prisma/dtos/paginationDTOs';
+import { ProductDTOs } from '../infra/prisma/dtos/productDTOs';
+import { RequestDTOs } from '../infra/prisma/dtos/requestDTOs';
 
 export interface IProductRepository {
-  findAll({ page, skip, take, name }: SearchParams): Promise<IPaginateProducts>;
-  findByName(name: string): Promise<IResponseProduct | null>;
-  findById(id: string): Promise<IResponseProduct | null>;
-  save(data: IRequestProduct): Promise<IResponseProduct>;
+  save(data: ProductDTOs): Promise<ProductDTOs>;
   delete(id: string): Promise<void>;
+  findAll({
+    limit,
+    order,
+    page,
+    search,
+  }: RequestDTOs): Promise<PaginationDTOs<ProductDTOs[]>>;
+  findByName(name: string): Promise<ProductDTOs | null>;
+  findById(id: string): Promise<ProductDTOs | null>;
 }
