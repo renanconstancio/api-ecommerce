@@ -5,7 +5,7 @@ import { RequestDTOs } from '../infra/prisma/dtos/requestDTOs';
 export interface IProductRepository {
   save(data: ProductDTOs): Promise<ProductDTOs>;
   delete(id: string): Promise<void>;
-  findAll({
+  findByAll({
     limit,
     order,
     page,

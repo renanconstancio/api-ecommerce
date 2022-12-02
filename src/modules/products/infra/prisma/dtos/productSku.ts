@@ -10,9 +10,10 @@ export type ProductSku = {
   updated_at: Date;
   deleted_at: Date;
   images?: {
-    id: string;
-    image_lg: string;
-    image_md: string;
-    image_xs: string;
+    id?: string;
+    image?: string;
+    image_lg?: string;
+    image_md?: string;
+    image_xs?: string;
   }[];
 };

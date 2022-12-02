@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import DeleteProductsController from '@modules/products/useCases/DeleteProducts/DeleteProductsController';
 import FindProductsController from '@modules/products/useCases/FindProducts/FindProductsController';
-import FindAllProductsController from '@modules/products/useCases/FindAllProducts/FindAllProductsController';
+import FindAllProductsController from '@modules/products/useCases/findAllProduct/findAllProductController';
 import PatchProductController from '@modules/products/useCases/patchProduct/patchProductController';
 
 const productsRouter = Router();
