@@ -14,12 +14,12 @@ export default class PatchProductUseCase {
   async execute({
     id,
     product_id,
+    sku,
     codebar,
     cost_price,
     price,
     quantity,
     sale_price,
-    sku,
   }: ProductSkuDTOs): Promise<ProductDTOs> {
     const isExistsId = await this.repository.findById(`${id}`, `${product_id}`);
 
@@ -27,22 +27,24 @@ export default class PatchProductUseCase {
       throw new AppError(`Not found!`);
     }
 
-    const existsData = await this.repository.findBy(name);
+    const existsData = await this.repository.findBySku(sku);
 
     if ((existsData && !id) || (existsData && `${existsData.id}` !== `${id}`)) {
       throw new AppError(
-        `This is ${existsData?.name} record is already being used`,
+        `This is ${existsData?.sku} record is already being used`,
         422,
       );
     }
 
     return await this.repository.save({
       id,
-      name,
-      description,
-      keywords,
-      visible,
-      description_text,
+      product_id,
+      sku,
+      codebar,
+      cost_price,
+      price,
+      quantity,
+      sale_price,
     });
   }
 }

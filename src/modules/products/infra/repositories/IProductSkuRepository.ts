@@ -3,10 +3,10 @@ import { ProductSkuDTOs } from '../prisma/dtos/productSkuDTOs';
 import { ProductSkuStockDTOs } from '../prisma/dtos/productSkuStockDTOs';
 
 export interface IProductSkuRepository {
-  // findBySku(sku: string): Promise<ProductsSkusEntity | null>;
   // findAll(product_id: string): Promise<ProductsEntity | null>;
   // findAllByIds(id: IFindProductsSkus[]): Promise<ProductsSkusEntity[]>;
 
+  findBySku(sku: string): Promise<ProductSkuDTOs | null>;
   findById({
     id,
     product_id,
