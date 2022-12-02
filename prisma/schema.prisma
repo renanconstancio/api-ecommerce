@@ -24,58 +24,58 @@ model Category {
   @@map("categories")
 }
 
-model Customers {
-  id         String     @id @default(uuid()) @db.VarChar(36)
-  name       String     @db.VarChar(105)
-  email      String     @db.VarChar(85)
-  password   String     @db.VarChar(86)
-  cpf        String?    @db.VarChar(20)
-  cnpj       String?    @db.VarChar(22)
-  phone      String?    @db.VarChar(20)
-  avatar     String?    @db.VarChar(41)
-  created_at DateTime   @default(now())
-  updated_at DateTime   @updatedAt()
-  deleted_at DateTime?
-  birth_date String?    @db.VarChar(20)
-  adresses   Adresses[]
-  orders     Orders[]
+// model Customers {
+//   id         String     @id @default(uuid()) @db.VarChar(36)
+//   name       String     @db.VarChar(105)
+//   email      String     @db.VarChar(85)
+//   password   String     @db.VarChar(86)
+//   cpf        String?    @db.VarChar(20)
+//   cnpj       String?    @db.VarChar(22)
+//   phone      String?    @db.VarChar(20)
+//   avatar     String?    @db.VarChar(41)
+//   created_at DateTime   @default(now())
+//   updated_at DateTime   @updatedAt()
+//   deleted_at DateTime?
+//   birth_date String?    @db.VarChar(20)
+//   adresses   Adresses[]
+//   orders     Orders[]
 
-  @@map("customers")
-}
+//   @@map("customers")
+// }
 
-model Adresses {
-  id           String  @id @default(uuid()) @db.VarChar(36)
-  customers_id String  @db.VarChar(36)
-  recipient    String  @db.VarChar(55)
-  address      String  @db.VarChar(65)
-  number       String  @db.VarChar(5)
-  district     String  @db.VarChar(45)
-  complement   String? @db.VarChar(85)
-  reference    String? @db.VarChar(85)
-  city         String  @db.VarChar(45)
-  state        String  @db.VarChar(2)
-  zip_code     String  @db.VarChar(9)
-  for_orders   Boolean @default(true)
+// model Adresses {
+//   id           String  @id @default(uuid()) @db.VarChar(36)
+//   customers_id String  @db.VarChar(36)
+//   recipient    String  @db.VarChar(55)
+//   address      String  @db.VarChar(65)
+//   number       String  @db.VarChar(5)
+//   district     String  @db.VarChar(45)
+//   complement   String? @db.VarChar(85)
+//   reference    String? @db.VarChar(85)
+//   city         String  @db.VarChar(45)
+//   state        String  @db.VarChar(2)
+//   zip_code     String  @db.VarChar(9)
+//   for_orders   Boolean @default(true)
 
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt()
-  deleted_at DateTime?
+//   created_at DateTime  @default(now())
+//   updated_at DateTime  @updatedAt()
+//   deleted_at DateTime?
 
-  customer Customers @relation(fields: [customers_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_CUSTOMERS")
+//   customer Customers @relation(fields: [customers_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_CUSTOMERS")
 
-  @@index([customers_id], map: "FK_CUSTOMERS")
-  @@map("adresses")
-}
+//   @@index([customers_id], map: "FK_CUSTOMERS")
+//   @@map("adresses")
+// }
 
 model Products {
   id               String         @id @default(uuid()) @db.VarChar(36)
-  name             String         @db.VarChar(155)
+  title            String         @db.VarChar(155)
   keywords         String         @db.VarChar(255)
   visible          Boolean        @default(false)
   description      String         @db.VarChar(505)
   description_text String?        @db.Text
-  created_at       DateTime       @default(now())
-  updated_at       DateTime       @updatedAt()
+  created_at       DateTime?      @default(now())
+  updated_at       DateTime?      @updatedAt()
   deleted_at       DateTime?
   skus             ProductsSkus[]
 
@@ -87,8 +87,8 @@ model ProductsImages {
   product_sku_id String?       @db.VarChar(36)
   image          String        @db.VarChar(42)
   position       Int           @default(0)
-  created_at     DateTime      @default(now())
-  updated_at     DateTime      @updatedAt()
+  created_at     DateTime?     @default(now())
+  updated_at     DateTime?     @updatedAt()
   deleted_at     DateTime?
   skus           ProductsSkus? @relation(fields: [product_sku_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_PRODUCTS_IMAGES")
 
@@ -100,105 +100,105 @@ model ProductsSkus {
   id         String           @id @default(uuid()) @db.VarChar(36)
   product_id String           @db.VarChar(36)
   sku        String           @db.VarChar(20)
-  price      Decimal          @default(0) @db.Decimal(10, 0)
   quantity   Int              @default(0)
-  cost_price Decimal          @default(0) @db.Decimal(10, 0)
-  sale_price Decimal          @default(0) @db.Decimal(10, 0)
-  created_at DateTime         @default(now())
-  updated_at DateTime         @updatedAt()
+  price      Decimal          @default(0) @db.Decimal(10, 2)
+  cost_price Decimal          @default(0) @db.Decimal(10, 2)
+  sale_price Decimal          @default(0) @db.Decimal(10, 2)
+  created_at DateTime?        @default(now())
+  updated_at DateTime?        @updatedAt()
   deleted_at DateTime?
   product    Products?        @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_PRODUCTS_SKUS")
   images     ProductsImages[]
-  orders     OrdersProducts[]
+  // orders     OrdersProducts[]
 
   @@index([product_id], map: "FK_PRODUCTS_SKUS")
   @@map("products_skus")
 }
 
-model Orders {
-  id            String    @id @default(uuid()) @db.VarChar(36)
-  code          String    @db.VarChar(20)
-  date_of_order DateTime
-  customers_id  String    @db.VarChar(36)
-  created_at    DateTime  @default(now())
-  updated_at    DateTime  @updatedAt()
-  deleted_at    DateTime?
+// model Orders {
+//   id            String    @id @default(uuid()) @db.VarChar(36)
+//   code          String    @db.VarChar(20)
+//   date_of_order DateTime
+//   customers_id  String    @db.VarChar(36)
+//   created_at    DateTime  @default(now())
+//   updated_at    DateTime  @updatedAt()
+//   deleted_at    DateTime?
 
-  transactions OrdersTransactions[]
-  addresses    OrdersAddresses[]
-  products     OrdersProducts[]
-  status       OrdersStatus[]
-  customer     Customers            @relation(fields: [customers_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_CUSTOMER")
+//   transactions OrdersTransactions[]
+//   addresses    OrdersAddresses[]
+//   products     OrdersProducts[]
+//   status       OrdersStatus[]
+//   customer     Customers            @relation(fields: [customers_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_CUSTOMER")
 
-  @@index([customers_id], map: "FK_CUSTOMER")
-  @@index([code, date_of_order])
-  @@map("orders")
-}
+//   @@index([customers_id], map: "FK_CUSTOMER")
+//   @@index([code, date_of_order])
+//   @@map("orders")
+// }
 
-model OrdersAddresses {
-  id String @id @default(uuid()) @db.VarChar(36)
+// model OrdersAddresses {
+//   id String @id @default(uuid()) @db.VarChar(36)
 
-  orders_id  String  @db.VarChar(36)
-  recipient  String  @db.VarChar(55)
-  address    String  @db.VarChar(65)
-  number     String  @db.VarChar(5)
-  district   String  @db.VarChar(45)
-  complement String? @db.VarChar(85)
-  reference  String? @db.VarChar(85)
-  city       String  @db.VarChar(45)
-  state      String  @db.VarChar(2)
-  zip_code   String  @db.VarChar(9)
+//   orders_id  String  @db.VarChar(36)
+//   recipient  String  @db.VarChar(55)
+//   address    String  @db.VarChar(65)
+//   number     String  @db.VarChar(5)
+//   district   String  @db.VarChar(45)
+//   complement String? @db.VarChar(85)
+//   reference  String? @db.VarChar(85)
+//   city       String  @db.VarChar(45)
+//   state      String  @db.VarChar(2)
+//   zip_code   String  @db.VarChar(9)
 
-  order Orders @relation(fields: [orders_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_ORDER_ADDRESS")
+//   order Orders @relation(fields: [orders_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_ORDER_ADDRESS")
 
-  @@index([orders_id], map: "FK_ORDER_ADDRESS")
-  @@map("orders_addresses")
-}
+//   @@index([orders_id], map: "FK_ORDER_ADDRESS")
+//   @@map("orders_addresses")
+// }
 
-model OrdersProducts {
-  id                String  @id @default(uuid()) @db.VarChar(36)
-  orders_id         String  @db.VarChar(36)
-  produtcts_skus_id String  @db.VarChar(36)
-  quantity          Int     @default(0) @db.Int()
-  price_paid        Decimal @default(0) @db.Decimal(10, 0)
+// model OrdersProducts {
+//   id                String  @id @default(uuid()) @db.VarChar(36)
+//   orders_id         String  @db.VarChar(36)
+//   produtcts_skus_id String  @db.VarChar(36)
+//   quantity          Int     @default(0) @db.Int()
+//   price_paid        Decimal @default(0) @db.Decimal(10, 0)
 
-  order Orders       @relation(fields: [orders_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_ORDER_PRODUCTS")
-  sku   ProductsSkus @relation(fields: [produtcts_skus_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_SKU_PRODUCTS")
+//   order Orders       @relation(fields: [orders_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_ORDER_PRODUCTS")
+//   sku   ProductsSkus @relation(fields: [produtcts_skus_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_SKU_PRODUCTS")
 
-  @@index([orders_id], map: "FK_ORDER_PRODUCTS")
-  @@index([produtcts_skus_id], map: "FK_SKU_PRODUCTS")
-  @@map("orders_products")
-}
+//   @@index([orders_id], map: "FK_ORDER_PRODUCTS")
+//   @@index([produtcts_skus_id], map: "FK_SKU_PRODUCTS")
+//   @@map("orders_products")
+// }
 
-model OrdersTransactions {
-  id              String                            @id @default(uuid()) @db.VarChar(36)
-  orders_id       String                            @db.VarChar(36)
-  payment_methods String                            @db.VarChar(55)
-  flag            String                            @db.VarChar(20)
-  installment     Int                               @default(0) @db.TinyInt
-  discounts       Decimal                           @default(0) @db.Decimal(10, 0)
-  discount_type   orders_transactions_discount_type @default(percent)
-  total_price     Decimal                           @default(0) @db.Decimal(10, 0)
-  price_increase  Decimal                           @default(0) @db.Decimal(10, 0)
-  created_at      DateTime                          @default(now())
-  updated_at      DateTime                          @updatedAt()
-  deleted_at      DateTime?
-  order           Orders                            @relation(fields: [orders_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_ORDER_TRANSATIONS")
+// model OrdersTransactions {
+//   id              String                            @id @default(uuid()) @db.VarChar(36)
+//   orders_id       String                            @db.VarChar(36)
+//   payment_methods String                            @db.VarChar(55)
+//   flag            String                            @db.VarChar(20)
+//   installment     Int                               @default(0) @db.TinyInt
+//   discounts       Decimal                           @default(0) @db.Decimal(10, 0)
+//   discount_type   orders_transactions_discount_type @default(percent)
+//   total_price     Decimal                           @default(0) @db.Decimal(10, 0)
+//   price_increase  Decimal                           @default(0) @db.Decimal(10, 0)
+//   created_at      DateTime                          @default(now())
+//   updated_at      DateTime                          @updatedAt()
+//   deleted_at      DateTime?
+//   order           Orders                            @relation(fields: [orders_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_ORDER_TRANSATIONS")
 
-  @@index([orders_id], map: "FK_ORDER_TRANSATIONS")
-  @@map("orders_transactions")
-}
+//   @@index([orders_id], map: "FK_ORDER_TRANSATIONS")
+//   @@map("orders_transactions")
+// }
 
-model OrdersStatus {
-  id         String             @id @default(uuid()) @db.VarChar(36)
-  orders_id  String             @db.VarChar(36)
-  status     orders_status_type @default(ORDER_MADE)
-  created_at DateTime           @default(now())
-  order      Orders?            @relation(fields: [orders_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_ORDER_STATUS")
+// model OrdersStatus {
+//   id         String             @id @default(uuid()) @db.VarChar(36)
+//   orders_id  String             @db.VarChar(36)
+//   status     OrdersStatusType @default(ORDER_MADE)
+//   created_at DateTime           @default(now())
+//   order      Orders?            @relation(fields: [orders_id], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "FK_ORDER_STATUS")
 
-  @@index([orders_id], map: "FK_ORDER_STATUS")
-  @@map("orders_status")
-}
+//   @@index([orders_id], map: "FK_ORDER_STATUS")
+//   @@map("orders_status")
+// }
 
 model Stores {
   id            String    @id @default(uuid()) @db.VarChar(36)
@@ -206,17 +206,17 @@ model Stores {
   fantasy_name  String    @db.VarChar(105)
   email         String    @db.VarChar(55)
   phone         String    @db.VarChar(20)
-  opening_hours String?   @db.VarChar(155)
+  opening_hours String    @db.VarChar(155)
   address       String    @db.VarChar(55)
   number        String    @db.VarChar(4)
   district      String    @db.VarChar(35)
-  complement    String?   @db.VarChar(45)
+  complement    String    @db.VarChar(45)
   city          String    @db.VarChar(35)
   state         String    @db.VarChar(2)
   zip_code      String    @db.VarChar(9)
   visible       Boolean   @default(true)
-  created_at    DateTime  @default(now())
-  updated_at    DateTime  @updatedAt()
+  created_at    DateTime? @default(now())
+  updated_at    DateTime? @updatedAt()
   deleted_at    DateTime?
 
   @@map("stores")
@@ -227,7 +227,7 @@ enum orders_transactions_discount_type {
   percent
 }
 
-enum orders_status_type {
+enum OrdersStatusType {
   ORDER_MADE // pedido realizado
   AWAITING_PAYMENT // aguardando pagamento
   PAYMENT_UNDER_REVIEW // pagamento em análise

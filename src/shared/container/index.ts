@@ -33,8 +33,8 @@ import SalesProductsRepository from '@modules/sales/infra/prisma/repositories/Sa
 import SalesStatusRepository from '@modules/sales/infra/prisma/repositories/SalesStatusRepository';
 import { ISalesStatusRepository } from '@modules/sales/repositories/ISalesStatusRepository';
 
-import { IAdressesRepository } from '@modules/adresses/repositories/IAdressesRepository';
-import AdressesRepository from '@modules/adresses/infra/prisma/repositories/AdressesRepository';
+import { IAdressesRepository } from '@modules/addresses/repositories/IAdressesRepository';
+import AdressesRepository from '@modules/addresses/infra/prisma/repositories/AdressesRepository';
 
 import { IResizeImage } from './providers/ResizeImage/dtos/IResizeImage';
 import ResizeImage from './providers/ResizeImage/ResizeImage';
