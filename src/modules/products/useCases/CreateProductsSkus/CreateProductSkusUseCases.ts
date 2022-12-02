@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import { ICreateProductSku } from '@modules/products/dtos/ICreateProductSku';
 import { IProductsSkusRepository } from '@modules/products/repositories/IProductsSkusRepository';
-import { ProductsSkus } from '@modules/products/infra/prisma/entities/ProductsSkus';
+import { ProductsSkus } from '@modules/products/infra/prisma/dtos/productSku';
 import AppError from '@shared/errors/AppError';
 
 // import redisCache from '@shared/cache/RedisCache';

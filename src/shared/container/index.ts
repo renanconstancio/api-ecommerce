@@ -9,14 +9,14 @@ import { ICategoriesRepository } from '@modules/categories/repositories/ICategor
 import StoresRepository from '@modules/stores/infra/prisma/repositories/StoresRepository';
 import { IStoresRepository } from '@modules/stores/repositories/IStoresRepository';
 
-import ProductsRepository from '@modules/products/infra/prisma/repositories/ProductsRepository';
-import { IProductsRepository } from '@modules/products/repositories/IProductsRepository';
+import ProductsRepository from '@modules/products/infra/prisma/repositories/productRepository';
+import { IProductsRepository } from '@modules/products/repositories/IProductRepository';
 
 import ProductsSkusRepository from '@modules/products/infra/prisma/repositories/ProductsSkusRepository';
 import { IProductsSkusRepository } from '@modules/products/repositories/IProductsSkusRepository';
 
 import { IProductsImagesRepository } from '@modules/products/repositories/IProductsImagesRepository';
-import ProductsImagesRepository from '@modules/products/infra/prisma/repositories/ProductsImagesRepository';
+import ProductsImagesRepository from '@modules/products/infra/prisma/repositories/productsImageRepository';
 
 import CustomersHashRepository from '@modules/customers/infra/prisma/repositories/CustomersHashRepository';
 import { ICustomersHashRepository } from '@modules/customers/repositories/ICustomersHashRepository';

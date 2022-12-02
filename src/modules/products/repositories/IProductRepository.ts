@@ -9,10 +9,10 @@ type SearchParams = {
   name: string;
 };
 
-export interface IProductsRepository {
+export interface IProductRepository {
   findAll({ page, skip, take, name }: SearchParams): Promise<IPaginateProducts>;
-  findById(id: string): Promise<IResponseProduct | null>;
   findByName(name: string): Promise<IResponseProduct | null>;
-  delete(id: string): Promise<void>;
+  findById(id: string): Promise<IResponseProduct | null>;
   save(data: IRequestProduct): Promise<IResponseProduct>;
+  delete(id: string): Promise<void>;
 }

@@ -1,4 +1,4 @@
-import { ProductsSkus } from '@modules/products/infra/prisma/entities/ProductsSkus';
+import { ProductsSkus } from '@modules/products/infra/prisma/dtos/productSku';
 import { IFindSalesProducts } from '@modules/sales/dtos/IFindSalesProducts';
 import { ICreateSalesProducts } from '@modules/sales/dtos/ICreateSalesProducts';
 import { IUpdateStockSalesProducts } from '@modules/sales/dtos/IUpdateStockSalesProducts';

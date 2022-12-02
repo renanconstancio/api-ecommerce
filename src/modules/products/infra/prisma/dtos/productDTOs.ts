@@ -1,15 +1,15 @@
 // import { Products as ProductsEntity } from '@prisma/client';
-import { ProductsSkus } from './ProductsSkus';
+import { ProductSku } from './productSku';
 
-export type Products = {
-  id: string;
+export type ProductDTOs = {
+  id?: string;
   name: string;
   keywords: string;
   visible: string;
   description: string;
-  description_text: string;
+  description_text?: string;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
-  skus?: ProductsSkus[];
+  skus?: ProductSku[];
 };

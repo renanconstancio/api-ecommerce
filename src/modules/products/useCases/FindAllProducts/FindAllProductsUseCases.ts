@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { IProductsRepository } from '@modules/products/repositories/IProductsRepository';
+import { IProductsRepository } from '@modules/products/repositories/IProductRepository';
 import { IPaginateProducts } from '@modules/products/dtos/IPaginateProducts';
 
 interface SearchParams {

@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { IFindProducts } from '@modules/products/dtos/IFindProducts';
 import { IPaginateProducts } from '@modules/products/dtos/IPaginateProducts';
-import { IProductsRepository } from '@modules/products/repositories/IProductsRepository';
+import { IProductsRepository } from '@modules/products/repositories/IProductRepository';
 import { IRequestProduct } from '@modules/products/dtos/IRequestProduct';
 import { IResponseProduct } from '@modules/products/dtos/IResponseProduct';
 import { prisma } from '@shared/infra/prisma';
@@ -14,14 +14,14 @@ type SearchParams = {
   name: string;
 };
 
-export default class ProductsRepository implements IProductsRepository {
+export default class ProductRepository implements IProductRepository {
   async save(data: IRequestProduct): Promise<IResponseProduct> {
     if (data.id)
       return await prisma.products.update({
-        data,
         where: {
           id: data.id,
         },
+        data,
       });
 
     return await prisma.products.create({

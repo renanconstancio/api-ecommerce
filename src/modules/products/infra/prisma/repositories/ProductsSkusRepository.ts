@@ -3,8 +3,8 @@ import { IUpdateStockProductsSkus } from '@modules/products/dtos/IUpdateStockPro
 import { IProductsSkusRepository } from '@modules/products/repositories/IProductsSkusRepository';
 import { ICreateProductSku } from '@modules/products/dtos/ICreateProductSku';
 import { IUpdateProductSku } from '@modules/products/dtos/IUpdateProductSku';
-import { ProductsSkus } from '@modules/products/infra/prisma/entities/ProductsSkus';
-import { Products } from '@modules/products/infra/prisma/entities/Products';
+import { ProductsSkus } from '@modules/products/infra/prisma/dtos/productSku';
+import { Products } from '@modules/products/infra/prisma/dtos/productDTOs';
 import { IFindProductsSkus } from '@modules/products/dtos/IFindProductsSkus';
 
 export default class ProductsSkusRepository implements IProductsSkusRepository {

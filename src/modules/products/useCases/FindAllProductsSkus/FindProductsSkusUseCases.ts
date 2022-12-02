@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { IProductsSkusRepository } from '@modules/products/repositories/IProductsSkusRepository';
-import { ProductsEntity } from '@modules/products/infra/prisma/entities/Products';
+import { ProductsEntity } from '@modules/products/infra/prisma/dtos/productDTOs';
 import AppError from '@shared/errors/AppError';
 
 @injectable()
