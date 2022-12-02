@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import { PaginationDTOs } from '@modules/products/infra/prisma/dtos/paginationDTOs';
 import { ProductDTOs } from '@modules/products/infra/prisma/dtos/productDTOs';
 import { RequestDTOs } from '@modules/products/infra/prisma/dtos/requestDTOs';
-import { IProductRepository } from '@modules/products/repositories/IProductRepository';
+import { IProductRepository } from '@modules/products/infra/repositories/IProductRepository';
 
 @injectable()
 export default class FindAllProductUseCase {

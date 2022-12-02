@@ -1,30 +1,33 @@
 import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/appError';
-import { IProductRepository } from '@modules/products/infra/repositories/IProductRepository';
 import { ProductDTOs } from '@modules/products/infra/prisma/dtos/productDTOs';
+import { IProductSkuRepository } from '@modules/products/infra/repositories/IProductSkuRepository';
+import { ProductSkuDTOs } from '@modules/products/infra/prisma/dtos/productSkuDTOs';
 
 @injectable()
 export default class PatchProductUseCase {
   constructor(
-    @inject('ProductRepository')
-    private repository: IProductRepository,
+    @inject('ProductSkuRepository')
+    private repository: IProductSkuRepository,
   ) {}
 
   async execute({
     id,
-    name,
-    description,
-    keywords,
-    visible,
-    description_text,
-  }: ProductDTOs): Promise<ProductDTOs> {
-    const isExistsId = await this.repository.findById(`${id}`);
+    product_id,
+    codebar,
+    cost_price,
+    price,
+    quantity,
+    sale_price,
+    sku,
+  }: ProductSkuDTOs): Promise<ProductDTOs> {
+    const isExistsId = await this.repository.findById(`${id}`, `${product_id}`);
 
     if (!isExistsId && id) {
       throw new AppError(`Not found!`);
     }
 
-    const existsData = await this.repository.findByName(name);
+    const existsData = await this.repository.findBy(name);
 
     if ((existsData && !id) || (existsData && `${existsData.id}` !== `${id}`)) {
       throw new AppError(

@@ -4,7 +4,7 @@ import { container, delay } from 'tsyringe';
 // import { IStoreRepository } from '@modules/stores/repositories/IStoreRepository';
 
 import ProductRepository from '@modules/products/infra/prisma/repositories/productRepository';
-import { IProductRepository } from '@modules/products/repositories/IProductRepository';
+import { IProductRepository } from '@modules/products/infra/repositories/IProductRepository';
 
 // import ProductSkuRepository from '@modules/products/infra/prisma/repositories/ProductSkuRepository';
 // import { IProductSkuRepository } from '@modules/products/repositories/IProductSkuRepository';

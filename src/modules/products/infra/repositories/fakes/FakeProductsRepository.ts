@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { IProductsRepository } from '@modules/products/repositories/IProductRepository';
+import { IProductsRepository } from '@modules/products/infra/repositories/IProductRepository';
 import { ProductsEntity } from '@modules/products/infra/prisma/dtos/productDTOs';
 import { IPaginateProducts } from '@modules/products/dtos/IPaginateProducts';
 import { ICreateProduct } from '@modules/products/dtos/ICreateProduct';

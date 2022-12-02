@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import AppError from '@shared/errors/appError';
-import FakeProductsRepository from '@modules/products/repositories/fakes/FakeProductsRepository';
+import FakeProductsRepository from '@modules/products/infra/repositories/fakes/FakeProductsRepository';
 import CreateProductsUseCases from '@modules/products/useCases/patchProduct/patchProductUseCase';
 import DeleteProductsUseCases from '@modules/products/useCases/DeleteProducts/DeleteProductsUseCases';
 

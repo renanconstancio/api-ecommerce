@@ -1,5 +1,5 @@
 import { prisma } from '@shared/infra/prisma';
-import { IProductRepository } from '@modules/products/repositories/IProductRepository';
+import { IProductRepository } from '@modules/products/infra/repositories/IProductRepository';
 import { PaginationDTOs } from '../dtos/paginationDTOs';
 import { ProductDTOs } from '../dtos/productDTOs';
 import { RequestDTOs } from '../dtos/requestDTOs';
@@ -7,13 +7,21 @@ import { dateString } from '@shared/utils/functions';
 
 export default class ProductRepository implements IProductRepository {
   async save(data: ProductDTOs): Promise<ProductDTOs> {
+    const handleData = {
+      name: data.name,
+      keywords: data.keywords,
+      visible: data.visible,
+      description: data.description,
+      description_text: data.description_text,
+    };
+
     if (data.id)
       return await prisma.products
         .update({
           where: {
             id: data.id,
           },
-          data,
+          data: { ...handleData },
         })
         .then(({ ...prod }) => ({
           ...prod,
@@ -24,7 +32,7 @@ export default class ProductRepository implements IProductRepository {
 
     return await prisma.products
       .create({
-        data,
+        data: { ...handleData },
       })
       .then(({ ...prod }) => ({
         ...prod,
@@ -94,14 +102,31 @@ export default class ProductRepository implements IProductRepository {
     order,
     search,
   }: RequestDTOs): Promise<PaginationDTOs<ProductDTOs[]>> {
-    const where = { deleted_at: null };
+    const whereOr = [];
 
-    // if (name) where = { ...where, name: name };
+    if (search && search.name)
+      whereOr.push({ name: { contains: search.name } });
 
-    const productsCount = await prisma.products.count({ where });
+    let handleWhere = {};
+    if (whereOr.length) handleWhere = { OR: whereOr };
+
+    const orderBy = [];
+    if (order && order.name)
+      orderBy.push({ name: order.name === 'asc' ? 'asc' : 'desc' });
+
+    let handleOrder = {};
+    if (orderBy.length) handleOrder = orderBy;
+
+    const productsCount = await prisma.products.count({
+      where: { ...handleWhere, deleted_at: null },
+    });
 
     const products = (await prisma.products
       .findMany({
+        where: { ...handleWhere, deleted_at: null },
+        orderBy: handleOrder,
+        take: limit,
+        skip: (Number(page) - 1) * page,
         include: {
           skus: {
             include: {
@@ -113,9 +138,6 @@ export default class ProductRepository implements IProductRepository {
             },
           },
         },
-        take: limit,
-        skip: (Number(page) - 1) * page,
-        where,
       })
       .then((products) =>
         products.map(({ ...prod }) => ({

@@ -1,6 +1,6 @@
-import { PaginationDTOs } from '../infra/prisma/dtos/paginationDTOs';
-import { ProductDTOs } from '../infra/prisma/dtos/productDTOs';
-import { RequestDTOs } from '../infra/prisma/dtos/requestDTOs';
+import { PaginationDTOs } from '../prisma/dtos/paginationDTOs';
+import { ProductDTOs } from '../prisma/dtos/productDTOs';
+import { RequestDTOs } from '../prisma/dtos/requestDTOs';
 
 export interface IProductRepository {
   save(data: ProductDTOs): Promise<ProductDTOs>;

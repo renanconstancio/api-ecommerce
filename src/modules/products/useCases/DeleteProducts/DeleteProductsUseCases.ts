@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { IDeleteProduct } from '@modules/products/dtos/IDeleteProduct';
-import { IProductsRepository } from '@modules/products/repositories/IProductRepository';
+import { IProductsRepository } from '@modules/products/infra/repositories/IProductRepository';
 import AppError from '@shared/errors/appError';
 
 // import redisCache from '@shared/cache/RedisCache';
