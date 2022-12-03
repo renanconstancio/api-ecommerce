@@ -7,6 +7,10 @@ import { IProductRepository } from '@modules/products/infra/interfaces/IProductR
 import ProductRepository from '@modules/products/infra/prisma/repositories/productRepository';
 import { IProductSkuRepository } from '@modules/productsSkus/infra/interfaces/IProductSkuRepository';
 import ProductSkuRepository from '@modules/productsSkus/infra/prisma/respositories/productSkuRepository';
+import { IProductImageRepository } from '@modules/productsImages/infra/interfaces/IProductImageRepository';
+import ProductImageRepository from '@modules/productsImages/infra/prisma/repositories/productImageRepository';
+import { IResizeImage } from './providers/resizeImage/dtos/IResizeImage';
+import ResizeImage from './providers/resizeImage/resizeImage';
 
 // import ProductSkuRepository from '@modules/products/infra/prisma/repositories/ProductSkuRepository';
 // import { IProductSkuRepository } from '@modules/products/repositories/IProductSkuRepository';
@@ -17,7 +21,10 @@ import ProductSkuRepository from '@modules/productsSkus/infra/prisma/respositori
 // import { IResizeImage } from './providers/resizeImage/dtos/IResizeImage';
 // import ResizeImage from './providers/resizeImage/ResizeImage';
 
-// container.registerSingleton<IResizeImage>('ResizeImage', ResizeImage);
+container.registerSingleton<IResizeImage>(
+  'ResizeImage',
+  delay(() => ResizeImage),
+);
 
 // container.registerSingleton<IStoreRepository>(
 //   'StoreRepository',
@@ -27,6 +34,11 @@ import ProductSkuRepository from '@modules/productsSkus/infra/prisma/respositori
 container.registerSingleton<IProductRepository>(
   'ProductRepository',
   delay(() => ProductRepository),
+);
+
+container.registerSingleton<IProductImageRepository>(
+  'ProductImageRepository',
+  delay(() => ProductImageRepository),
 );
 
 container.registerSingleton<IProductSkuRepository>(
