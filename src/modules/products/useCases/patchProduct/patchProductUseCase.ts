@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/appError';
-import { IProductRepository } from '@modules/products/infra/repositories/IProductRepository';
-import { ProductDTOs } from '@modules/products/infra/prisma/dtos/productDTOs';
+import { IProductRepository } from '@modules/products/infra/interfaces/IProductRepository';
+import { ProductDTOs } from '@modules/products/dtos/productDTOs';
 
 @injectable()
 export default class PatchProductUseCase {
@@ -21,16 +21,13 @@ export default class PatchProductUseCase {
     const isExistsId = await this.repository.findById(`${id}`);
 
     if (!isExistsId && id) {
-      throw new AppError(`Not found!`);
+      throw new AppError(`nada encontrado!`);
     }
 
     const existsData = await this.repository.findByName(name);
 
     if ((existsData && !id) || (existsData && `${existsData.id}` !== `${id}`)) {
-      throw new AppError(
-        `This is ${existsData?.name} record is already being used`,
-        422,
-      );
+      throw new AppError(`${existsData?.name} já está sendo usado`, 422);
     }
 
     return await this.repository.save({

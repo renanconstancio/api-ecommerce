@@ -7,9 +7,7 @@ export default class FindAllProductsController {
     const page = request.query.page ? Number(request.query.page) : 1;
     const limit = request.query.limit ? Number(request.query.limit) : 20;
 
-    const { order, search } = (request.query ? request.query : '') as {
-      [key: string]: '';
-    };
+    const { order, search } = (request.query ? request.query : '') as never;
 
     const useCases = container.resolve(FindAllProductUseCase);
     const products = await useCases.execute({ page, limit, order, search });

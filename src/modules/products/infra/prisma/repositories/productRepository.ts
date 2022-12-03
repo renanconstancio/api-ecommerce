@@ -1,8 +1,8 @@
 import { prisma } from '@shared/infra/prisma';
-import { IProductRepository } from '@modules/products/infra/repositories/IProductRepository';
-import { PaginationDTOs } from '../dtos/paginationDTOs';
-import { ProductDTOs } from '../dtos/productDTOs';
-import { RequestDTOs } from '../dtos/requestDTOs';
+import { IProductRepository } from '@modules/products/infra/interfaces/IProductRepository';
+import { PaginationDTOs } from '../../../dtos/paginationDTOs';
+import { ProductDTOs } from '../../../dtos/productDTOs';
+import { RequestDTOs } from '../../../dtos/requestDTOs';
 import { dateString } from '@shared/utils/functions';
 
 export default class ProductRepository implements IProductRepository {
@@ -60,14 +60,21 @@ export default class ProductRepository implements IProductRepository {
 
   async findById(id: string): Promise<ProductDTOs | null> {
     return (await prisma.products
-      .findUnique({
+      .findFirst({
         where: {
           id,
+          deleted_at: null,
         },
         include: {
           skus: {
+            where: {
+              deleted_at: null,
+            },
             include: {
               images: {
+                where: {
+                  deleted_at: null,
+                },
                 orderBy: {
                   position: 'asc',
                 },
@@ -83,6 +90,9 @@ export default class ProductRepository implements IProductRepository {
         deleted_at: prod.deleted_at && dateString(prod.deleted_at),
         skus: prod.skus?.map(({ ...skus }) => ({
           ...skus,
+          price: (skus.price.toNumber() * 1).toFixed(2),
+          cost_price: (skus.cost_price.toNumber() * 1).toFixed(2),
+          sale_price: (skus.sale_price.toNumber() * 1).toFixed(2),
           created_at: dateString(skus.created_at as Date),
           updated_at: dateString(skus.updated_at as Date),
           deleted_at: skus.deleted_at && dateString(skus.deleted_at),
@@ -93,7 +103,7 @@ export default class ProductRepository implements IProductRepository {
             image_xs: `${process.env.APP_API_URL}/images/xs/${image.image}`,
           })),
         })),
-      }))) as ProductDTOs;
+      }))) as ProductDTOs | null;
   }
 
   async findByAll({
@@ -125,12 +135,18 @@ export default class ProductRepository implements IProductRepository {
       .findMany({
         where: { ...handleWhere, deleted_at: null },
         orderBy: handleOrder,
+        skip: Number(limit * Number(page) - 1),
         take: limit,
-        skip: (Number(page) - 1) * page,
         include: {
           skus: {
+            where: {
+              deleted_at: null,
+            },
             include: {
               images: {
+                where: {
+                  deleted_at: null,
+                },
                 orderBy: {
                   position: 'asc',
                 },
@@ -148,6 +164,9 @@ export default class ProductRepository implements IProductRepository {
           skus: prod?.skus?.map(({ ...skus }) => {
             return {
               ...skus,
+              price: (skus.price.toNumber() * 1).toFixed(2),
+              cost_price: (skus.cost_price.toNumber() * 1).toFixed(2),
+              sale_price: (skus.sale_price.toNumber() * 1).toFixed(2),
               created_at: dateString(skus.created_at as Date),
               updated_at: dateString(skus.updated_at as Date),
               deleted_at: skus.deleted_at && dateString(skus.deleted_at),

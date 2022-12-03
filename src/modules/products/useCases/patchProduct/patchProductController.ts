@@ -26,6 +26,6 @@ export default class PatchProductController {
       visible,
     });
 
-    return response.json(product);
+    return response.status(!id ? 201 : 200).json(product);
   }
 }

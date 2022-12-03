@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
-import { IProductSkuRepository } from '@modules/products/infra/repositories/IProductSkuRepository';
+import { IProductSkuRepository } from '@modules/productsSkus/infra/interfaces/IProductSkuRepository';
 import { IUpdateProductSku } from '@modules/products/dtos/IUpdateProductSku';
-import { ProductsSkusEntity } from '@modules/products/infra/prisma/dtos/productSkuDTOs';
+import { ProductsSkusEntity } from '@modules/productsSkus/dtos/productSkuDTOs';
 import AppError from '@shared/errors/appError';
 
 @injectable()
