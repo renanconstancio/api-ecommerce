@@ -1,5 +1,5 @@
 import { ProductSkuDTOs } from '../../dtos/productSkuDTOs';
-import { ProductSkuStockDTOs } from '../../../products/dtos/productSkuStockDTOs';
+import { ProductSkuStockDTOs } from '../../dtos/productSkuStockDTOs';
 import { ProductDTOs } from '@modules/products/dtos/productDTOs';
 
 export interface IProductSkuRepository {

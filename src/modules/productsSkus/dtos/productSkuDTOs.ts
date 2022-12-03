@@ -1,5 +1,5 @@
 import { Decimal } from '@prisma/client/runtime';
-import { ProductImageDTOs } from '../../products/dtos/productImageDTOs';
+import { ProductImageDTOs } from '../../productsImages/dtos/productImageDTOs';
 
 export type ProductSkuDTOs = {
   id?: string;

@@ -1,6 +1,6 @@
 import { prisma } from '@shared/infra/prisma';
 import { IProductSkuRepository } from '@modules/productsSkus/infra/interfaces/IProductSkuRepository';
-import { ProductSkuStockDTOs } from '../../../../products/dtos/productSkuStockDTOs';
+import { ProductSkuStockDTOs } from '../../../dtos/productSkuStockDTOs';
 import { ProductSkuDTOs } from '../../../dtos/productSkuDTOs';
 import { dateString } from '@shared/utils/functions';
 import { ProductDTOs } from '@modules/products/dtos/productDTOs';
