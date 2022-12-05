@@ -1,7 +1,7 @@
 import { prisma } from '@shared/infra/prisma';
+import { dateString } from '@shared/utils/functions';
 import { ProductImageDTOs } from '@modules/productsImages/dtos/productImageDTOs';
 import { IProductImageRepository } from '../../interfaces/IProductImageRepository';
-import { dateString } from '@shared/utils/functions';
 
 export default class ProductImageRepository implements IProductImageRepository {
   async save(data: ProductImageDTOs): Promise<ProductImageDTOs> {
@@ -23,7 +23,22 @@ export default class ProductImageRepository implements IProductImageRepository {
       }));
   }
 
+  async findById(id: string): Promise<{ id: string } | null> {
+    return await prisma.productsImages.findFirst({
+      where: {
+        id,
+        deleted_at: null,
+      },
+      select: {
+        id: true,
+      },
+    });
+  }
+
   async delete(id: string): Promise<void> {
-    // await this.ormRepository.softDelete(id);
+    await prisma.productsImages.update({
+      data: { deleted_at: new Date() },
+      where: { id },
+    });
   }
 }
