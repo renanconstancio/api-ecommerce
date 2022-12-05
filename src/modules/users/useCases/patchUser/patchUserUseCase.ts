@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
-import { UserDTOs } from '@modules/users/dtos/UserDTOs';
+import { UserDTOs } from '@modules/users/dtos/userDTOs';
 import { IUserRepository } from '@modules/users/infra/interfaces/IUserRepository';
-import { IBcryptHashPovider } from '@shared/container/providers/hashProvider/interfaces/IBcryptHashPovider';
+import { IBcryptHashPovider } from '@shared/container/providers/hashProvider/interfaces/IBcryptHashProvider';
 import AppError from '@shared/errors/appError';
 
 @injectable()

@@ -1,6 +1,6 @@
 import { container, delay } from 'tsyringe';
 
-import { IBcryptHashPovider } from './providers/hashProvider/interfaces/IBcryptHashPovider';
+import { IBcryptHashProvider } from './providers/hashProvider/interfaces/IBcryptHashProvider';
 import BcryptHashProvider from './providers/hashProvider/implementations/bcryptHashProvider';
 import { IProductRepository } from '@modules/products/infra/interfaces/IProductRepository';
 import ProductRepository from '@modules/products/infra/prisma/repositories/productRepository';
@@ -11,7 +11,7 @@ import ProductImageRepository from '@modules/productsImages/infra/prisma/reposit
 import { IUserRepository } from '@modules/users/infra/interfaces/IUserRepository';
 import UserRepository from '@modules/users/infra/prisma/repositories/UserRepository';
 
-container.registerSingleton<IBcryptHashPovider>(
+container.registerSingleton<IBcryptHashProvider>(
   'BcryptHashProvider',
   delay(() => BcryptHashProvider),
 );

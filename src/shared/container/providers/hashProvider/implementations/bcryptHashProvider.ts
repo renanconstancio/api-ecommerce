@@ -1,5 +1,5 @@
 import { compare, hash } from 'bcryptjs';
-import { IBcryptHashPovider } from '../interfaces/IBcryptHashPovider';
+import { IBcryptHashPovider } from '../interfaces/IBcryptHashProvider';
 
 export default class BcryptHashProvider implements IBcryptHashPovider {
   async generateHash(payload: string): Promise<string> {

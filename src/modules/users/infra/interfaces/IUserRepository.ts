@@ -1,4 +1,4 @@
-import { UserDTOs } from '../../dtos/UserDTOs';
+import { UserDTOs } from '@modules/users/dtos/UserDTOs';
 
 export interface IUserRepository {
   save(data: UserDTOs): Promise<UserDTOs>;

@@ -1,9 +1,9 @@
 import { inject, injectable } from 'tsyringe';
 import { IUserRepository } from '@modules/users/infra/interfaces/IUserRepository';
-import { IHashProvider } from '@shared/provider/HashProvider/dtos/IHashPovider';
-import { IResponseUserAuth } from '@modules/users/dtos/IResponseUserAuth';
+import { IBcryptHashProvider } from '@shared/container/providers/hashProvider/interfaces/IBcryptHashProvider';
+import { UserAuthDTOs } from '@modules/users/dtos/userAuthDTOs';
 import { sign } from 'jsonwebtoken';
-import AppError from '@shared/errors/AppError';
+import AppError from '@shared/errors/appError';
 import auth from '@config/auth';
 
 @injectable()
@@ -11,31 +11,31 @@ export default class LoginUserUseCase {
   constructor(
     @inject('UserRepository')
     private ormRepository: IUserRepository,
-    @inject('HashProvider')
-    private hashProvider: IHashProvider,
+    @inject('BcryptHashProvider')
+    private hashProvider: IBcryptHashProvider,
   ) {}
 
   async execute(data: {
     password: string;
     email: string;
-  }): Promise<IResponseUserAuth> {
+  }): Promise<UserAuthDTOs> {
     const respUser = await this.ormRepository.findByEmailUser(data.email);
 
     if (!data.email || !data.password) {
-      throw new AppError(`This is email and password required`, 422);
+      throw new AppError(`E-mail e senha são obrigatórios!`, 422);
     }
 
     if (!respUser) {
-      throw new AppError(`This is not user`);
+      throw new AppError(`Esse usuário não existe!`);
     }
 
     const passwordConfirmed = await this.hashProvider.compareHash(
       data.password,
-      respUser?.password,
+      `${respUser?.password}`,
     );
 
     if (!passwordConfirmed) {
-      throw new AppError('Incorrect email/password combination.', 401);
+      throw new AppError('Combinação incorreta de email/password.', 422);
     }
 
     const token = sign({}, auth.jwt.secret, {
