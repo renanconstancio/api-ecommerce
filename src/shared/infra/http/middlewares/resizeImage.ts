@@ -30,17 +30,17 @@ export default async function resizeImages(
       const filename = `${uuid()}.jpg`;
 
       await sharp(file.buffer)
-        .composite([{ input: resizeImage.waterMark }])
         .resize(1200, 1200, resizeImage.config)
+        // .composite([{ input: resizeImage.waterMark }])
         .jpeg({ quality: 98 })
         .toFile(`${resizeImage.pathResolve}/${filename}`);
 
-      await sharp(`${resizeImage.pathResolve}/${filename}`)
+      await sharp(file.buffer)
         .resize(800, 800, resizeImage.config)
         .jpeg({ quality: 94 })
         .toFile(`${resizeImage.pathResolveMd}/${filename}`);
 
-      await sharp(`${resizeImage.pathResolve}/${filename}`)
+      await sharp(file.buffer)
         .resize(400, 400, resizeImage.config)
         .jpeg({ quality: 90 })
         .toFile(`${resizeImage.pathResolveXs}/${filename}`);

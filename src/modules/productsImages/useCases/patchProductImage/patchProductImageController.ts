@@ -13,6 +13,6 @@ export default class PatchProductImageController {
       photos,
     });
 
-    return response.json(image);
+    return response.status(201).json(image);
   }
 }
