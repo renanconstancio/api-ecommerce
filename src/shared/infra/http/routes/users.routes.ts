@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import PatchUserController from '@modules/users/useCases/patchUser/PatchUserController';
+import PatchUserController from '@modules/users/useCases/patchUser/patchUserController';
 import DeleteUserController from '@modules/users/useCases/deleteUser/deleteUserController';
 
 const usersRoutes = Router();
