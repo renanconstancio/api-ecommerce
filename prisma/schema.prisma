@@ -7,6 +7,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Users {
+  id             String    @id @default(uuid()) @db.Char(36)
+  type           TypeUser  @default(user)
+  email          String    @db.VarChar(40)
+  password       String    @db.VarChar(85)
+  reset_password String?   @db.VarChar(36)
+  first_name     String?   @db.VarChar(55)
+  last_name      String?   @db.VarChar(30)
+  phone          String?   @db.VarChar(20)
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @updatedAt()
+  deleted_at     DateTime?
+
+  @@map("users")
+}
+
 model Category {
   id             String     @id @default(uuid()) @db.VarChar(36)
   category_id    String?    @db.VarChar(36)
@@ -178,7 +194,7 @@ model ProductsImages {
 //   flag            String                            @db.VarChar(20)
 //   installment     Int                               @default(0) @db.TinyInt
 //   discounts       Decimal                           @default(0) @db.Decimal(10, 0)
-//   discount_type   orders_transactions_discount_type @default(percent)
+//   discount_type   OrdersTransactionsDiscountType @default(percent)
 //   total_price     Decimal                           @default(0) @db.Decimal(10, 0)
 //   price_increase  Decimal                           @default(0) @db.Decimal(10, 0)
 //   created_at      DateTime                          @default(now())
@@ -223,7 +239,7 @@ model Stores {
   @@map("stores")
 }
 
-enum orders_transactions_discount_type {
+enum OrdersTransactionsDiscountType {
   price
   percent
 }
@@ -241,4 +257,10 @@ enum OrdersStatusType {
   AWAITING_WITHDRAWAL // aguardando retirada
   ORDER_DELIVERED // pedido entregue
   ORDER_CANCELED // pedido cancelado
+}
+
+enum TypeUser {
+  admin
+  user
+  root
 }
