@@ -1,42 +1,35 @@
 import { UserDTOs } from '@modules/users/dtos/UserDTOs';
 import { IUserRepository } from '@modules/users/infra/interfaces/IUserRepository';
+import { dateString } from '@shared/utils/functions';
 import { prisma } from '@shared/infra/prisma';
 
 export default class UserRepository implements IUserRepository {
   async save(data: UserDTOs): Promise<UserDTOs> {
     if (data.id)
-      return await prisma.users.update({
-        where: {
-          id: data.id,
-        },
-        data,
-        select: {
-          id: true,
-          type: true,
-          email: true,
-          first_name: true,
-          last_name: true,
-          phone: true,
-          created_at: true,
-          updated_at: true,
-          deleted_at: true,
-        },
-      });
+      return (await prisma.users
+        .update({
+          where: {
+            id: data.id,
+          },
+          data,
+        })
+        .then(({ ...user }) => ({
+          ...user,
+          created_at: dateString(user.created_at as Date),
+          updated_at: dateString(user.updated_at as Date),
+          deleted_at: user.deleted_at && dateString(user.deleted_at as Date),
+        }))) as UserDTOs;
 
-    return await prisma.users.create({
-      data,
-      select: {
-        id: true,
-        type: true,
-        email: true,
-        first_name: true,
-        last_name: true,
-        phone: true,
-        created_at: true,
-        updated_at: true,
-        deleted_at: true,
-      },
-    });
+    return (await prisma.users
+      .create({
+        data,
+      })
+      .then(({ ...user }) => ({
+        ...user,
+        created_at: dateString(user.created_at as Date),
+        updated_at: dateString(user.updated_at as Date),
+        deleted_at: user.deleted_at && dateString(user.deleted_at as Date),
+      }))) as UserDTOs;
   }
 
   async remove(id: string): Promise<void> {
@@ -51,58 +44,28 @@ export default class UserRepository implements IUserRepository {
   }
 
   async findByEmailUser(email: string): Promise<UserDTOs | null> {
-    return await prisma.users.findFirst({
+    return (await prisma.users.findFirst({
       where: {
         deleted_at: null,
         email: email,
       },
-      select: {
-        id: true,
-        type: true,
-        email: true,
-        first_name: true,
-        last_name: true,
-        password: true,
-      },
-    });
+    })) as UserDTOs;
   }
 
   async findByIdUser(id: string): Promise<UserDTOs | null> {
-    return await prisma.users.findUnique({
+    return (await prisma.users.findUnique({
       where: {
         id,
       },
-      select: {
-        id: true,
-        type: true,
-        email: true,
-        first_name: true,
-        last_name: true,
-        phone: true,
-        created_at: true,
-        updated_at: true,
-        deleted_at: true,
-      },
-    });
+    })) as UserDTOs;
   }
 
   async findAllUsers(): Promise<UserDTOs[]> {
-    return await prisma.users.findMany({
+    return (await prisma.users.findMany({
       where: { deleted_at: null },
       orderBy: {
         first_name: 'asc',
       },
-      select: {
-        id: true,
-        type: true,
-        email: true,
-        first_name: true,
-        last_name: true,
-        phone: true,
-        created_at: true,
-        updated_at: true,
-        deleted_at: true,
-      },
-    });
+    })) as UserDTOs[];
   }
 }

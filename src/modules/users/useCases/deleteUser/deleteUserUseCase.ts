@@ -11,7 +11,7 @@ export default class DeleteUserUseCase {
     private ormRepository: IUserRepository,
   ) {}
 
-  async execute(id: string, idUser: string): Promise<void> {
+  async execute(id: string): Promise<void> {
     const isExists = await this.ormRepository.findByIdUser(id);
 
     if (!isExists) {

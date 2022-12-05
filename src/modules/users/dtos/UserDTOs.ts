@@ -1,14 +1,14 @@
-import { typeUser } from '@prisma/client';
+import { TypeUser } from '@prisma/client';
 
 export type UserDTOs = {
   id?: string;
-  type: typeUser;
+  type: TypeUser;
   email: string;
-  password?: string;
-  reset_password?: string;
-  first_name: string;
-  last_name: string;
-  phone: string;
+  password?: string | null;
+  reset_password?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
+  phone?: string | null;
   created_at?: Date | string;
   updated_at?: Date | string;
   deleted_at?: Date | string | null;

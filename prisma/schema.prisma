@@ -11,7 +11,7 @@ model Users {
   id             String    @id @default(uuid()) @db.Char(36)
   type           TypeUser  @default(user)
   email          String    @db.VarChar(40)
-  password       String    @db.VarChar(85)
+  password       String?   @db.VarChar(85)
   reset_password String?   @db.VarChar(36)
   first_name     String?   @db.VarChar(55)
   last_name      String?   @db.VarChar(30)
