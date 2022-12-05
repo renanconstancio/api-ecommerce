@@ -9,8 +9,6 @@ import { IProductSkuRepository } from '@modules/productsSkus/infra/interfaces/IP
 import ProductSkuRepository from '@modules/productsSkus/infra/prisma/respositories/productSkuRepository';
 import { IProductImageRepository } from '@modules/productsImages/infra/interfaces/IProductImageRepository';
 import ProductImageRepository from '@modules/productsImages/infra/prisma/repositories/productImageRepository';
-import { IResizeImage } from './providers/resizeImage/dtos/IResizeImage';
-import ResizeImage from './providers/resizeImage/resizeImage';
 
 // import ProductSkuRepository from '@modules/products/infra/prisma/repositories/ProductSkuRepository';
 // import { IProductSkuRepository } from '@modules/products/repositories/IProductSkuRepository';
@@ -20,11 +18,6 @@ import ResizeImage from './providers/resizeImage/resizeImage';
 
 // import { IResizeImage } from './providers/resizeImage/dtos/IResizeImage';
 // import ResizeImage from './providers/resizeImage/ResizeImage';
-
-container.registerSingleton<IResizeImage>(
-  'ResizeImage',
-  delay(() => ResizeImage),
-);
 
 // container.registerSingleton<IStoreRepository>(
 //   'StoreRepository',

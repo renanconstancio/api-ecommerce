@@ -12,15 +12,24 @@ export default async function resizeImages(
   if (!req.files) return next();
 
   if (!fs.existsSync(resizeImage.pathResolve)) {
-    fs.mkdirSync(resizeImage.pathResolve, 664);
+    fs.mkdirSync(resizeImage.pathResolve, {
+      recursive: true,
+      mode: 664,
+    });
   }
 
   if (!fs.existsSync(resizeImage.pathResolveMd)) {
-    fs.mkdirSync(resizeImage.pathResolveMd, 664);
+    fs.mkdirSync(resizeImage.pathResolveMd, {
+      recursive: true,
+      mode: 664,
+    });
   }
 
   if (!fs.existsSync(resizeImage.pathResolveXs)) {
-    fs.mkdirSync(resizeImage.pathResolveXs, 664);
+    fs.mkdirSync(resizeImage.pathResolveXs, {
+      recursive: true,
+      mode: 664,
+    });
   }
 
   req.body.photos = [];
