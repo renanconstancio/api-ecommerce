@@ -135,7 +135,7 @@ export default class ProductRepository implements IProductRepository {
       .findMany({
         where: { ...handleWhere, deleted_at: null },
         orderBy: handleOrder,
-        skip: Number(limit * Number(page) - 1),
+        skip: limit * (page - 1),
         take: limit,
         include: {
           skus: {
