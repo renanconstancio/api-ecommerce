@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "ecommerce_api_1.0",
+      "name": "api_ecommerce",
       "script": "dist/shared/infra/http/server.js",
       "instances": 1,
       "exec_mode": "cluster",

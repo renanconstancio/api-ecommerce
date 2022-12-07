@@ -15,10 +15,10 @@ echo "********************************"
 if [ "$NODE_ENV" == "development" ]
 then
   echo "Development MODE"
-  pm2 start /app/.docker/loopback/pm2/pm2.json
+  pm2 start /app/.docker/api/pm2/pm2.json
 else
   echo "Production MODE"
-  pm2 start /app/.docker/loopback/pm2/pm2.json
+  pm2 start /app/.docker/api/pm2/pm2.json
 fi
 
 # Keep Container Running

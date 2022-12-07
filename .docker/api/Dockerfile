@@ -1,8 +1,8 @@
 # our base image
-FROM node:16
+FROM node:16-bullseye-slim
 
 # specify the port number the container should expose
-EXPOSE 8001
+# EXPOSE 8001
 
 # User user as root
 USER root
