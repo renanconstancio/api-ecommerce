@@ -6,6 +6,7 @@ import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/appError';
 import routes from './routes';
 import '@shared/container';
+import { PrismaClient } from '@prisma/client';
 // import rateLimiter from '@shared/infra/http/middlewares/rateLimiter';
 
 const app: Application = express();
@@ -14,6 +15,26 @@ app.use(cors());
 app.use(express.json());
 // app.use(rateLimiter);
 // app.use(errors());
+
+app.use(async (req, res, next) => {
+  const databaseUrl = process.env.DATABASE_URL!.split('/', -1);
+
+  console.log(databaseUrl);
+
+  // if (!datasource) {
+
+  // const prisma = new PrismaClient({
+  //   datasources: {
+  //     db: {
+  //       url: 'new db url goes here',
+  //     },
+  //   },
+  // });
+
+  // req.prisma = prisma;
+  next();
+});
+
 app.use('/images', express.static(uploadConfig.directory));
 app.use('/api', routes);
 app.use(
