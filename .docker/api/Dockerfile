@@ -1,8 +1,8 @@
 # our base image
-FROM node:16-bullseye-slim
+FROM node:16-slim
 
 # specify the port number the container should expose
-# EXPOSE 8001
+EXPOSE 8001
 
 # User user as root
 USER root
@@ -17,3 +17,4 @@ RUN mkdir /app
 RUN npm install -g npm
 RUN npm install -g pm2
 RUN pm2 install pm2-logrotate
+
