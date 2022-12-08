@@ -1,6 +1,6 @@
 import cors from 'cors';
 import 'express-async-errors';
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 // import { CelebrateError, errors } from 'celebrate';
 import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/appError';
@@ -8,7 +8,7 @@ import routes from './routes';
 import '@shared/container';
 // import rateLimiter from '@shared/infra/http/middlewares/rateLimiter';
 
-const app = express();
+const app: Application = express();
 
 app.use(cors());
 app.use(express.json());
